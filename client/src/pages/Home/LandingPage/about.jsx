@@ -13,13 +13,13 @@ function AppAbout() {
                 </div>
                 <Row className="my-5">
                     <Col sm={6} className="d-flex justify-content-center">
-                        <Image src={require('../../../assets/img/anh1.png')} />
+                        <Image src={require('../../../assets/img/logo/homepage-logo/anh1.png')} />
                     </Col>
                     <Col sm={6}>
                         <div>
                             <h3>CÂU CHUYỆN</h3>
                             <div className="box1">
-                                <img src={require('../../../assets/img/box1.png')} alt=''/>
+                                <img src={require('../../../assets/img/logo/homepage-logo/box1.png')} alt=''/>
                                 <div className="pa2">
                                     <p>
                                         OCXANH lấy sứ mệnh và hình tượng vỏ ốc để nói về ngôi nhà. Nơi mà đi theo bạn
@@ -30,7 +30,7 @@ function AppAbout() {
                             </div>
 
                             <div className="box2">
-                                <img src={require('../../../assets/img/box.png')} alt=''/>
+                                <img src={require('../../../assets/img/logo/homepage-logo/box.png')} alt=''/>
                                 <div className="pa3" id="message">
                                     <p>
                                         Chính từ những ý tưởng đó mà chúng tôi OCXANH là những người mang xứ mệnh giúp

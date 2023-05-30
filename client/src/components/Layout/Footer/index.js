@@ -29,7 +29,7 @@ export default function AppFooter() {
                         Email: support@ocxanh.com
                     </p>
                     <div className="underdown">
-                        <img src={require('../../../assets/img/download.png')} alt=''/>
+                        <img src={require('../../../assets/img/logo/homepage-logo/download.png')} alt=''/>
                     </div>
                 </Col>
                 <Col className="fCol">
@@ -47,7 +47,7 @@ export default function AppFooter() {
                 </Col>
                 <Col className="fCol">
                     <p>Gương mặt đại diện</p>
-                    <img src={require('../../../assets/img/anh5.png')} alt=''/>
+                    <img src={require('../../../assets/img/logo/homepage-logo//anh5.png')} alt=''/>
                     <p>Theo dõi chúng tôi</p>
                     <div className="icon">
                         <i className="bx fa-brands fa-facebook"></i>

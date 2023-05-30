@@ -7,13 +7,13 @@ import { AuthContext } from '../../../context/authContext';
 var slideData = [
     {
         id: 1,
-        image: require('../../../assets/img/BG.png'),
+        image: require('../../../assets/img/BG/BG.png'),
         title: 'Dọn nhà yêu',
         description: 'Hãy để chúng tôi dọn nhà hộ bạn',
     },
     {
         id: 2,
-        image: require('../../../assets/img/bg2.jpg'),
+        image: require('../../../assets/img/BG/bg2.jpg'),
         title: 'Đội ngũ chuyên nghiệp',
         description: 'Hãy để chúng tôi dọn nhà hộ bạn',
     },

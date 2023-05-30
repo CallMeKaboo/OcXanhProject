@@ -1,8 +1,4 @@
 import React from 'react';
-import Container from 'react-bootstrap/Container';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
-import Carousel from 'react-bootstrap/Carousel';
 
 import '../../../css/home/landingPage/client-talk.css';
 
@@ -11,7 +7,7 @@ let reviewData = [
         id: 1,
         title: 'Rất tuyệt vời',
         detail: 'Dịch vụ thuê dọn nhà là một lựa chọn tuyệt vời cho những ai đang có bận rộn trong công việc và không có thời gian để tự dọn dẹp nhà cửa của mình',
-        img: require('../../../assets/img/Kh1.png'),
+        img: require('../../../assets/img/avatar/KH-logo/Kh1.png'),
         name: 'Hoàng Thị Hà',
         address: 'Hà Nội',
     },
@@ -19,7 +15,7 @@ let reviewData = [
         id: 2,
         title: 'Rất tuyệt vời',
         detail: 'Tôi đã sử dụng dịch vụ thuê dọn nhà và rất hài lòng với kết quả. Những người làm việc rất chuyên nghiệp và thân thiện.',
-        img: require('../../../assets/img/Kh2.png'),
+        img: require('../../../assets/img/avatar/KH-logo/Kh2.png'),
         name: 'Nguyễn Khánh',
         address: 'Bắc Giang',
     },
@@ -27,7 +23,7 @@ let reviewData = [
         id: 3,
         title: 'Rất tuyệt vời Oke',
         detail: 'Tôi cảm thấy đáng tiền với chi phí thuê dọn nhà này và sẽ sử dụng dịch vụ của họ trong tương lai.',
-        img: require('../../../assets/img/Kh3.png'),
+        img: require('../../../assets/img/avatar/KH-logo/Kh3.png'),
         name: 'Nguyễn Tuấn',
         address: 'Bắc Ninh',
     },

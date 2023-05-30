@@ -9,19 +9,19 @@ let reviewData = [
         id: 1,
         title: 'Chuyên nghiệp - Tận tâm',
         detail: 'Đội ngũ Tư vấn viên & Chăm sóc Khách hàng kinh nghiệm, chuyên nghiệp, tận tâm. OcXanh cam kết bảo hành dịch vụ khi Khách hàng chưa hài lòng.',
-        img: require('../../../assets/img/customer-service-logo.png'),
+        img: require('../../../assets/img/logo/homepage-logo/customer-service-logo.png'),
     },
     {
         id: 2,
         title: 'Ứng dụng OcXanh tiện lợi',
         detail: 'Tìm Người giúp việc nhà nhanh chóng qua vài thao tác. Ứng dụng cung cấp đầy đủ thông tin về dịch vụ và Người giúp việc, tiện lợi trong việc chủ động lựa chọn và đánh giá',
-        img: require('../../../assets/img/smartphone-logo.png'),
+        img: require('../../../assets/img/logo/homepage-logo/smartphone-logo.png'),
     },
     {
         id: 3,
         title: 'Người giúp việc nhà tiêu chuẩn',
         detail: 'Người giúp việc nhà tiêu chuẩn, đáng tin cậy, có đầy đủ hồ sơ. Công ty OcXanh chịu trách nhiệm tuyển chọn, đào tạo và quản lý.',
-        img: require('../../../assets/img/human-logo.png'),
+        img: require('../../../assets/img/logo/homepage-logo/human-logo.png'),
     },
 ];
 
