@@ -33,11 +33,12 @@ function BookingTime(props) {
 
     const handleTimeSelect = (time) => {
         setSelectedTime(time);
+        props.setSelectedTime(time);
     };
 
-    useEffect(()=>{
+    useEffect(() => {
         localStorage.setItem('time_stamp', selectedTime);
-    },[selectedTime])
+    }, [selectedTime]);
 
     return (
         <div className="booking-form ">

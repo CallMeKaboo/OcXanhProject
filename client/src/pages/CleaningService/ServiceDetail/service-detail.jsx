@@ -12,6 +12,7 @@ function ServiceDetail() {
     const { currentUser } = useContext(AuthContext);
     const location = useLocation();
     const id = location.pathname.split('/').pop();
+    const [show, setShow] = useState(false);
     // Loading
     const [loading, setLoading] = useState(false);
     // Load data
@@ -29,11 +30,15 @@ function ServiceDetail() {
     };
 
     const [selectedDate, setSelectedDate] = useState(localStorageDate());
+    const [selectedTime, setSelectedTime] = useState('');
+
 
     const handleDateChange = (value) => {
         setSelectedDate(value);
     };
-
+    const selectedTimer = (value) => {
+        setSelectedTime(value)
+    }
     const [activeItems, setActiveItems] = useState([]);
     useEffect(() => {
         const fetchData = async () => {
@@ -79,6 +84,8 @@ function ServiceDetail() {
         localStorage.setItem('money', service.price);
         localStorage.setItem('service_id', id);
     }, [selectedDate, service.price, id]);
+
+    
     return (
         <>
             <main className="my-5">
@@ -169,12 +176,18 @@ function ServiceDetail() {
                                     </div>
                                     <div className="time-picker">
                                         <p>Chọn thời gian</p>
-                                        <BookingTime serviceID={service.service_id} />
+                                        <BookingTime serviceID={service.service_id} setSelectedTime={selectedTimer}/>
                                     </div>
                                     {currentUser ? (
                                         <button
                                             className="btn text-white"
-                                            onClick={() => navigate(`/service/booking/${service.id}`)}
+                                            onClick={() => {
+                                                if (selectedDate !== '' && selectedTime !== '') {
+                                                    navigate(`/service/booking/${service.id}`);
+                                                } else {
+                                                    setShow(true);
+                                                }
+                                            }}
                                         >
                                             Đặt lịch ngay
                                         </button>
@@ -183,6 +196,9 @@ function ServiceDetail() {
                                             Đăng nhập
                                         </button>
                                     )}
+                                    <p className='text-danger' style={{ display: show ? 'block' : 'none' }}>
+                                        Vui lòng chọn ngày và giờ để tiếp tục
+                                    </p>
                                 </div>
                             </>
                         ) : (

@@ -3,6 +3,7 @@ import '../../css/modelOverlay/overlay.css';
 import DetailsService from './details';
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
+import OurStaff from './staff';
 
 function ModelOverlay(props) {
     // const { currentUser } = useContext(AuthContext);
@@ -31,10 +32,16 @@ function ModelOverlay(props) {
         if (props.serviceID) {
             setScreen(1);
         }
-    }, [props.serviceID]);
+        if (props.staffID) {
+            setScreen(2);
+        }
+    }, [props.serviceID, props.staffID]);
 
     if (props.serviceID) {
         showScreen = <DetailsService serviceID={props.serviceID} descrip={props.descrip} />;
+    }
+    if (props.staffID) {
+        showScreen = <OurStaff staffID={props.staffID} />;
     }
 
     // } else if (screen === 2) {
@@ -46,7 +53,10 @@ function ModelOverlay(props) {
     // }
     return (
         <div className="main" onClick={cancelClick}>
-            <div className="main-overlay d-flex flex-column">
+            <div
+                className="main-overlay d-flex flex-column"
+                style={screen === 2 ? { height: '65vh', width: '45%' } : {}}
+            >
                 <div className="head">
                     {/* {screen > 1 && (
                         <span className="back-arrow" onClick={goback}>
@@ -54,6 +64,7 @@ function ModelOverlay(props) {
                         </span>
                     )} */}
                     {screen === 1 && 'CHI TIẾT DỊCH VỤ'}
+                    {screen === 2 && 'CHI TIẾT NHÂN VIÊN'}
                     <span className="cancel rouded-circle" onClick={props.onCancelbutton}>
                         <svg width={12} height={12} viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path
@@ -81,11 +92,13 @@ function ModelOverlay(props) {
                         </button>
                     </OverlayTrigger>
                 )} */}
-                <OverlayTrigger placement="top" overlay={tooltip}>
-                    <button className="btn text-white  next-btn" onClick={handleDetail}>
-                        Chi tiết
-                    </button>
-                </OverlayTrigger>
+                {screen === 1 && (
+                    <OverlayTrigger placement="top" overlay={tooltip}>
+                        <button className="btn text-white  next-btn" onClick={handleDetail}>
+                            Chi tiết
+                        </button>
+                    </OverlayTrigger>
+                )}
             </div>
         </div>
     );

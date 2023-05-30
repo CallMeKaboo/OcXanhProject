@@ -16,7 +16,6 @@ function ToastMessage(props) {
                 // onClose={() => setShowToast(false)}
                 show={toast}
                 delay={1000}
-                autohide
             >
                 <Toast.Header>
                     <img src="holder.js/20x20?text=%20" className="rounded me-2" alt="" />

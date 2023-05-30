@@ -1,19 +1,37 @@
 import React, { useContext, useState } from 'react';
 import '../../css/user/profile-page.css';
 import { AuthContext } from '../../context/authContext';
+import ToastMessage from '../../components/CompoChild/Toast/toast';
 
 import Avatar from 'react-avatar-edit';
 import Modal from 'react-bootstrap/Modal';
+import Tab from 'react-bootstrap/Tab';
+import Tabs from 'react-bootstrap/Tabs';
 import ava from '../../assets/img/avatar/Kh4.png';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
 
 function ProfileUser() {
     const { currentUser, updateUserProfile } = useContext(AuthContext);
-    const naviagte = useNavigate()
     const [modalShow, setModalShow] = useState(false);
     const [imageCrop, setImageCrop] = useState(false);
     const [image, setImage] = useState([]);
+
+    const [key, setKey] = useState('profile');
+    const [eye, seteye] = useState(true);
+    const [type, setType] = useState('password');
+
+    const [inputs, setInputs] = useState({
+        currentPassword: '',
+        newPassword: '',
+        confirmNewPassword: '',
+    });
+
+    const [error, setError] = useState('');
+
+    // Toast
+    const [message, setMessage] = useState('');
+    const [variant, setVariant] = useState('');
+    const [showToast, setShowToast] = useState(false);
 
     const [values, setValues] = useState({
         fullName: currentUser.fullName,
@@ -34,256 +52,305 @@ function ProfileUser() {
     };
     const imgShow = image.map((item) => item.imageCrop);
 
-    console.log(imageCrop);
     // Handle change
     const handleChange = (e) => {
-        setValues({
-            ...values,
-            [e.target.name]: e.target.value,
-        });
+        if (key === 'profile') {
+            setValues({
+                ...values,
+                [e.target.name]: e.target.value,
+            });
+        }
+        if (key === 'pass') {
+            setInputs({ ...inputs, [e.target.name]: e.target.value });
+        }
     };
+
     const updateUser = async (e) => {
         e.preventDefault();
         // const { id, name, email, password } = userData;
 
-        try {
-            await axios.put('/api/auth/users/' + currentUser.id, {
-                fullName: values.fullName ? values.fullName : '',
-                avatar: imageCrop ? imageCrop : '',
-                city: values.city ? values.city : '',
-                email: values.email ? values.email : '',
-            });
-            const updatedUser = {
-                ...currentUser,
-                fullName: values.fullName,
-                avatar: imageCrop,
-                city: values.city,
-                email: values.email,
-            };
-            updateUserProfile(updatedUser);
-            alert('Gui thanh cong');
-            // naviagte('http://localhost:3000/profile')
-        } catch (err) {
-            console.log(err);
-            // setTextVisibility(true);
-            // console.log(err.response.data.errors);
-            // setError(err.response.data.errors);
+        if (key === 'profile') {
+            try {
+                await axios.put('/api/auth/users/' + currentUser.id, {
+                    fullName: values.fullName ? values.fullName : '',
+                    avatar: imgShow[imgShow.length - 1],
+                    city: values.city ? values.city : '',
+                    email: values.email ? values.email : '',
+                });
+                const updatedUser = {
+                    ...currentUser,
+                    fullName: values.fullName,
+                    avatar: imageCrop,
+                    city: values.city,
+                    email: values.email,
+                };
+                updateUserProfile(updatedUser);
+                setMessage('Cập nhật thành công');
+                setVariant('success');
+                setShowToast(true);
+                setTimeout(() => setShowToast(false), 1000);
+            } catch (err) {
+                console.log(err);
+
+                // setError(err.response.data.errors);
+            }
+            return;
+        }
+        if (key === 'pass') {
+            if (inputs.newPassword !== inputs.confirmNewPassword) {
+                setError('Mật khẩu mới không khớp');
+            }
+
+            try {
+                const response = await axios.put('/api/auth/users/changepass', {
+                    currentPassword: inputs.currentPassword,
+                    newPassword: inputs.newPassword,
+                });
+
+                console.log(response.data);
+
+                setInputs({});
+                setError('');
+            } catch (err) {
+                console.error(err);
+                setError(err.response.data.errors.pass);
+            }
+            return;
         }
     };
-    console.log(currentUser);
+    const Eye = (e) => {
+        if (type === 'password') {
+            setType('text');
+            seteye(false);
+        } else {
+            setType('password');
+            seteye(true);
+        }
+    };
+
     return (
-        <div className="container emp-profile">
-            <form method="post">
-                <div className="row">
-                    <div className="col-md-4">
-                        <div className="profile-img">
-                            <img
-                                src={
-                                    imgShow.length
-                                        ? imgShow[imgShow.length - 1]
-                                        : currentUser.avatar
-                                        ? currentUser.avatar
-                                        : ava
-                                }
-                                alt=""
-                            />
-                            <div className="file btn btn-lg btn-primary" onClick={() => setModalShow(true)}>
-                                Đổi ảnh
-                                {/* <input
-                                    type="file"
-                                    name="file"
-                                    accept="/image/*"
-                                    onChange={(event) => {
-                                        const file = event.target.files[0];
-                                        if (file && file.type.substring(0, 5) === 'image') {
-                                            setImage(file);
-                                        } else {
-                                            setImage(null);
-                                        }
-                                    }}
-                                /> */}
-                            </div>
-                            <Modal
-                                size="lg"
-                                aria-labelledby="contained-modal-title-vcenter"
-                                centered
-                                show={modalShow}
-                                onHide={() => setModalShow(false)}
-                            >
-                                <Modal.Header closeButton>
-                                    <Modal.Title id="contained-modal-title-vcenter">Chọn ảnh</Modal.Title>
-                                </Modal.Header>
-                                <Modal.Body>
-                                    <Avatar width={100 + '%'} height={300} onCrop={onCrop} onClose={onClose} />
-                                </Modal.Body>
-                                <Modal.Footer className="justify-content-center">
-                                    <div className="btn text-white" onClick={saveImage}>
-                                        Lưu
-                                    </div>
-                                </Modal.Footer>
-                            </Modal>
-                        </div>
-                    </div>
-                    <div className="col-md-6">
-                        <div className="profile-head">
-                            <p className='fs-1'>{currentUser.username}</p>
-                            <ul className="nav nav-tabs mt-5" id="myTab" role="tablist">
-                                <li className="nav-item">
-                                    <a
-                                        className="nav-link active"
-                                        id="home-tab"
-                                        data-toggle="tab"
-                                        href="#home"
-                                        role="tab"
-                                        aria-controls="home"
-                                        aria-selected="true"
-                                    >
-                                        Thông tin
-                                    </a>
-                                </li>
-                                <li className="nav-item">
-                                    <a
-                                        className="nav-link"
-                                        id="pass-tab"
-                                        data-toggle="tab"
-                                        href="#pass"
-                                        role="tab"
-                                        aria-controls="pass"
-                                        aria-selected="false"
-                                    >
-                                        Thay đổi mật khẩu
-                                    </a>
-                                </li>
-                            </ul>
-                            <div className="col-md-8">
-                                <div className="tab-content profile-tab" id="myTabContent">
-                                    <div
-                                        className="tab-pane fade show active"
-                                        id="home"
-                                        role="tabpanel"
-                                        aria-labelledby="home-tab"
-                                    >
-                                        <div className="row mb-2">
-                                            <div className="col-md-6">
-                                                <label>Họ và tên</label>
-                                            </div>
-                                            <div className="col-md-6 d-flex align-items-center hover">
-                                                <input
-                                                    type="text"
-                                                    name="fullName"
-                                                    value={values.fullName ? values.fullName : ' '}
-                                                    onChange={handleChange}
-                                                    style={{
-                                                        outline: 'none',
-                                                        border: 'none',
-                                                        color: 'var(--main-color)',
-                                                    }}
-                                                />
-                                            </div>
-                                        </div>
-                                        <div className="row mb-2">
-                                            <div className="col-md-6">
-                                                <label>Email</label>
-                                            </div>
-                                            <div className="col-md-6 d-flex align-items-center hover">
-                                                <input
-                                                    type="text"
-                                                    name="email"
-                                                    value={values.email ? values.email : ' '}
-                                                    onChange={handleChange}
-                                                    style={{
-                                                        outline: 'none',
-                                                        border: 'none',
-                                                        color: 'var(--main-color)',
-                                                    }}
-                                                />
-                                            </div>
-                                        </div>
-                                        <div className="row mb-2">
-                                            <div className="col-md-6">
-                                                <label>Số điện thoại</label>
-                                            </div>
-                                            <div className="col-md-6 d-flex align-items-center hover">
-                                                <input
-                                                    type="text"
-                                                    value={values.phone}
-                                                    style={{
-                                                        outline: 'none',
-                                                        border: 'none',
-                                                        color: 'var(--main-color)',
-                                                    }}
-                                                    disabled
-                                                />
-                                            </div>
-                                        </div>
-                                        <div className="row mb-2">
-                                            <div className="col-md-6">
-                                                <label>Thành phố</label>
-                                            </div>
-                                            <div className="col-md-6 d-flex align-items-center hover">
-                                                <input
-                                                    type="text"
-                                                    name="city"
-                                                    value={values.city ? values.city : ' '}
-                                                    style={{
-                                                        outline: 'none',
-                                                        border: 'none',
-                                                        color: 'var(--main-color)',
-                                                    }}
-                                                    onChange={handleChange}
-                                                />
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div
-                                        className="tab-pane fade show "
-                                        id="pass"
-                                        role="tabpanel"
-                                        aria-labelledby="pass-tab"
-                                    >
-                                        <div className="row">
-                                            <div className="col-md-6">
-                                                <label>Tên tài khoản</label>
-                                            </div>
-                                            <div className="col-md-6">
-                                                <p>{currentUser.username}</p>
-                                            </div>
-                                        </div>
-                                        <div className="row">
-                                            <div className="col-md-6">
-                                                <label>Email</label>
-                                            </div>
-                                            <div className="col-md-6">
-                                                <p>{currentUser.email}</p>
-                                            </div>
-                                        </div>
-                                        <div className="row">
-                                            <div className="col-md-6">
-                                                <label>Số điện thoại</label>
-                                            </div>
-                                            <div className="col-md-6">
-                                                <p>{currentUser.phone}</p>
-                                            </div>
-                                        </div>
-                                    </div>
+        <>
+            {showToast && (
+                <ToastMessage
+                    autohide
+                    toast={showToast}
+                    setShowToast={setShowToast}
+                    message={message}
+                    variant={variant}
+                />
+            )}
+            <div className="container emp-profile">
+                <form method="post">
+                    <div className="row">
+                        <div className="col-md-4">
+                            <div className="profile-img">
+                                <img
+                                    src={
+                                        imgShow.length
+                                            ? imgShow[imgShow.length - 1]
+                                            : currentUser.avatar
+                                            ? currentUser.avatar
+                                            : ava
+                                    }
+                                    alt=""
+                                />
+                                <div className="file btn btn-lg btn-primary" onClick={() => setModalShow(true)}>
+                                    Đổi ảnh
                                 </div>
+                                <Modal
+                                    size="lg"
+                                    aria-labelledby="contained-modal-title-vcenter"
+                                    centered
+                                    show={modalShow}
+                                    onHide={() => setModalShow(false)}
+                                >
+                                    <Modal.Header closeButton>
+                                        <Modal.Title id="contained-modal-title-vcenter">Chọn ảnh</Modal.Title>
+                                    </Modal.Header>
+                                    <Modal.Body>
+                                        <Avatar width={100 + '%'} height={300} onCrop={onCrop} onClose={onClose} />
+                                    </Modal.Body>
+                                    <Modal.Footer className="justify-content-center">
+                                        <div className="btn text-white" onClick={saveImage}>
+                                            Lưu
+                                        </div>
+                                    </Modal.Footer>
+                                </Modal>
                             </div>
                         </div>
+                        <div className="col-md-6">
+                            <div className="profile-head">
+                                <p className="fs-1">{currentUser.username}</p>
+                                <Tabs
+                                    id="controlled-tab-example"
+                                    activeKey={key}
+                                    onSelect={(k) => setKey(k)}
+                                    className="mb-3"
+                                >
+                                    <Tab eventKey="profile" title="Thông tin">
+                                        <div className="tab-content profile-tab" id="myTabContent">
+                                            <div
+                                                className="tab-pane fade show active"
+                                                id="home"
+                                                role="tabpanel"
+                                                aria-labelledby="home-tab"
+                                            >
+                                                <div className="row mb-3">
+                                                    <div className="col-md-6">
+                                                        <label>Họ và tên</label>
+                                                    </div>
+                                                    <div className="col-md-6 d-flex align-items-center hover">
+                                                        <input
+                                                            type="text"
+                                                            name="fullName"
+                                                            value={values.fullName ? values.fullName : ''}
+                                                            onChange={handleChange}
+                                                            style={{
+                                                                outline: 'none',
+                                                                border: 'none',
+                                                                color: 'var(--main-color)',
+                                                            }}
+                                                        />
+                                                    </div>
+                                                </div>
+                                                <div className="row mb-3">
+                                                    <div className="col-md-6">
+                                                        <label>Email</label>
+                                                    </div>
+                                                    <div className="col-md-6 d-flex align-items-center hover">
+                                                        <input
+                                                            type="text"
+                                                            name="email"
+                                                            value={values.email ? values.email : ''}
+                                                            onChange={handleChange}
+                                                            style={{
+                                                                outline: 'none',
+                                                                border: 'none',
+                                                                color: 'var(--main-color)',
+                                                            }}
+                                                        />
+                                                    </div>
+                                                </div>
+                                                <div className="row mb-3">
+                                                    <div className="col-md-6">
+                                                        <label>Số điện thoại</label>
+                                                    </div>
+                                                    <div className="col-md-6 d-flex align-items-center hover">
+                                                        <input
+                                                            type="text"
+                                                            value={values.phone}
+                                                            style={{
+                                                                outline: 'none',
+                                                                border: 'none',
+                                                                color: 'var(--main-color)',
+                                                            }}
+                                                            disabled
+                                                        />
+                                                    </div>
+                                                </div>
+                                                <div className="row mb-3">
+                                                    <div className="col-md-6">
+                                                        <label>Thành phố</label>
+                                                    </div>
+                                                    <div className="col-md-6 d-flex align-items-center hover">
+                                                        <input
+                                                            type="text"
+                                                            name="city"
+                                                            value={values.city ? values.city : ''}
+                                                            style={{
+                                                                outline: 'none',
+                                                                border: 'none',
+                                                                color: 'var(--main-color)',
+                                                            }}
+                                                            onChange={handleChange}
+                                                        />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </Tab>
+                                    <Tab eventKey="pass" title="Thay đổi mật khẩu">
+                                        <div className="tab-content profile-tab" id="myTabContent">
+                                            <div
+                                                className="tab-pane fade show active"
+                                                id="home"
+                                                role="tabpanel"
+                                                aria-labelledby="home-tab"
+                                            >
+                                                <div className="row mb-3">
+                                                    <div className="col-md-6">
+                                                        <label>Nhập mật khẩu cũ</label>
+                                                    </div>
+                                                    <div className="col-md-6 d-flex align-items-center hover">
+                                                        <input
+                                                            type="password"
+                                                            name="currentPassword"
+                                                            value={inputs.currentPassword}
+                                                            onChange={handleChange}
+                                                        />
+                                                    </div>
+                                                </div>
+                                                <div className="row mb-3">
+                                                    <div className="col-md-6">
+                                                        <label>Nhập mật khẩu mới</label>
+                                                    </div>
+                                                    <div className="col-md-6 d-flex align-items-center hover position-relative">
+                                                        <input
+                                                            type={type}
+                                                            name="newPassword"
+                                                            value={inputs.newPassword}
+                                                            onChange={handleChange}
+                                                        />
+                                                        <i
+                                                            style={{
+                                                                color: 'var(--main-color)',
+                                                            }}
+                                                            onClick={(e) => Eye(e.target.name)}
+                                                            className={`eye fa ${eye ? 'fa-eye-slash' : 'fa-eye'}`}
+                                                        ></i>
+                                                    </div>
+                                                </div>
+                                                <div className="row mb-3">
+                                                    <div className="col-md-6">
+                                                        <label>Nhập lại mật khẩu mới</label>
+                                                    </div>
+                                                    <div className="col-md-6 d-flex align-items-center hover position-relative">
+                                                        <input
+                                                            type={type}
+                                                            name="confirmNewPassword"
+                                                            value={inputs.confirmNewPassword}
+                                                            onChange={handleChange}
+                                                        />
+                                                        <i
+                                                            style={{
+                                                                color: 'var(--main-color)',
+                                                            }}
+                                                            onClick={(e) => Eye(e.target.name)}
+                                                            className={`eye fa ${eye ? 'fa-eye-slash' : 'fa-eye'}`}
+                                                        ></i>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </Tab>
+                                </Tabs>
+                            </div>
+                        </div>
+                        <div className="col-md-2">
+                            <button
+                                type="submit"
+                                className="btn profile-edit-btn text-white"
+                                name="btnAddMore"
+                                defaultValue="Edit Profile"
+                                onClick={updateUser}
+                            >
+                                Cập nhật
+                            </button>
+                        </div>
                     </div>
-                    <div className="col-md-2">
-                        <button
-                            type="submit"
-                            className="btn profile-edit-btn text-white"
-                            name="btnAddMore"
-                            defaultValue="Edit Profile"
-                            onClick={updateUser}
-                        >
-                            Cập nhật
-                        </button>
-                    </div>
-                </div>
-            </form>
-        </div>
+                </form>
+            </div>
+        </>
     );
 }
 

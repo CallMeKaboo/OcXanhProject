@@ -1,12 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import '../../css/booking/booking.css';
 import 'react-step-progress-bar/styles.css';
 import OverviewDetail from './screen/overview';
 import OrderDetail from './screen/order-detail';
 import Payment from './screen/payment';
-import { useEffect } from 'react';
+import ToastMessage from '../../components/CompoChild/Toast/toast';
+
 import axios from 'axios';
+import '../../css/booking/booking.css';
 
 const steps = [
     {
@@ -27,7 +28,11 @@ function BookingService() {
     let componentToRender;
     // const location = useLocation();
     const navigate = useNavigate();
-    // const id = location.pathname.split('/').pop();
+    // Toast
+    const [message, setMessage] = useState('');
+    const [variant, setVariant] = useState('');
+    const [showToast, setShowToast] = useState(false);
+    const [error, setError] = useState({});
 
     const [activeStep, setActiveStep] = useState(1);
 
@@ -113,7 +118,7 @@ function BookingService() {
         localStorage.getItem('fullName'),
         localStorage.getItem('phoneNumber'),
         localStorage.getItem('email'),
-        localStorage.getItem('payment_id')
+        localStorage.getItem('payment_id'),
     ]);
     // Handle payment
     const handleSubmit = async (e) => {
@@ -132,15 +137,13 @@ function BookingService() {
                 contact_phone: inputs.contact_phone,
                 contact_email: inputs.contact_email,
             });
-            // console.log(res.data);
-            alert('Gui thanh cong');
+
             const user = localStorage.getItem('user');
             const rememberedUsername = localStorage.getItem('rememberedUsername');
             const rememberedPassword = localStorage.getItem('rememberedPassword');
             const rememberedCheckbox = localStorage.getItem('rememberedCheckbox');
 
             // Xóa toàn bộ dữ liệu trong localStorage
-
             // Đặt lại 2 trường rememberedUsername và rememberedPassword
 
             localStorage.clear();
@@ -148,67 +151,76 @@ function BookingService() {
             localStorage.setItem('rememberedUsername', rememberedUsername);
             localStorage.setItem('rememberedPassword', rememberedPassword);
             localStorage.setItem('rememberedCheckbox', rememberedCheckbox);
-            navigate('/service');
+            setMessage('Đặt lịch thành công');
+            setVariant('success');
+            setShowToast(true);
+            setTimeout(() => {
+                navigate('/service');
+            }, 1000);
         } catch (err) {
             console.log(err);
-            // setTextVisibility(true);
-            // console.log(err.response.data.errors);
+
             // setError(err.response.data.errors);
         }
     };
 
     return (
-        <main className="my-5 main-container">
-            <div className="progress-contain" style={{ '--after-width': width }}>
-                {steps.map(({ step, label }) => (
-                    <div className="wrapper" key={step}>
-                        <div
-                            className="step-style p-2"
-                            step={activeStep >= step ? 'completed' : 'incomplete'}
-                            style={{
-                                backgroundColor: `${
-                                    (activeStep >= step ? 'completed' : 'incomplete') === 'completed'
-                                        ? '#009c3b'
-                                        : '#F3E7F3'
-                                }`,
-                            }}
-                        >
+        <>
+            {showToast && (
+                <ToastMessage toast={showToast} setShowToast={setShowToast} message={message} variant={variant} />
+            )}
+            <main className="my-5 main-container">
+                <div className="progress-contain" style={{ '--after-width': width }}>
+                    {steps.map(({ step, label }) => (
+                        <div className="wrapper" key={step}>
                             <div
-                                className="step-lable"
+                                className="step-style p-2"
+                                step={activeStep >= step ? 'completed' : 'incomplete'}
                                 style={{
-                                    color: `${
+                                    backgroundColor: `${
                                         (activeStep >= step ? 'completed' : 'incomplete') === 'completed'
-                                            ? '#fff'
-                                            : '#000'
+                                            ? '#009c3b'
+                                            : '#F3E7F3'
                                     }`,
                                 }}
                             >
-                                {label}
+                                <div
+                                    className="step-lable"
+                                    style={{
+                                        color: `${
+                                            (activeStep >= step ? 'completed' : 'incomplete') === 'completed'
+                                                ? '#fff'
+                                                : '#000'
+                                        }`,
+                                    }}
+                                >
+                                    {label}
+                                </div>
                             </div>
                         </div>
-                    </div>
-                ))}
+                    ))}
 
-                {/* /.job-tab */}
-            </div>
-            <section className="mt-5">{componentToRender}</section>
-            <div className="button-contain mt-0">
-                <button className="btn button-style" onClick={prevStep} disabled={activeStep === 1 ? true : false}>
-                    Trước
-                </button>
+                    {/* /.job-tab */}
+                </div>
+                <section className="mt-5">{componentToRender}</section>
+                <div className="button-contain mt-0">
+                    <button className="btn button-style" onClick={prevStep} disabled={activeStep === 1 ? true : false}>
+                        Trước
+                    </button>
 
-                {activeStep === totalSteps ? (
-                    <button className="btn button-style" onClick={handleSubmit}>
-                        Hoàn thành
-                    </button>
-                ) : (
-                    <button className="btn button-style" onClick={activeStep === totalSteps ? null : nextStep}>
-                        Tiếp tục
-                    </button>
-                )}
-            </div>
-            {/* {showDialog && <Dialog/>} */}
-        </main>
+                    {activeStep === totalSteps ? (
+                        <button className="btn button-style" onClick={handleSubmit}>
+                            Hoàn thành
+                        </button>
+                    ) : (
+                        <button className="btn button-style" onClick={activeStep === totalSteps ? null : nextStep}>
+                            Tiếp tục
+                        </button>
+                    )}
+                </div>
+                {/* {showDialog && <Dialog/>} */}
+            </main>
+        </>
     );
 }
 

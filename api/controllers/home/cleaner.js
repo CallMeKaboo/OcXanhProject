@@ -12,7 +12,7 @@ const getCleaners = (req, res) => {
 };
 // Select all details of a service
 const getCleaner = (req, res) => {
-  const q = "SELECT * FROM cleaning_services.service_details WHERE id=?";
+  const q = "SELECT * FROM cleaning_services.cleaner WHERE id=?";
 
   connection.query(q, [req.params.id], (err, result) => {
     if (err) return res.send(err);

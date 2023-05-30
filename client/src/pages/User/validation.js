@@ -25,6 +25,13 @@ const validation = (values) => {
     } else {
         err.passWord = '';
     }
+    if (values.newPassword === '') {
+        err.passWord = 'Mật khẩu không được bỏ trống!';
+    } else if (!passwordRegex.test(values.password)) {
+        err.passWord = 'Tối thiểu 8 ký tự, gồm ít nhất 1 chữ hoa, 1 chữ thường và 1 số';
+    } else {
+        err.passWord = '';
+    }
 
     return err;
 };
