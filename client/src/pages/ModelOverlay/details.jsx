@@ -35,7 +35,7 @@ function DetailsService({ serviceID, descrip }) {
             {loading ? (
                 <div className="row m-0 overflow-hidden main-rounded h-100" key={service.id}>
                     <div className="col-6 service-bg ps-0">
-                        <img className="img-fluid" src={service.thumbnail} alt="service-bg" />
+                        {service.thumbnail ? <img className="img-fluid" src={service.thumbnail} alt="service-bg" /> : <span>Đang cập nhật</span>}
                     </div>
                     <div className="col-6 service-detail lg">
                         <div className="hot-sale">

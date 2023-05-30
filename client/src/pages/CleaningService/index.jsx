@@ -5,10 +5,11 @@ import { Link, useLocation } from 'react-router-dom';
 
 import Loading from '../../components/CompoChild/Loading/loading';
 import ModelOverlay from '../ModelOverlay';
-import bg from '../../assets/img/BG/2.jpg';
-import '../..//css/servicePage/cleaning.css';
 import Pagination from '../../components/CompoChild/Pagination/pagination';
 import Money from '../../components/CompoChild/Money/money';
+
+import bg from '../../assets/img/BG/2.jpg';
+import '../..//css/servicePage/cleaning.css';
 
 const listData = [
     {
@@ -94,7 +95,14 @@ function CleaningService() {
                                                         setIndex(index);
                                                     }}
                                                 >
-                                                    <img src={e.thumbnail} alt={e.altData} />
+                                                    <img
+                                                        src={
+                                                            e.thumbnail
+                                                                ? e.thumbnail
+                                                                : require(`../../assets/img/services_img/default/${e.def_thumbnail}`)
+                                                        }
+                                                        alt={e.altData}
+                                                    />
                                                     <div className="services-page_item__text">
                                                         <h5>{e.name}</h5>
                                                         <p>

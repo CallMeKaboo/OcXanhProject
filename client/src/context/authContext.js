@@ -38,15 +38,15 @@ export const AuthContextProvider = ({ children }) => {
         await axios.post('api/admin/logout');
         setAdmin(null);
     };
-    const updateUser = async (newUser) => {
-        setCurrentUser(newUser);
-        await axios.post('api/auth/updts');
+    const updateUserProfile = async (updatedUser) => {
+        setCurrentUser(updatedUser);
+        localStorage.setItem('user', JSON.stringify(updatedUser));
     };
     useEffect(() => {
         localStorage.setItem('user', JSON.stringify(currentUser));
     }, [currentUser]);
     return (
-        <AuthContext.Provider value={{ currentUser, admin, loginAdmin, login, logout, updateUser }}>
+        <AuthContext.Provider value={{ currentUser, admin, loginAdmin, login, logout, updateUserProfile }}>
             {children}
         </AuthContext.Provider>
     );

@@ -97,8 +97,19 @@ const getUsersInfor = (req, res) => {
   });
 };
 const updateUserInfor = (req, res) => {
+  const { fullName, avatar, city, email } = req.body;
   const q =
-    "UPDATE cleaning_services.user SET fullName=?, avatar=?, city=?, email=? WHERE id = ?";
+    "UPDATE cleaning_services.user SET `fullName` = ? , `avatar` = ?, `city` = ?, `email` = ? WHERE id = ?";
+
+  connection.query(
+    q,
+    [fullName, avatar, city, email, req.params.user_id],
+    (err, result) => {
+      if (err) return res.send(err);
+
+      return res.status(200).json(result);
+    }
+  );
 };
 
-module.exports = { register, login, lougout, getUsersInfor };
+module.exports = { register, login, lougout, getUsersInfor, updateUserInfor };

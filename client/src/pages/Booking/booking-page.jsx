@@ -115,11 +115,10 @@ function BookingService() {
         localStorage.getItem('email'),
         localStorage.getItem('payment_id')
     ]);
-    console.log(inputs.contact_email);
+    // Handle payment
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        console.log(inputs);
         try {
             const res = await axios.post('/api/bookings/post', {
                 user_id: inputs.user_id,
@@ -133,7 +132,7 @@ function BookingService() {
                 contact_phone: inputs.contact_phone,
                 contact_email: inputs.contact_email,
             });
-            console.log(res.data);
+            // console.log(res.data);
             alert('Gui thanh cong');
             const user = localStorage.getItem('user');
             const rememberedUsername = localStorage.getItem('rememberedUsername');

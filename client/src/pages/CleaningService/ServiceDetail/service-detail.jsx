@@ -94,7 +94,11 @@ function ServiceDetail() {
                                 <div className="col-6 service-imgs d-flex">
                                     <div className="img-display">
                                         <div className="img-showcase d-flex">
-                                            <img src={selectedImage ? selectedImage : service.thumbnail} alt="bg" />
+                                            {service.thumbnail ? (
+                                                <img src={selectedImage ? selectedImage : service.thumbnail} alt="bg" />
+                                            ) : (
+                                                <span>Đang cập nhật</span>
+                                            )}
                                         </div>
                                         <div className="img-select d-flex mt-2">
                                             <div
