@@ -1,0 +1,41 @@
+.main-rounded {
+    border-radius: 0 0 28px 28px;
+    background: rgb(2, 0, 36);
+    background: linear-gradient(90deg, rgba(2, 0, 36, 1) 0%, rgba(239, 255, 240, 1) 0%, rgba(168, 255, 168, 1) 100%);
+}
+.text-weight {
+    font-weight: 500;
+}
+.title p {
+    font-style: normal;
+    font-weight: 600;
+    font-size: 28px;
+    line-height: 38px;
+    padding-top: 51px;
+    padding-bottom: 36px;
+    margin-bottom: 0;
+}
+.form-select.select_box,
+.form-control.input_box {
+    padding: 10px;
+    /* width: 100%; */
+    caret-color: #536bf6;
+    font-size: 19px;
+    font-weight: 300;
+    color: black;
+    transition: width 0.4s linear;
+    margin-top: 22px;
+    width: 360px;
+}
+.form-control.input_box {
+    margin-top: 0;
+}
+.form-select.select_box:first-of-type {
+    margin-top: 0;
+}
+
+.col-6.service-detail {
+    padding: 35px 53px 90px 85px;
+}
+.service-btn {
+}

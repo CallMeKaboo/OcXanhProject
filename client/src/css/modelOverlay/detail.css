@@ -1,0 +1,100 @@
+
+.main-rounded {
+    border-radius: 0 0 28px 28px;
+}
+.service-bg {
+    /* position: relative;
+    border-radius: 28px; */
+}
+.service-bg img {
+    max-width: 100%;
+    height: 100%;
+    object-fit: cover;
+
+    /* border-radius: 0 0 0 28px; */
+}
+.col-6.service-detail {
+    padding: 35px 53px 90px 85px;
+}
+.hot-sale {
+    padding: 2px 6px;
+    gap: 10px;
+    background: #f12b2c;
+    border-radius: 4px;
+    color: white;
+    width: 59px;
+    height: 16px;
+}
+.hot-sale p {
+    font-style: normal;
+    font-weight: 600;
+    font-size: 9px;
+    line-height: 12px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+.service-name p,
+.money {
+    font-style: normal;
+    font-weight: 600;
+    font-size: 28px;
+    line-height: 38px;
+    color: var(--main-color);
+}
+.service-name p {
+    margin: 0;
+}
+.service-star i {
+    width: 14px;
+    height: 15px;
+    
+}
+.service-descrip {
+    margin-top: 12px;
+}
+.service-descrip p {
+    font-style: normal;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 24px;
+    margin-bottom: 11px;
+}
+.service-descrip li {
+    font-style: normal;
+    font-weight: 300;
+    font-size: 12px;
+    line-height: 21px;
+    letter-spacing: 0.02em;
+}
+.service-detail_features ul {
+    padding: 0;
+}
+.service-detail_features ul li {
+    list-style: none;
+    font-size: 14px;
+    color: #111111;
+    font-family: 'Rubik', sans-serif;
+    margin-bottom: 16px;
+}
+.icon_check::before {
+    content: '\2713';
+}
+.service-detail_features ul li span {
+    color: #287ff9;
+    margin-right: 4px;
+}
+.service-detail_pic img {
+    max-width: 100%;
+    margin-bottom: 20px;
+}
+.service-btn {
+}
+.btn.next-btn {
+    padding: 11px;
+    font-weight: 600;
+
+    position: absolute;
+    bottom: 44px;
+    right: 53px;
+    /* border: 0px; */
+}

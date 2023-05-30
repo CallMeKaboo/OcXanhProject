@@ -1,0 +1,44 @@
+.topbar {
+    height: 4.375rem;
+}
+.form-inline {
+    display: flex;
+    flex-flow: row wrap;
+    align-items: center;
+}
+.topbar #sidebarToggleTop {
+    height: 2.5rem;
+    width: 2.5rem;
+}
+.topbar .navbar-search {
+    width: 25rem;
+}
+.form-inline .custom-select, .form-inline .input-group {
+    width: auto;
+}
+.input-group {
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: stretch;
+    width: 100%;
+}
+.input-group-append {
+    margin-left: -1px;
+}
+.topbar .dropdown {
+    position: relative;
+}
+.topbar .nav-item .nav-link {
+    height: 4.375rem;
+    display: flex;
+    align-items: center;
+    padding: 0 0.75rem;
+}
+.topbar.navbar-light .navbar-nav .nav-item .nav-link {
+    color: #d1d3e2;
+}
+.sidebar .nav-item .nav-link .img-profile, .topbar .nav-item .nav-link .img-profile {
+    height: 2rem;
+    width: 2rem;
+}

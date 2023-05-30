@@ -1,0 +1,6 @@
+.selected{
+    border: 2px solid #009c3b;
+}
+.movie-time-card:hover{
+    cursor: pointer;
+}

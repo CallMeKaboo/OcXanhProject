@@ -1,0 +1,12 @@
+.select_box {
+    margin-bottom: 20px;
+    padding: 10px 15px;
+}
+
+.input_box {
+    padding: 10px 15px;
+    margin-bottom: 20px;
+}
+.input_box::placeholder{
+    font-size: 16px;
+}

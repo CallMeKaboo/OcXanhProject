@@ -1,0 +1,9 @@
+/* Button */
+.btn {
+    background-image: linear-gradient(#55d250, #1fab53);
+    outline: none;
+    border: none;
+  }
+  .btn:hover {
+    background-image: linear-gradient(#93f48f, #2dd26a);
+  }

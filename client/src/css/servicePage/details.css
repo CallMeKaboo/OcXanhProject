@@ -1,0 +1,242 @@
+.container {
+    line-height: 1.5;
+}
+.detail {
+    max-width: 100%;
+
+    margin: 0 auto;
+    justify-content: center;
+    /* align-items: center; */
+}
+.service-imgs {
+    flex-direction: column;
+    justify-content: center;
+}
+.service-imgs img {
+    width: 100%;
+    display: block;
+}
+.img-display {
+    overflow: hidden;
+}
+.img-showcase {
+    height: 500px;
+    width: 100%;
+    transition: all 0.5s ease;
+}
+.img-showcase img {
+    object-fit: cover;
+    min-width: 100%;
+    border-radius: 10px;
+}
+
+.img-item {
+    margin: 0.3rem;
+    width: 200px;
+    height: 200px;
+    cursor: pointer;
+}
+.img-item img {
+    object-fit: cover;
+    border-radius: 10px;
+    width: 100%;
+    height: 100%;
+}
+.img-item:nth-child(1) {
+    margin-left: 0;
+}
+.img-item:nth-child(4) {
+    margin-right: 0;
+}
+.s-title {
+    font-weight: 700;
+    font-size: 3rem;
+    text-transform: capitalize;
+    margin: 0 0 1rem 0;
+}
+.hot-sale {
+    margin-bottom: 0.5rem;
+}
+.hot-sale p {
+    color: white;
+}
+.s-rating i {
+    color: rgb(255, 255, 24);
+}
+.s-money {
+    font-size: 1rem;
+
+    font-weight: 700;
+}
+.s-money span {
+    font-size: 2rem;
+    color: #007e0d;
+    font-weight: 900;
+    margin-left: 0.5rem;
+}
+.s-des {
+    font-size: 1rem;
+    font-weight: 400;
+    color: #494949;
+    height: 62px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+.date-picker,
+.time-picker {
+    margin-bottom: 1rem;
+}
+.date-picker p,
+.time-picker p {
+    margin-bottom: 0.5rem;
+    font-weight: 700;
+}
+.date-picker input,
+.time-picker input {
+    width: 460px;
+}
+.icon_check {
+    color: red;
+}
+.feature-list li {
+    margin: 0.5rem 0;
+}
+.desc-long {
+    column-width: 50px; /* Số cột bạn muốn chia đoạn văn bản */
+    column-gap: 20px;
+}
+
+.select-star {
+    display: flex;
+    margin: 20px 0 0;
+    justify-content: center;
+}
+.ul-star {
+    display: flex;
+    justify-content: center;
+    width: 270px;
+}
+.ul-star li {
+    cursor: pointer;
+    margin: 0 6px;
+    text-align: center;
+    width: 45px;
+}
+.iconratingnew-star--big {
+    background-position: -125px -1px;
+    width: 27px;
+    height: 27px;
+}
+.iconratingnew-star--big.active {
+    background-position: -1px -1px;
+    width: 27px;
+    height: 27px;
+}
+[class^='iconratingnew-'],
+[class*='iconratingnew-'] {
+    background-image: url(//cdn.tgdd.vn/mwgcart/mwgcore/ContentMwg/images/icon-comment.webp);
+    background-repeat: no-repeat;
+    display: inline-block;
+    height: 30px;
+    width: 30px;
+    line-height: 30px;
+    vertical-align: middle;
+    background-size: 152px 58px;
+}
+.ul-star p {
+    font-size: 12px;
+    line-height: 14px;
+    margin-top: 8px;
+}
+.textarea {
+    border: 1px solid #bdbdbd;
+    border-radius: 4px;
+    margin-bottom: 1rem;
+}
+.inputrating__group {
+    position: relative;
+    margin-bottom: 15px;
+}
+.read-assess-form textarea {
+    background-color: #fff;
+    border-radius: 4px 4px 0 0;
+    resize: none;
+    border: 0;
+    color: #323232;
+    height: 67px;
+    padding: 10px;
+    width: 100%;
+}
+.read-assess-form textarea:focus-visible {
+    outline: none;
+}
+.submit-assess {
+    background-image: linear-gradient(#55d250, #1fab53);
+    text-decoration: none;
+    border: 0;
+    border-radius: 4px;
+    color: #fff;
+    cursor: pointer;
+    display: block;
+    padding: 11px 10px;
+    width: 215px;
+    text-align: center;
+}
+.submit-assess:hover {
+    background-image: linear-gradient(#93f48f, #2dd26a);
+    color: white;
+}
+
+.comment--all {
+    margin-bottom: 30px;
+}
+.comment {
+    margin-top: 20px;
+}
+.comment--all .comment__item {
+    border-top: 1px solid #f1f1f1;
+}
+.comment__item {
+    border-top: 1px solid #f1f1f1;
+    padding: 15px 0 25px;
+    position: relative;
+}
+.comment__item .txtname {
+    font-weight: bold;
+    margin-right: 8px;
+    text-transform: capitalize;
+    display: inline-block;
+}
+.comment__item .item-rate {
+    margin-top: 5px;
+}
+.comment-star,
+.intro-future {
+    display: inline-block;
+    vertical-align: middle;
+}
+[class^='icon-'],
+[class*='icon-'] {
+    background-image: url(//cdn.tgdd.vn/mwgcart/mwgcore/ContentMwg/images/homev2/desk/icon_common@2x.webp);
+    background-repeat: no-repeat;
+    display: inline-block;
+    height: 30px;
+    width: 30px;
+    line-height: 30px;
+    vertical-align: middle;
+    background-size: 300px 200px;
+}
+.icon-star {
+    background-position: -205px -60px;
+    height: 12px;
+    width: 13px;
+    margin-right: 5px;
+}
+
+.comment-content {
+    margin-top: 10px;
+}
+.comment-content .cmt-txt {
+    font-size: 14px;
+    line-height: 20px;
+}

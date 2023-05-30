@@ -1,0 +1,208 @@
+/* @import url('https://fonts.googleapis.com/css?family=Montserrat:400,700&display=swap'); */
+
+.box-1 {
+    /* padding: 10px 40px; */
+    user-select: none;
+}
+.box-inner-1 {
+    border: 1px solid #ccc;
+    border-radius: 20px;
+}
+
+.box-1 .name {
+    font-size: 11px;
+    font-weight: 600;
+}
+
+.service-img img {
+    border-radius: 20px;
+}
+.dis {
+    font-size: 20px;
+    font-weight: 700;
+}
+.service-row {
+    padding-bottom: 20px;
+    border-bottom: 1px solid #ccc;
+}
+.price-row {
+    border-bottom: 1px solid #ccc;
+}
+
+.box-2 {
+}
+.list-group.staff-group {
+    padding-left: 12px;
+    height: 341px;
+    background-color: transparent;
+    overflow-y: scroll;
+}
+.row.staff-box {
+    padding: 20px 16px;
+    margin-bottom: 16px;
+    border-radius: 10px;
+    background-color: #fff;
+    cursor: pointer;
+
+}
+.list-group.staff-group .more-detail p {
+    color: #fff;
+    background-color: #009c3b;
+    border-radius: 20px;
+    cursor: pointer;
+}
+.list-group.staff-group .more-detail p:hover {
+    background-color: #00b45d;
+}
+.staff-box.active {
+    border: 3px solid #009c3b;
+    padding: 10px;
+}
+@media (max-width: 768px) {
+    .container {
+        max-width: 700px;
+        margin: 10px auto;
+    }
+
+    .box-1,
+    .box-2 {
+        max-width: 600px;
+        padding: 20px 90px;
+        margin: 20px auto;
+    }
+}
+
+@media (max-width: 426px) {
+    .box-1,
+    .box-2 {
+        max-width: 400px;
+        padding: 20px 10px;
+    }
+
+    ::placeholder {
+        font-size: 9px;
+    }
+}
+
+/*  */
+.card {
+    margin: auto;
+    width: 600px;
+    /* padding: 3rem 3.5rem; */
+    box-shadow: 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+@media (max-width: 767px) {
+    .card {
+        width: 90%;
+        padding: 1.5rem;
+    }
+}
+@media (height: 1366px) {
+    .card {
+        width: 90%;
+        padding: 8vh;
+    }
+}
+.card-title {
+    font-weight: 700;
+    font-size: 16px;
+}
+
+/* form a {
+    color: grey;
+    text-decoration: none;
+    font-size: 0.87rem;
+    font-weight: bold;
+}
+form a:hover {
+    color: grey;
+    text-decoration: none;
+}
+form .row {
+    margin: 0;
+    overflow: hidden;
+}
+form .row-1 {
+    border: 1px solid rgba(0, 0, 0, 0.137);
+    padding: 0.5rem;
+    outline: none;
+    width: 100%;
+    min-width: unset;
+    border-radius: 5px;
+    background-color: rgba(221, 228, 236, 0.301);
+    border-color: rgba(221, 228, 236, 0.459);
+    margin: 2vh 0;
+    overflow: hidden;
+}
+form .row-2 {
+    border: none;
+    outline: none;
+    background-color: transparent;
+    margin: 0;
+    padding: 0 0.8rem;
+}
+form .row .row-2 {
+    border: none;
+    outline: none;
+    background-color: transparent;
+    margin: 0;
+    padding: 0 0.8rem;
+}
+form .row .col-2,
+.col-7,
+.col-3 {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    padding: 0 1vh;
+}
+form .row .col-2 {
+    padding-right: 0;
+} */
+
+#card-header {
+    font-weight: bold;
+    font-size: 0.9rem;
+}
+#card-inner {
+    font-size: 0.7rem;
+    color: gray;
+}
+/* .three .col-7 {
+    padding-left: 0;
+}
+.three {
+    overflow: hidden;
+    justify-content: space-between;
+}
+.three .col-2 {
+    border: 1px solid rgba(0, 0, 0, 0.137);
+    padding: 0.5rem;
+    outline: none;
+    width: 100%;
+    min-width: unset;
+    border-radius: 5px;
+    background-color: rgba(221, 228, 236, 0.301);
+    border-color: rgba(221, 228, 236, 0.459);
+    margin: 2vh 0;
+    width: fit-content;
+    overflow: hidden;
+}
+.three .col-2 input {
+    font-size: 0.7rem;
+    margin-left: 1vh;
+} */
+
+input:focus::-webkit-input-placeholder {
+    color: transparent;
+}
+input:focus:-moz-placeholder {
+    color: transparent;
+}
+input:focus::-moz-placeholder {
+    color: transparent;
+}
+input:focus:-ms-input-placeholder {
+    color: transparent;
+}

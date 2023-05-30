@@ -1,0 +1,42 @@
+.bg-login-image {
+    background: url(https://www.cleanlink.com/resources/editorial/2021/cleaning-staff-26492.jpg);
+    background-position: center;
+    background-size: cover;
+}
+form.user .form-control-user {
+    font-size: 0.8rem;
+    border-radius: 10rem;
+    padding: 1.5rem 1rem;
+}
+.card-inner.card {
+    width: 75%;
+}
+.custom-control {
+    position: relative;
+    z-index: 1;
+    display: block;
+    min-height: 1.5rem;
+    padding-left: 1.5rem;
+    -webkit-print-color-adjust: exact;
+    color-adjust: exact;
+}
+input[type='checkbox'],
+input[type='radio'] {
+    box-sizing: border-box;
+    padding: 0;
+}
+.custom-control-input {
+    position: absolute;
+    left: 0;
+    z-index: -1;
+    width: 1rem;
+    height: 1.25rem;
+}
+form.user .custom-checkbox.small label {
+    line-height: 1.5rem;
+}
+.custom-control-label {
+    position: relative;
+    margin-bottom: 0;
+    vertical-align: top;
+}

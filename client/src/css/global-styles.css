@@ -1,0 +1,39 @@
+@import 'normalize.css';
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Roboto&display=swap');
+:root{
+    --main-color: #009c3b;
+}
+* {
+    box-sizing: border-box;
+    max-width: 100%;
+}
+html {
+    scroll-behavior: smooth;
+    /* font-size: 62.5%; */
+}
+body {
+    font-family: 'Roboto', sans-serif;
+    font-family: 'Inter', sans-serif;
+    /* font-size: 1.6rem; */
+    text-rendering: optimizeSpeed;
+}
+p {
+    font-size: 16px;
+    color: #111111;
+    font-weight: 400;
+    line-height: 28px;
+    margin: 0 0 15px 0;
+}
+/* .bg-secondary {
+    background-color: transparent !important;
+} */
+main {
+    margin: 0 72px;
+    /* padding-top: 59px; */
+}
+.row {
+    margin-left: 0;
+}
+#wrapper {
+    display: flex;
+}

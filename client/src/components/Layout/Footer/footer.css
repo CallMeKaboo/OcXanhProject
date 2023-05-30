@@ -1,0 +1,31 @@
+/* Footer */
+.footer {
+    margin: 0;
+    padding: 50px 0;
+    width: 100%;
+    max-width: 100%;
+}
+.logo1 {
+    scale: 0.5;
+    margin-left: -25%;
+    /* margin-top: -10%; */
+    margin-bottom: -10%;
+}
+.fCol p {
+    margin-top: 10%;
+    color: white;
+    font-size: 15px;
+    width: 75%;
+    font-family: 'Roboto', sans-serif;
+}
+.bx {
+    margin-left: 10px;
+    margin-right: 5px;
+}
+
+.icon i {
+    transform: scale(2);
+    display: inline-block;
+    color: white;
+    margin: 0 16px;
+}
