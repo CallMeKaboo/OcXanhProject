@@ -3,7 +3,7 @@ const connection = require("../../database/database");
 // Select all kind of services of services have id
 const getBooking = (req, res) => {
   const q =
-    "SELECT booking.id, service_details.name, CONCAT (cleaning_time, ' ', cleaning_date) as time_stamp, address, status " +
+    "SELECT booking.id, service_details.name, cleaning_time, cleaning_date, address, status " +
     "FROM cleaning_services.booking join service_details on booking.service_detail_id = service_details.id " +
     "where user_id = ?";
 

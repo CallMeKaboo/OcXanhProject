@@ -15,7 +15,7 @@ const postContact = (req, res) => {
   const { fullName, email, message } = req.body;
   // create user
   const query =
-    "INSERT INTO cleaning_services.contact ( fullName, email, message) VALUES (?,?,?)";
+    "INSERT INTO cleaning_services.contact ( fullName, email, message,status) VALUES (?,?,?,0)";
   connection.query(query, [fullName, email, message], (err, data) => {
     if (err) return res.json(err);
     return res.status(200).json("Request send successfully");

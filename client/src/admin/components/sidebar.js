@@ -1,7 +1,44 @@
 import React from 'react';
 import '../styles/sidebar.css';
 import { Link } from 'react-router-dom';
+import { useState } from 'react';
+
+const sideBarData = [
+    {
+        name: 'Tổng quan',
+        to: '/admin/home/overview',
+    },
+    {
+        name: 'Quản lý dịch vụ',
+        to: '/admin/home/service',
+    },
+    {
+        name: 'Quản lý nhân viên',
+        to: '/admin/home/staff',
+    },
+    {
+        name: 'Quản lý người dùng',
+        to: '/admin/home/user',
+    },
+    {
+        name: 'Quản lý lịch đặt',
+        to: '/admin/home/booking',
+    },
+    {
+        name: 'Quản lý hỗ trợ',
+        to: '/admin/home/contact',
+    },
+    {
+        name: 'Báo cáo thống kê',
+        to: '/admin/home/report',
+    },
+];
+
 function SideBar() {
+    const [active, setActive] = useState(null);
+    const handleOnClick = (index) => {
+        setActive(index);
+    };
     return (
         <>
             {/* Sidebar */}
@@ -13,53 +50,14 @@ function SideBar() {
                 {/* Divider */}
                 <hr className="sidebar-divider my-0" />
                 {/* Nav Item - Dashboard */}
-                <li className="nav-item active">
-                    <Link to={'/admin/home/overview'} className="nav-link" >
-                        <i className="fas fa-fw fa-tachometer-alt" />
-                        <span>Tổng quan</span>
-                    </Link>
-                </li>
-
-                {/* Nav Item - Tables */}
-                <li className="nav-item">
-                    <Link to={'/admin/home/service'} className="nav-link">
-                        <i className="fas fa-fw fa-table" />
-                        <span>Quản lý dịch vụ</span>
-                    </Link>
-                </li>
-                <li className="nav-item">
-                    <Link to={'/admin/home/staff'} className="nav-link" href="tables.html">
-                        <i className="fas fa-fw fa-table" />
-                        <span>Quản lý nhân viên</span>
-                    </Link>
-                </li>
-                <li className="nav-item">
-                    <Link to={'/admin/home/user'} className="nav-link" href="tables.html">
-                        <i className="fas fa-fw fa-table" />
-                        <span>Quản lý người dùng</span>
-                    </Link>
-                </li>
-                <li className="nav-item">
-                    <Link to={'/admin/home/booking'} className="nav-link" href="tables.html">
-                        <i className="fas fa-fw fa-table" />
-                        <span>Quản lý lịch đặt</span>
-                    </Link>
-                </li>
-                <li className="nav-item">
-                    <Link to={'/admin/home/contact'} className="nav-link" href="tables.html">
-                        <i className="fas fa-fw fa-table" />
-                        <span>Quản lý hỗ trợ</span>
-                    </Link>
-                </li>
-                <li className="nav-item">
-                    <Link to={'/admin/home/report'} className="nav-link" href="tables.html">
-                        <i className="fas fa-fw fa-table" />
-                        <span>Báo cáo thống kê</span>
-                    </Link>
-                </li>
-                
-                
-                
+                {sideBarData.map((value, index) => (
+                    <li className={`nav-item ${active === index ? 'active' : ''}`} key={index} onClick={()=>handleOnClick(index)}>
+                        <Link to={value.to} className="nav-link" >
+                            <i className="fas fa-fw fa-tachometer-alt" />
+                            <span style={{fontSize:"18px"}}>{value.name}</span>
+                        </Link>
+                    </li>
+                ))}
             </ul>
             {/* End of Sidebar */}
         </>

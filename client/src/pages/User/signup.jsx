@@ -13,6 +13,9 @@ function AppSignup() {
     const [variant, setVariant] = useState('');
     const [showToast, setShowToast] = useState(false);
 
+    const [eye, setEye] = useState(true);
+    const [showPassword, setShowPassword] = useState(false);
+
     const [values, setValues] = useState({
         username: '',
         phone: '',
@@ -30,7 +33,7 @@ function AppSignup() {
         e.preventDefault();
 
         const validationErrors = validation(values);
-        console.log(validationErrors);
+        
         if (
             validationErrors.userName !== '' ||
             validationErrors.passWord !== '' ||
@@ -59,6 +62,10 @@ function AppSignup() {
     };
     const handleFocus = () => {
         setError({});
+    };
+    const handleTogglePassword = () => {
+        setShowPassword(!showPassword);
+        setEye(!eye);
     };
 
     return (
@@ -110,12 +117,12 @@ function AppSignup() {
                                     {error.phoneNumber && <span>{error.phoneNumber}</span>}
                                 </div>
                             </div>
-                            <div className="mb-3 input-custom">
+                            <div className="mb-3 input-custom position-relative">
                                 <label htmlFor="InputPass" className="form-label">
                                     Mật khẩu
                                 </label>
                                 <input
-                                    type="password"
+                                    type={showPassword ? 'text' : 'password'}
                                     name="password"
                                     className="form-control"
                                     id="InputPass"
@@ -124,6 +131,15 @@ function AppSignup() {
                                     onChange={handleChange}
                                     onFocus={handleFocus}
                                 />
+                                <i
+                                    style={{
+                                        color: 'var(--main-color)',
+                                        right: '15px',
+                                        top: '45px',
+                                    }}
+                                    onClick={handleTogglePassword}
+                                    className={`eye fa ${eye ? 'fa-eye-slash' : 'fa-eye'}`}
+                                ></i>
                                 <div id="passDanger" className="form-text text-danger">
                                     {error.passWord && <span>{error.passWord}</span>}
                                 </div>

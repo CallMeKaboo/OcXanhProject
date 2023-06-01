@@ -11,6 +11,8 @@ import Pagination from '../../../components/CompoChild/Pagination/pagination';
 function StaffManager() {
     const [staff, setStaff] = useState([]);
     const [loading, setLoading] = useState(false);
+    const [selectedRow, setSelectedRow] = useState(null);
+
 
     const [overlay, setOverlay] = useState(false);
     const [type, setType] = useState('');
@@ -24,7 +26,7 @@ function StaffManager() {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const res = await axios.get(`/api/admin/staff`);
+                const res = await axios.get(`/api/adminGet/staff`);
                 setStaff(res.data);
                 setLoading(true);
             } catch (error) {
@@ -34,14 +36,33 @@ function StaffManager() {
         fetchData();
     }, []);
 
-    const handleClickOverlay = (overlayType) => {
+    const handleClickOverlay = (overlayType,rowData) => {
         setType(overlayType);
         setOverlay(true);
+        setSelectedRow(rowData);
+
+    };
+    // Check box handle
+    const handleCheckBox = (e) => {
+        const { id, checked } = e.target;
+        if (id === 'selectAll') {
+            const checkedValue = staff.map((value) => {
+                return { ...value, isChecked: checked };
+            });
+
+            setStaff(checkedValue);
+        } else {
+            const checkedValue = staff.map((value) =>
+                value.id.toString() === id ? { ...value, isChecked: checked } : value,
+            );
+            // console.log(checkedValue);
+            setStaff(checkedValue);
+        }
     };
 
     return (
         <>
-            <div className="container-xl">
+            <div className="container-xl" style={{ height: '440px' }}>
                 <div className="table-responsive">
                     <div className="table-wrapper">
                         <div className="table-title">
@@ -60,7 +81,6 @@ function StaffManager() {
                                         <i className="fa-solid fa-circle-plus"></i> <span>Thêm nhân viên mới</span>
                                     </a>
                                     <a
-                                        href="#deleteEmployeeModal"
                                         className="btn btn-danger"
                                         data-toggle="modal"
                                         onClick={() => handleClickOverlay('delete')}
@@ -75,7 +95,12 @@ function StaffManager() {
                                 <tr>
                                     <th>
                                         <span className="custom-checkbox">
-                                            <input type="checkbox" id="selectAll" />
+                                            <input
+                                                type="checkbox"
+                                                id="selectAll"
+                                                checked={!staff.some((value) => value?.isChecked !== true)}
+                                                onChange={handleCheckBox}
+                                            />
                                             <label htmlFor="selectAll" />
                                         </span>
                                     </th>
@@ -96,9 +121,10 @@ function StaffManager() {
                                                 <span className="custom-checkbox">
                                                     <input
                                                         type="checkbox"
-                                                        id={`checkbox${index}`}
-                                                        name="options[]"
-                                                        defaultValue={index}
+                                                        id={value.id}
+                                                        value={value.id}
+                                                        checked={value?.isChecked || false}
+                                                        onChange={handleCheckBox}
                                                     />
                                                     <label htmlFor={`checkbox${index}`} />
                                                 </span>
@@ -109,27 +135,16 @@ function StaffManager() {
                                             <td>{value.phone}</td>
                                             <td>{value.date_in}</td>
                                             <td>{value.salary}</td>
-                                            <td>
+                                            <td className="text-center">
                                                 <a
                                                     className="edit"
                                                     data-toggle="modal"
-                                                    onClick={() => handleClickOverlay('edit')}
+                                                    onClick={() => handleClickOverlay('edit', staff[index])}
                                                 >
                                                     <i
                                                         className="fa-solid fa-pencil"
                                                         data-toggle="tooltip"
                                                         title="Edit"
-                                                    ></i>
-                                                </a>
-                                                <a
-                                                    className="delete"
-                                                    data-toggle="modal"
-                                                    onClick={() => handleClickOverlay('delete')}
-                                                >
-                                                    <i
-                                                        class="fa-solid fa-trash"
-                                                        data-toggle="tooltip"
-                                                        title="Delete"
                                                     ></i>
                                                 </a>
                                             </td>
@@ -142,19 +157,23 @@ function StaffManager() {
                         </table>
                     </div>
                 </div>
-                <div class="row" style={{ marginTop: 80 + 'px' }}>
-                    <Pagination
-                        totalItem={staff.length}
-                        itemPerPage={itemPerPage}
-                        setCurrentPage={setCurrentPage}
-                        currentPage={currentPage}
-                    />
-                </div>
+            </div>
+            <div class="row" style={{ margin: '80px 47px 0 47px' }}>
+                <Pagination
+                    totalItem={staff.length}
+                    itemPerPage={itemPerPage}
+                    setCurrentPage={setCurrentPage}
+                    currentPage={currentPage}
+                />
             </div>
             {/* Add */}
-            {overlay && type === 'add' && <AddOverlay onCancelbutton={() => setOverlay(false)} />}
-            {overlay && type === 'delete' && <DeleteOverlay onCancelbutton={() => setOverlay(false)} />}
-            {overlay && type === 'edit' && <EditOverlay onCancelbutton={() => setOverlay(false)} />}
+            {overlay && type === 'add' && (
+                <AddOverlay onCancelbutton={() => setOverlay(false)} name={'Thêm nhân viên mới'} type={2} />
+            )}
+            {overlay && type === 'delete' && (
+                <DeleteOverlay onCancelbutton={() => setOverlay(false)} isChecked={staff} typePost={'deleteStaff'} />
+            )}
+            {overlay && type === 'edit' && <EditOverlay onCancelbutton={() => setOverlay(false)} name={'Sửa nhân viên'} type={2} data={selectedRow}/>}
         </>
     );
 }

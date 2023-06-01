@@ -6,10 +6,11 @@ import Loading from '../../../components/CompoChild/Loading/loading';
 import Money from '../../../components/CompoChild/Money/money';
 import ModelOverlay from '../../../pages/ModelOverlay';
 
-function OverviewDetail() {
+function OverviewDetail({ setDataValid }) {
     const [cleaner, setCleaner] = useState([]);
     const [overlay, setoverlay] = useState(false);
     const [loading, setLoading] = useState(false);
+    
 
     useEffect(() => {
         const fetchData = async () => {
@@ -29,16 +30,18 @@ function OverviewDetail() {
         if (loading) {
             let newLocalData = localStorage.getItem('staff');
             if (newLocalData === null) {
-                return cleaner[0];
+                return null;
             } else {
-                return JSON.parse(newLocalData);
+                return newLocalData;
             }
         } else return [];
     };
     const [isDivClicked, setIsDivClicked] = useState(localStorageStaff());
     const handleDivClick = (data) => {
         setIsDivClicked(data);
+        setDataValid(data);
     };
+
     const handleClick = () => {
         setoverlay(true);
     };

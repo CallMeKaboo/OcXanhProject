@@ -4,3 +4,6 @@
     margin-left: 218px;
     background-color: #fff;
 }
+.card-body{
+    cursor: pointer;
+}

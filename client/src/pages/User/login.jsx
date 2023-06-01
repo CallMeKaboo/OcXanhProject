@@ -11,6 +11,9 @@ function AppLogin() {
     const navigate = useNavigate();
     const { login } = useContext(AuthContext);
 
+    const [eye, setEye] = useState(true);
+    const [showPassword, setShowPassword] = useState(false);
+
     // Toast
     const [message, setMessage] = useState('');
     const [variant, setVariant] = useState('');
@@ -52,7 +55,7 @@ function AppLogin() {
     const handleLogin = async (e) => {
         e.preventDefault();
         const validationErrors = validation(values);
-        
+
         if (validationErrors.userName !== '' || validationErrors.passWord !== '') {
             setError(validationErrors);
             return;
@@ -60,7 +63,6 @@ function AppLogin() {
             try {
                 await login(values);
                 if (rememberPass) {
-                    
                     localStorage.setItem('rememberedUsername', values.username);
                     localStorage.setItem('rememberedPassword', values.password);
                     localStorage.setItem('rememberedCheckbox', rememberPass);
@@ -84,6 +86,10 @@ function AppLogin() {
     };
     const handleFocus = () => {
         setError({});
+    };
+    const handleTogglePassword = () => {
+        setShowPassword(!showPassword);
+        setEye(!eye);
     };
 
     return (
@@ -118,12 +124,12 @@ function AppLogin() {
                                     {error.userName && <span>{error.userName}</span>}
                                 </div>
                             </div>
-                            <div className="mb-3 input-custom">
+                            <div className="mb-3 input-custom position-relative">
                                 <label htmlFor="exampleInputPassword1" className="form-label">
                                     Mật khẩu
                                 </label>
                                 <input
-                                    type="password"
+                                    type={showPassword ? 'text' : 'password'}
                                     className="form-control"
                                     id="InputPassword"
                                     placeholder="Nhập mật khẩu của bạn"
@@ -131,6 +137,15 @@ function AppLogin() {
                                     value={values.password}
                                     onChange={handleChange}
                                 />
+                                <i
+                                    style={{
+                                        color: 'var(--main-color)',
+                                        right: '15px',
+                                        top: '45px',
+                                    }}
+                                    onClick={handleTogglePassword}
+                                    className={`eye fa ${eye ? 'fa-eye-slash' : 'fa-eye'}`}
+                                ></i>
                                 <div id="passDanger" className="form-text text-danger">
                                     {error.passWord && <span>{error.passWord}</span>}
                                 </div>

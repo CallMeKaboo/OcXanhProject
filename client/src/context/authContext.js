@@ -13,7 +13,7 @@ export const AuthContextProvider = ({ children }) => {
         setCurrentUser(res.data);
     };
     const loginAdmin = async (inputs) => {
-        const res = await axios.post('/api/admin/login', inputs, {
+        const res = await axios.post('/api/adminPost/login', inputs, {
             withCredentials: true,
         });
         setAdmin(res.data);
@@ -35,7 +35,7 @@ export const AuthContextProvider = ({ children }) => {
         localStorage.setItem('rememberedCheckbox', rememberedCheckbox);
     };
     const logoutAdmin = async () => {
-        await axios.post('api/admin/logout');
+        await axios.post('api/adminPost/logout');
         setAdmin(null);
     };
     const updateUserProfile = async (updatedUser) => {

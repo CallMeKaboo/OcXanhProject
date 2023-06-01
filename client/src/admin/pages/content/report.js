@@ -30,7 +30,7 @@ function ReportManager() {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const res = await axios.get(`/api/admin/report`);
+                const res = await axios.get(`/api/adminGet/report`);
                 setReport(res.data);
                 setLoading(true);
             } catch (error) {
@@ -58,14 +58,13 @@ function ReportManager() {
     // Total money
     const calculateTotal = () => {
         const sum = report.reduce((accumulator, value) => accumulator + parseFloat(value.tong), 0);
-        console.log(sum);
         setTotal(sum);
     };
 
     useEffect(() => {
         calculateTotal();
     }, [report]);
-
+    localStorage.setItem('total', numeral(total).format('0,0'));
     // Export excel
     const { onDownload } = useDownloadExcel({
         currentTableRef: tableRef.current,
@@ -74,7 +73,7 @@ function ReportManager() {
     });
     return (
         <>
-            <div className="container-xl">
+            <div className="container-xl" style={{height: "440px"}}>
                 <div className="table-responsive">
                     <div className="table-wrapper">
                         <div className="table-title">
@@ -116,21 +115,24 @@ function ReportManager() {
                             )}
                             <tfoot>
                                 <tr>
-                                    <th colSpan={3} className='text-center'>Tổng doanh thu</th>
+                                    <th colSpan={3} className="text-center">
+                                        Tổng doanh thu
+                                    </th>
                                     <th>{numeral(total).format('0,0')} VNĐ</th>
                                 </tr>
                             </tfoot>
                         </table>
                     </div>
                 </div>
-                <div class="row" style={{ marginTop: 80 + 'px' }}>
-                    <Pagination
-                        totalItem={report.length}
-                        itemPerPage={itemPerPage}
-                        setCurrentPage={setCurrentPage}
-                        currentPage={currentPage}
-                    />
-                </div>
+                
+            </div>
+            <div class="row" style={{ margin: "80px 47px 0 47px" }}>
+                <Pagination
+                    totalItem={report.length}
+                    itemPerPage={itemPerPage}
+                    setCurrentPage={setCurrentPage}
+                    currentPage={currentPage}
+                />
             </div>
             {/* Add */}
             {overlay && type === 'add' && <AddOverlay onCancelbutton={() => setOverlay(false)} />}

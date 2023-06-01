@@ -1,5 +1,7 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
+import { format } from 'date-fns';
+
 import Loading from '../../components/CompoChild/Loading/loading';
 import { useContext } from 'react';
 import { AuthContext } from '../../context/authContext';
@@ -36,6 +38,7 @@ function CartHistory() {
 
     const lastItemIndex = currentPage * itemPerPage;
     const firstItemIndex = lastItemIndex - itemPerPage;
+
     return (
         <>
             <div className="container-xl">
@@ -70,7 +73,11 @@ function CartHistory() {
                                             <td>MLD{value.id}</td>
                                             <td>{value.name}</td>
                                             {/* <td>{value.contact_phone}</td> */}
-                                            <td>{value.time_stamp}</td>
+                                            <td>
+                                                {value.cleaning_time}
+                                                <br />
+                                                {format(new Date(value.cleaning_date), 'dd-MM-yyyy')}
+                                            </td>
                                             <td>{value.address}</td>
 
                                             <td className="text-success">

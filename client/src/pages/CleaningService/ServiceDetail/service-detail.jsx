@@ -7,8 +7,10 @@ import '../../../css/servicePage/details.css';
 import Loading from '../../../components/CompoChild/Loading/loading';
 import BookingTime from '../../../components/CompoChild/TimeCard/time-form';
 import Money from '../../../components/CompoChild/Money/money';
+import Reviews from '../../../components/Layout/ServiceDetail/Review/review';
 
 function ServiceDetail() {
+    const navigate = useNavigate();
     const { currentUser } = useContext(AuthContext);
     const location = useLocation();
     const id = location.pathname.split('/').pop();
@@ -23,23 +25,21 @@ function ServiceDetail() {
         let newLocalData = localStorage.getItem('date_stamp');
 
         if (newLocalData === null) {
-            return null;
+            return 'null';
         } else {
             return newLocalData;
         }
     };
 
     const [selectedDate, setSelectedDate] = useState(localStorageDate());
-    const [selectedTime, setSelectedTime] = useState('');
-
+    const [selectedTime, setSelectedTime] = useState(localStorage.getItem('time_stamp'));
 
     const handleDateChange = (value) => {
         setSelectedDate(value);
     };
     const selectedTimer = (value) => {
-        setSelectedTime(value)
-    }
-    const [activeItems, setActiveItems] = useState([]);
+        setSelectedTime(value);
+    };
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -53,49 +53,36 @@ function ServiceDetail() {
         };
         fetchData();
     }, [id]);
+
     const [selectedImage, setSelectedImage] = useState('');
 
     const handleImageClick = (imageUrl) => {
         setSelectedImage(imageUrl);
     };
 
-    const isItemActive = (value) => {
-        const clickedIndex = activeItems.indexOf(value);
-        return clickedIndex !== -1;
-    };
-    const navigate = useNavigate();
-
-    // Handle back
-    const handleBack = () => {
-        navigate(`/service/?service_id=${service.service_id}`);
-    };
     // Hanle login
     const handleLogin = () => {
         navigate('/login');
     };
 
-    // handle star click
-    const handleClick = (value) => {
-        const activeItems = Array.from({ length: value }, (_, index) => index + 1);
-        setActiveItems(activeItems);
+    const checkValue = () => {
+        console.log(selectedDate);
+        if (selectedDate === 'null' && selectedTime === 'null') setShow(true);
+        else if (selectedDate === 'null' || selectedTime === 'null') setShow(true);
+        else navigate(`/service/booking/${service.id}`);
     };
+
     useEffect(() => {
         localStorage.setItem('date_stamp', selectedDate);
         localStorage.setItem('money', service.price);
         localStorage.setItem('service_id', id);
     }, [selectedDate, service.price, id]);
 
-    
     return (
         <>
             <main className="my-5">
                 <div className="container">
-                    <div className="row mx-auto my-3">
-                        <span className="back-arrow" onClick={handleBack}>
-                            ← Quay lại{' '}
-                        </span>
-                    </div>
-                    <div className="row detail d-flex">
+                    <div className="row detail d-flex mt-3">
                         {loading ? (
                             <>
                                 <div className="col-6 service-imgs d-flex">
@@ -176,19 +163,10 @@ function ServiceDetail() {
                                     </div>
                                     <div className="time-picker">
                                         <p>Chọn thời gian</p>
-                                        <BookingTime serviceID={service.service_id} setSelectedTime={selectedTimer}/>
+                                        <BookingTime serviceID={service.service_id} setSelectedTime={selectedTimer} />
                                     </div>
                                     {currentUser ? (
-                                        <button
-                                            className="btn text-white"
-                                            onClick={() => {
-                                                if (selectedDate !== '' && selectedTime !== '') {
-                                                    navigate(`/service/booking/${service.id}`);
-                                                } else {
-                                                    setShow(true);
-                                                }
-                                            }}
-                                        >
+                                        <button className="btn text-white" onClick={checkValue}>
                                             Đặt lịch ngay
                                         </button>
                                     ) : (
@@ -196,7 +174,7 @@ function ServiceDetail() {
                                             Đăng nhập
                                         </button>
                                     )}
-                                    <p className='text-danger' style={{ display: show ? 'block' : 'none' }}>
+                                    <p className="text-danger" style={{ display: show ? 'block' : 'none' }}>
                                         Vui lòng chọn ngày và giờ để tiếp tục
                                     </p>
                                 </div>
@@ -222,91 +200,7 @@ function ServiceDetail() {
                             </div>
                         </div>
                     </div>
-                    <div className="row mx-auto">
-                        <form className="col-6">
-                            <div className="select-star">
-                                <ul className="ul-star">
-                                    <li data-val={1} onClick={() => handleClick(1)}>
-                                        <i className={`iconratingnew-star--big ${isItemActive(1) ? 'active' : ''}`} />
-                                        <p>Rất tệ</p>
-                                    </li>
-                                    <li data-val={2} onClick={() => handleClick(2)}>
-                                        <i className={`iconratingnew-star--big ${isItemActive(2) ? 'active' : ''}`} />
-                                        <p>Tệ</p>
-                                    </li>
-                                    <li data-val={3} onClick={() => handleClick(3)}>
-                                        <i className={`iconratingnew-star--big ${isItemActive(3) ? 'active' : ''}`} />
-                                        <p className="active-slt">Bình thường</p>
-                                    </li>
-                                    <li data-val={4} onClick={() => handleClick(4)}>
-                                        <i className={`iconratingnew-star--big ${isItemActive(4) ? 'active' : ''}`} />
-                                        <p>Tốt</p>
-                                    </li>
-                                    <li data-val={5} onClick={() => handleClick(5)}>
-                                        <i className={`iconratingnew-star--big ${isItemActive(5) ? 'active' : ''}`} />
-                                        <p>Rất tốt</p>
-                                    </li>
-                                </ul>
-                            </div>
-                            <div className="read-assess-form" style={{ display: 'block' }}>
-                                <div className="textarea">
-                                    <div className="inputrating__group">
-                                        <textarea
-                                            className="ct"
-                                            name="fRContent"
-                                            placeholder="Mời bạn chia sẻ thêm một số cảm nhận về sản phẩm ..."
-                                            defaultValue={''}
-                                        />
-                                        <div className="txtcount__box">
-                                            <span className="ct-words" style={{ display: 'none' }}>
-                                                1 chữ
-                                            </span>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <a className="submit-assess">Gửi đánh giá ngay</a>
-                            </div>
-                        </form>
-                    </div>
-                    <div className="row mx-auto">
-                        <div className="col-6 comment comment--all ratingLst">
-                            <div className="comment__item par" id="r-54303832">
-                                <div className="item-top">
-                                    <p className="txtname m-0">Cẩm Lanh</p>
-                                </div>
-                                <div className="item-rate">
-                                    <div className="comment-star">
-                                        <i className="icon-star" />
-                                        <i className="icon-star" />
-                                        <i className="icon-star" />
-                                        <i className="icon-star" />
-                                        <i className="icon-star" />
-                                    </div>
-                                </div>
-                                <div className="comment-content">
-                                    <p className="cmt-txt">Rất tốt</p>
-                                </div>
-                            </div>
-                            <div className="comment__item par" id="r-54303832">
-                                <div className="item-top">
-                                    <p className="txtname m-0">Cẩm Lanh</p>
-                                </div>
-                                <div className="item-rate">
-                                    <div className="comment-star">
-                                        <i className="icon-star" />
-                                        <i className="icon-star" />
-                                        <i className="icon-star" />
-                                        <i className="icon-star" />
-                                        <i className="icon-star" />
-                                    </div>
-                                </div>
-                                <div className="comment-content">
-                                    <p className="cmt-txt">Rất tốt</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    <Reviews service_detail_id={id} />
                 </div>
             </main>
         </>

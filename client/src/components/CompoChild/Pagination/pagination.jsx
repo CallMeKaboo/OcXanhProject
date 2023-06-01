@@ -10,7 +10,8 @@ function Pagination(props) {
     return (
         <div className="clearfix mx-2">
             <div className="hint-text">
-                Hiển thị <b>{props.itemPerPage}</b> trong <b>{props.totalItem}</b> giá trị
+                Hiển thị <b>{props.itemPerPage - (props.itemPerPage - props.totalItem)}</b> trong{' '}
+                <b>{props.totalItem}</b> giá trị
             </div>
             <ul className="pagination">
                 <li className={`page-item ${props.currentPage <= 1 ? 'disabled' : ''}`}>

@@ -8,6 +8,7 @@ import ToastMessage from '../../components/CompoChild/Toast/toast';
 
 import axios from 'axios';
 import '../../css/booking/booking.css';
+import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 
 const steps = [
     {
@@ -25,14 +26,17 @@ const steps = [
 ];
 
 function BookingService() {
+    const [dataValid, setDataValid] = useState('');
     let componentToRender;
+    let tooltip;
+    const [error, setError] = useState('');
+    // const tooltip = <Tooltip id="tooltip">{error}</Tooltip>;
     // const location = useLocation();
     const navigate = useNavigate();
     // Toast
     const [message, setMessage] = useState('');
     const [variant, setVariant] = useState('');
     const [showToast, setShowToast] = useState(false);
-    const [error, setError] = useState({});
 
     const [activeStep, setActiveStep] = useState(1);
 
@@ -78,29 +82,37 @@ function BookingService() {
     };
 
     // screen movement
-
     const nextStep = () => {
         setActiveStep(activeStep + 1);
         setScreen(screen + 1);
     };
-
     const prevStep = () => {
         setActiveStep(activeStep - 1);
         setScreen(screen - 1);
     };
 
     const totalSteps = steps.length;
-
     const width = `${(100 / (totalSteps - 1)) * (activeStep - 1)}%`;
 
+    const handleDataFromChild = (data) => {
+        setDataValid(data);
+    };
+
     if (screen === 1) {
-        componentToRender = <OverviewDetail />;
+        componentToRender = <OverviewDetail setDataValid={handleDataFromChild} />;
     } else if (screen === 2) {
         componentToRender = <OrderDetail />;
     } else if (screen === 3) {
         componentToRender = <Payment />;
     }
 
+    const handleCheckData = () => {
+        if (dataValid === '') {
+            setError('Vui lòng chọn nhân viên để tiếp tục');
+            // tooltip = <Tooltip id="tooltip">{error}</Tooltip>;
+            return false;
+        } else return true;
+    };
     // update local data
     const updateInputsFromLocalStorage = () => {
         const data = localStorageData();
@@ -157,6 +169,7 @@ function BookingService() {
             setTimeout(() => {
                 navigate('/service');
             }, 1000);
+            console.log(res.data);
         } catch (err) {
             console.log(err);
 
@@ -213,7 +226,11 @@ function BookingService() {
                             Hoàn thành
                         </button>
                     ) : (
-                        <button className="btn button-style" onClick={activeStep === totalSteps ? null : nextStep}>
+                        // <OverlayTrigger placement="top" >
+                        <button
+                            className="btn button-style"
+                            onClick={activeStep === totalSteps ? null : nextStep}
+                        >
                             Tiếp tục
                         </button>
                     )}

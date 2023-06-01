@@ -1,8 +1,11 @@
 import { React, useEffect, useState } from 'react';
 import '../../../css/booking/screen/order-detail.css';
 import axios from 'axios';
+import { useContext } from 'react';
+import { AuthContext } from '../../../context/authContext';
 
-function OrderDetail({ serviceID, onNext, ...props }) {
+function OrderDetail() {
+    const { currentUser } = useContext(AuthContext);
     // Load address of VN
     const [provinces, setProvinces] = useState([]);
     const [districts, setDistricts] = useState([]);
@@ -89,9 +92,9 @@ function OrderDetail({ serviceID, onNext, ...props }) {
         setSelectedWard(event.target.value);
     };
 
-    const [fullName, setFullName] = useState('');
-    const [phoneNumber, setPhoneNumber] = useState('');
-    const [email, setEmail] = useState('');
+    const [fullName, setFullName] = useState(currentUser.fullName);
+    const [phoneNumber, setPhoneNumber] = useState(currentUser.phone);
+    const [email, setEmail] = useState(currentUser.email);
     //
     const [inputAddress, setInputAddress] = useState('');
 

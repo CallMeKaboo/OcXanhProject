@@ -17,7 +17,7 @@ function ContactPage() {
     const handleSubmit = async (e)=>{
         e.preventDefault();
         try {
-           const res = await axios.post('/api/contact/post',{
+           const res = await axios.post('/api/contacts/post',{
             fullName: inputs.fullName,
             email: inputs.email,
             message: inputs.message

@@ -84,6 +84,7 @@ function CleaningService() {
                         <div className="row">
                             <div className="col-lg-8 order-lg-2 m-0">
                                 {loading ? (
+                                    
                                     <div className="row">
                                         {services.slice(firstItemIndex, lastItemIndex).map((e, index) => (
                                             <div className="col-lg-6 col-md-6 col-sm-6" key={index}>

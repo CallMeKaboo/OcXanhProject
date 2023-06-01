@@ -11,7 +11,10 @@ const dropRoutes = require("./routes/dropdown")
 const cleanerRoutes = require("./routes/cleaner")
 const contactRoutes = require("./routes/contact")
 const bookingRoutes = require("./routes/booking")
-const adminRoutes = require("./routes/admin")
+const reviewRoutes = require("./routes/review")
+const adminGetRoutes = require("./routes/adminGet")
+const adminPostRoutes = require("./routes/adminPost")
+const adminUpdateRoutes = require("./routes/adminUpdate")
 // const { default: router } = require("./routes/user");
 
 app.use(express.json());
@@ -35,7 +38,10 @@ app.use("/api/dropdowns", dropRoutes);
 app.use("/api/cleaners", cleanerRoutes);
 app.use("/api/contacts", contactRoutes);
 app.use("/api/bookings", bookingRoutes);
-app.use("/api/admin", adminRoutes);
+app.use("/api/reviews", reviewRoutes);
+app.use("/api/adminGet", adminGetRoutes);
+app.use("/api/adminPost", adminPostRoutes);
+app.use("/api/adminUpdate", adminUpdateRoutes);
 
 
 app.listen(8800, function () {

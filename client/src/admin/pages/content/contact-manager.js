@@ -2,15 +2,14 @@ import React, { useEffect, useState } from 'react';
 import Loading from '../../../components/CompoChild/Loading/loading';
 import '../../styles/table.css';
 import axios from 'axios';
-import AddOverlay from '../../../admin/components/add';
 import DeleteOverlay from '../../../admin/components/delete';
-import EditOverlay from '../../../admin/components/edit';
 import Pagination from '../../../components/CompoChild/Pagination/pagination';
-
+import ReplyOverlay from '../../../admin/components/reply';
 
 function ContactManager() {
     const [contact, setContact] = useState([]);
     const [loading, setLoading] = useState(false);
+    const [selectedRow, setSelectedRow] = useState(null);
 
     const [overlay, setOverlay] = useState(false);
     const [type, setType] = useState('');
@@ -24,7 +23,7 @@ function ContactManager() {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const res = await axios.get(`/api/admin/contact`);
+                const res = await axios.get(`/api/adminGet/contact`);
                 setContact(res.data);
                 setLoading(true);
             } catch (error) {
@@ -34,14 +33,37 @@ function ContactManager() {
         fetchData();
     }, []);
 
-    const handleClickOverlay = (overlayType) => {
+    const handleClickOverlay = (overlayType, rowData) => {
         setType(overlayType);
         setOverlay(true);
+        setSelectedRow(rowData);
     };
-    useEffect(() => {localStorage.setItem('contact_request',contact.length)},[contact.length]);
+
+    // Check box handle
+    const handleCheckBox = (e) => {
+        const { id, checked } = e.target;
+        if (id === 'selectAll') {
+            const checkedValue = contact.map((value) => {
+                return { ...value, isChecked: checked };
+            });
+
+            setContact(checkedValue);
+        } else {
+            const checkedValue = contact.map((value) =>
+                value.id.toString() === id ? { ...value, isChecked: checked } : value,
+            );
+            // console.log(checkedValue);
+            setContact(checkedValue);
+        }
+    };
+
+    useEffect(() => {
+        localStorage.setItem('contact_request', contact.length);
+    }, [contact.length]);
+
     return (
         <>
-            <div className="container-xl">
+            <div className="container-xl" style={{ height: '440px' }}>
                 <div className="table-responsive">
                     <div className="table-wrapper">
                         <div className="table-title">
@@ -53,7 +75,7 @@ function ContactManager() {
                                 </div>
                                 <div className="col-sm-6">
                                     <a
-                                        href="#deleteEmployeeModal"
+                                        
                                         className="btn btn-danger"
                                         data-toggle="modal"
                                         onClick={() => handleClickOverlay('delete')}
@@ -68,7 +90,12 @@ function ContactManager() {
                                 <tr>
                                     <th>
                                         <span className="custom-checkbox">
-                                            <input type="checkbox" id="selectAll" />
+                                            <input
+                                                type="checkbox"
+                                                id="selectAll"
+                                                checked={!contact.some((value) => value?.isChecked !== true)}
+                                                onChange={handleCheckBox}
+                                            />
                                             <label htmlFor="selectAll" />
                                         </span>
                                     </th>
@@ -80,15 +107,16 @@ function ContactManager() {
                             </thead>
                             {loading ? (
                                 <tbody>
-                                    {contact.slice(firstItemIndex,lastItemIndex).map((value, index) => (
+                                    {contact.slice(firstItemIndex, lastItemIndex).map((value, index) => (
                                         <tr key={index}>
                                             <td>
                                                 <span className="custom-checkbox">
                                                     <input
                                                         type="checkbox"
-                                                        id={`checkbox${index}`}
-                                                        name="options[]"
-                                                        defaultValue={index}
+                                                        id={value.id}
+                                                        value={value.id}
+                                                        checked={value?.isChecked || false}
+                                                        onChange={handleCheckBox}
                                                     />
                                                     <label htmlFor={`checkbox${index}`} />
                                                 </span>
@@ -99,12 +127,9 @@ function ContactManager() {
 
                                             <td className="text-center">
                                                 <a
-                                                    className="edit"
+                                                    className="reply"
                                                     data-toggle="modal"
-                                                    onClick={() => {
-                                                        if (value.status === 0) value.status = 1;
-                                                        else value.status = 0;
-                                                    }}
+                                                    onClick={() => handleClickOverlay('reply', contact[index])}
                                                 >
                                                     <i
                                                         className="fa-solid fa-reply"
@@ -120,23 +145,31 @@ function ContactManager() {
                                 <Loading />
                             )}
                         </table>
-                        
                     </div>
                 </div>
-                <div class="row" style={{ marginTop: 80 + 'px' }}>
-                    <Pagination
-                        totalItem={contact.length}
-                        itemPerPage={itemPerPage}
-                        setCurrentPage={setCurrentPage}
-                        currentPage={currentPage}
-                    />
-                </div>
+            </div>
+            <div className="row" style={{ margin: '80px 47px 0 47px' }}>
+                <Pagination
+                    totalItem={contact.length}
+                    itemPerPage={itemPerPage}
+                    setCurrentPage={setCurrentPage}
+                    currentPage={currentPage}
+                />
             </div>
             {/* Add */}
-            {overlay && type === 'add' && <AddOverlay onCancelbutton={() => setOverlay(false)} />}
+            {overlay && type === 'reply' && (
+                <ReplyOverlay
+                    onCancelbutton={() => setOverlay(false)}
+                    id={selectedRow.id}
+                    email={selectedRow.email}
+                    message={selectedRow.message}
+                    usernames={selectedRow.username}
+                />
+            )}
 
-            {overlay && type === 'delete' && <DeleteOverlay onCancelbutton={() => setOverlay(false)} />}
-            {overlay && type === 'edit' && <EditOverlay onCancelbutton={() => setOverlay(false)} />}
+            {overlay && type === 'delete' && (
+                <DeleteOverlay onCancelbutton={() => setOverlay(false)} isChecked={contact} typePost={"deleteContact"} />
+            )}
 
             {/* 
             

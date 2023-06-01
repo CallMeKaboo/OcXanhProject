@@ -21,7 +21,7 @@ function UserManager() {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const res = await axios.get(`/api/admin/user`);
+                const res = await axios.get(`/api/adminGet/user`);
                 setUser(res.data);
                 setLoading(true);
             } catch (error) {
@@ -34,9 +34,26 @@ function UserManager() {
         setType(overlayType);
         setOverlay(true);
     };
+    // Check box handle
+    const handleCheckBox = (e) => {
+        const { id, checked } = e.target;
+        if (id === 'selectAll') {
+            const checkedValue = user.map((value) => {
+                return { ...value, isChecked: checked };
+            });
+
+            setUser(checkedValue);
+        } else {
+            const checkedValue = user.map((value) =>
+                value.id.toString() === id ? { ...value, isChecked: checked } : value,
+            );
+            // console.log(checkedValue);
+            setUser(checkedValue);
+        }
+    };
     return (
         <>
-            <div className="container-xl">
+            <div className="container-xl" style={{ height: '440px' }}>
                 <div className="table-responsive">
                     <div className="table-wrapper">
                         <div className="table-title">
@@ -48,7 +65,6 @@ function UserManager() {
                                 </div>
                                 <div className="col-sm-6">
                                     <a
-                                        href="#deleteEmployeeModal"
                                         className="btn btn-danger"
                                         data-toggle="modal"
                                         onClick={() => handleClickOverlay('delete')}
@@ -63,14 +79,19 @@ function UserManager() {
                                 <tr>
                                     <th>
                                         <span className="custom-checkbox">
-                                            <input type="checkbox" id="selectAll" />
+                                            <input
+                                                type="checkbox"
+                                                id="selectAll"
+                                                checked={!user.some((value) => value?.isChecked !== true)}
+                                                onChange={handleCheckBox}
+                                            />
                                             <label htmlFor="selectAll" />
                                         </span>
                                     </th>
                                     <th>Họ và tên</th>
-                                    <th>Tên tài khoản</th>
-                                    <th>Số điện thoại</th>
-                                    <th>Email</th>
+                                    <th style={{ width: '20%' }}>Tên tài khoản</th>
+                                    <th style={{ width: '20%' }}>Số điện thoại</th>
+                                    <th style={{ width: '30%' }}>Email</th>
                                 </tr>
                             </thead>
                             {loading ? (
@@ -81,9 +102,10 @@ function UserManager() {
                                                 <span className="custom-checkbox">
                                                     <input
                                                         type="checkbox"
-                                                        id={`checkbox${index}`}
-                                                        name="options[]"
-                                                        defaultValue={index}
+                                                        id={value.id}
+                                                        value={value.id}
+                                                        checked={value?.isChecked || false}
+                                                        onChange={handleCheckBox}
                                                     />
                                                     <label htmlFor={`checkbox${index}`} />
                                                 </span>
@@ -101,18 +123,20 @@ function UserManager() {
                         </table>
                     </div>
                 </div>
-                <div class="row" style={{ marginTop: 80 + 'px' }}>
-                    <Pagination
-                        totalItem={user.length}
-                        itemPerPage={itemPerPage}
-                        setCurrentPage={setCurrentPage}
-                        currentPage={currentPage}
-                    />
-                </div>
+            </div>
+            <div class="row" style={{ margin: '80px 47px 0 47px' }}>
+                <Pagination
+                    totalItem={user.length}
+                    itemPerPage={itemPerPage}
+                    setCurrentPage={setCurrentPage}
+                    currentPage={currentPage}
+                />
             </div>
             {/* Add */}
 
-            {overlay && type === 'delete' && <DeleteOverlay onCancelbutton={() => setOverlay(false)} />}
+            {overlay && type === 'delete' && (
+                <DeleteOverlay onCancelbutton={() => setOverlay(false)} isChecked={user} typePost={'deleteUser'} />
+            )}
 
             {/* 
             

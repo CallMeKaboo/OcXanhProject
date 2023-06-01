@@ -1,7 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, {  useState } from 'react';
 import '../../styles/login.css';
 import ToastMessage from '../../../components/CompoChild/Toast/toast';
-import validation from '../../../pages/User/validation.js';
 
 import { useNavigate } from 'react-router-dom';
 import { useContext } from 'react';
@@ -9,12 +8,15 @@ import { AuthContext } from '../../../context/authContext';
 function LoginAdmin() {
     const navigate = useNavigate();
     const { loginAdmin } = useContext(AuthContext);
-    
+
+    const [eye, setEye] = useState(true);
+    const [showPassword, setShowPassword] = useState(false);
+
     // Toast
     const [message, setMessage] = useState('');
     const [variant, setVariant] = useState('');
     const [showToast, setShowToast] = useState(false);
-    const [error, setError] = useState({});
+    const [error, setError] = useState('');
 
     // const [admin, setAdmin] = useState({});
 
@@ -29,31 +31,30 @@ function LoginAdmin() {
 
     const handleLogin = async (e) => {
         e.preventDefault();
-        const validationErrors = validation(inputs);
 
-        if (validationErrors.userName !== '' || validationErrors.passWord !== '') {
-            setError(validationErrors);
-            return;
-        } else {
-            try {
-                await loginAdmin(inputs);
+        try {
+            await loginAdmin(inputs);
 
-                // // localStorage.setItem('admin', JSON.parse(admin));
-                // console.log(admin);
-                setMessage('Đăng nhập thành công');
-                setVariant('success');
-                setShowToast(true);
-                setTimeout(() => {
-                    navigate('/admin/home/overview');
-                }, 1000);
-            } catch (err) {
-                console.log(err.response.data.errors);
-                setError(err.response.data.errors);
-            }
+            // // localStorage.setItem('admin', JSON.parse(admin));
+            // console.log(admin);
+            setMessage('Đăng nhập thành công');
+            setVariant('success');
+            setShowToast(true);
+            setTimeout(() => {
+                navigate('/admin/home/overview');
+            }, 1000);
+        } catch (err) {
+            console.log(err.response.data.errors);
+            setError(err.response.data.errors.message);
         }
     };
     const handleFocus = () => {
-        setError({});
+        setError('');
+    };
+
+    const handleTogglePassword = () => {
+        setShowPassword(!showPassword);
+        setEye(!eye);
     };
     return (
         <>
@@ -85,11 +86,11 @@ function LoginAdmin() {
                                                     onChange={handleChange}
                                                     onFocus={handleFocus}
                                                 />
-                                                {error && <p className="text-danger">{error.userName}</p>}
+                                                {/* {error && <p className="text-danger">{error.userName}</p>} */}
                                             </div>
-                                            <div className="form-group mb-3">
+                                            <div className="form-group mb-3 position-relative">
                                                 <input
-                                                    type="password"
+                                                    type={showPassword ? 'text' : 'password'}
                                                     name="password"
                                                     className="form-control form-control-user"
                                                     id="exampleInputPassword"
@@ -97,7 +98,16 @@ function LoginAdmin() {
                                                     value={inputs.password}
                                                     onChange={handleChange}
                                                 />
-                                                {error && <p className="text-danger">{error.passWord}</p>}
+                                                <i
+                                                    style={{
+                                                        color: 'var(--main-color)',
+                                                        top: '40%',
+                                                        right:'20px'
+                                                    }}
+                                                    onClick={handleTogglePassword}
+                                                    className={`eye fa ${eye ? 'fa-eye-slash' : 'fa-eye'}`}
+                                                ></i>
+                                                {error && <p className="text-danger">{error}</p>}
                                             </div>
 
                                             <button
