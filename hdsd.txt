@@ -1,0 +1,36 @@
+npm install cho từng thư mục api và client 
+
+npm start để khởi động api và client
+
+thay đổi cấu hình database trong .env ở folder api
+
+chạy file sql ở ứng dụng mysql hoặc các ứng dụng hỗ trợ mysql
+
+Các package dùng trong project:
+API: 
+      "bcryptjs": "^2.4.3",
+      "cookie-parser": "^1.4.6",
+       "cors": "^2.8.5",
+      "dotenv": "^16.0.3",
+      "express": "^4.18.2",
+      "express-session": "^1.17.3",
+      "jsonwebtoken": "^9.0.0",
+      "mysql2": "^3.2.4",
+      "nodemon": "^2.0.22"
+CLIENT:
+	"axios": "^1.3.6",
+        "bcryptjs": "^2.4.3",
+        "bootstrap": "^5.2.3",
+        "date-fns": "^2.30.0",
+        "normalize.css": "^8.0.1",
+        "numeral": "^2.0.6",
+        "react": "^18.2.0",
+        "react-avatar-edit": "^1.2.0",
+        "react-bootstrap": "^2.7.2",
+        "react-dom": "^18.2.0",
+        "react-export-table-to-excel": "^1.0.6",
+        "react-router-dom": "^6.10.0",
+
+Truy cập ADMIN page bằng đường dẫn http://localhost:3000/admin
+Tài khoản: Admin
+Mật khẩu: Admin123456

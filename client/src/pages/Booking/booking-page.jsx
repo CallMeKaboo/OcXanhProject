@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import 'react-step-progress-bar/styles.css';
+
 import OverviewDetail from './screen/overview';
 import OrderDetail from './screen/order-detail';
 import Payment from './screen/payment';
@@ -8,7 +8,7 @@ import ToastMessage from '../../components/CompoChild/Toast/toast';
 
 import axios from 'axios';
 import '../../css/booking/booking.css';
-import { OverlayTrigger, Tooltip } from 'react-bootstrap';
+
 
 const steps = [
     {

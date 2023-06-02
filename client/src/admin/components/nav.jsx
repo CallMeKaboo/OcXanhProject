@@ -5,8 +5,8 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { AuthContext } from '../../context/authContext';
 function NavBar() {
-    const { admin } = useContext(AuthContext);
-    console.log(admin);
+    const { logoutAdmin } = useContext(AuthContext);
+    
 
     const [show, setShow] = useState(false);
 
@@ -80,7 +80,7 @@ function NavBar() {
                             aria-labelledby="userDropdown"
                             style={{ right: '-19px', top: '75px' }}
                         >
-                            <Link to={'/admin'} className="dropdown-item" href="#">
+                            <Link to={'/admin'} className="dropdown-item" href="#" onclick={logoutAdmin}>
                                 <i className="fa-solid fa-arrow-right-from-bracket text-gray-400" />
                                 Đăng xuất
                             </Link>
