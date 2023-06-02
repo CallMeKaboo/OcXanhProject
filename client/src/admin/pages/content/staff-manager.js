@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import { format } from 'date-fns';
 
 import '../../styles/table.css';
 import AddOverlay from '../../../admin/components/add';
@@ -7,6 +8,7 @@ import DeleteOverlay from '../../../admin/components/delete';
 import EditOverlay from '../../../admin/components/edit';
 import Loading from '../../../components/CompoChild/Loading/loading';
 import Pagination from '../../../components/CompoChild/Pagination/pagination';
+import Money from '../../../components/CompoChild/Money/money';
 
 function StaffManager() {
     const [staff, setStaff] = useState([]);
@@ -130,16 +132,16 @@ function StaffManager() {
                                                 </span>
                                             </td>
                                             <td>{value.fullName}</td>
-                                            <td>{value.dob}</td>
+                                            <td>{format(new Date(value.dob), 'dd/MM/yyyy')}</td>
                                             <td>{value.gender}</td>
                                             <td>{value.phone}</td>
-                                            <td>{value.date_in}</td>
-                                            <td>{value.salary}</td>
+                                            <td>{format(new Date(value.date_in), 'dd/MM/yyyy')}</td>
+                                            <td><Money value={value.salary} /></td>
                                             <td className="text-center">
                                                 <a
                                                     className="edit"
                                                     data-toggle="modal"
-                                                    onClick={() => handleClickOverlay('edit', staff[index])}
+                                                    onClick={() => handleClickOverlay('edit', staff[firstItemIndex + index])}
                                                 >
                                                     <i
                                                         className="fa-solid fa-pencil"
@@ -152,13 +154,19 @@ function StaffManager() {
                                     ))}
                                 </tbody>
                             ) : (
-                                <Loading />
+                                <tbody>
+                                    <tr>
+                                        <td colSpan={8} className='text-center'>
+                                            <Loading />
+                                        </td>
+                                    </tr>
+                                </tbody>
                             )}
                         </table>
                     </div>
                 </div>
             </div>
-            <div class="row" style={{ margin: '80px 47px 0 47px' }}>
+            <div className="row" style={{ margin: '80px 47px 0 47px' }}>
                 <Pagination
                     totalItem={staff.length}
                     itemPerPage={itemPerPage}

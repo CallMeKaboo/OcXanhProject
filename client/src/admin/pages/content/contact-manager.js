@@ -142,7 +142,13 @@ function ContactManager() {
                                     ))}
                                 </tbody>
                             ) : (
-                                <Loading />
+                                <tbody>
+                                    <tr>
+                                        <td colSpan={8} className='text-center'>
+                                            <Loading />
+                                        </td>
+                                    </tr>
+                                </tbody>
                             )}
                         </table>
                     </div>

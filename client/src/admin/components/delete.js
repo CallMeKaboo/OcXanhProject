@@ -36,44 +36,34 @@ function DeleteOverlay(props) {
             )}
             <div className="modal-admin modal-dialog">
                 <div className="modal-content">
-                    
-                        <div className="modal-header">
-                            <h4 className="modal-title">Xóa bản ghi</h4>
-                            <button
-                                type="button"
-                                className="close"
-                                data-dismiss="modal"
-                                aria-hidden="true"
-                                onClick={props.onCancelbutton}
-                            >
-                                ×
-                            </button>
-                        </div>
-                        <div className="modal-body">
-                            <p>Bạn có chắc muốn xóa những bản ghi vừa chọn ?</p>
-                            <p className="text-warning">
-                                <small>Hành dộng này không thể khôi phục.</small>
-                            </p>
-                        </div>
-                        <div className="modal-footer">
-                            <button
-                                type="button"
-                                className="btn btn-default text-white"
-                                data-dismiss="modal"
-                                defaultValue="Cancel"
-                            >
-                                Quay lại
-                            </button>
-                            <button
-                                type="submit"
-                                className="btn btn-danger ms-3"
-                                defaultValue="Delete"
-                                onClick={multipleDelete}
-                            >
-                                Đồng ý
-                            </button>
-                        </div>
-                    
+                    <div className="modal-header">
+                        <h4 className="modal-title">Xóa bản ghi</h4>
+                        <button
+                            type="button"
+                            className="close"
+                            data-dismiss="modal"
+                            aria-hidden="true"
+                            onClick={props.onCancelbutton}
+                        >
+                            ×
+                        </button>
+                    </div>
+                    <div className="modal-body">
+                        <p>Bạn có chắc muốn xóa những bản ghi vừa chọn ?</p>
+                        <p className="text-warning">
+                            <small>Hành dộng này không thể khôi phục.</small>
+                        </p>
+                    </div>
+                    <div className="modal-footer">
+                        <button
+                            type="submit"
+                            className="btn btn-danger ms-3"
+                            defaultValue="Delete"
+                            onClick={multipleDelete}
+                        >
+                            Đồng ý
+                        </button>
+                    </div>
                 </div>
             </div>
         </>

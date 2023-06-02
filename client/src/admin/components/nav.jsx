@@ -65,7 +65,7 @@ function NavBar() {
                             aria-haspopup="true"
                             aria-expanded="false"
                         >
-                            <span className="mr-2 d-none d-lg-inline text-dark small me-2">Khai Bui</span>
+                            <span className="mr-2 d-none d-lg-inline text-dark small me-2">Admin</span>
                             <img className="img-profile rounded-circle" src={logo} alt="" />
                         </a>
                         {/* Dropdown - User Information */}
@@ -74,14 +74,11 @@ function NavBar() {
                                 show ? 'show' : ''
                             }`}
                             aria-labelledby="userDropdown"
+                            style={{right: '-19px',top:'75px'}}
                         >
-                            <a className="dropdown-item" href="#">
-                                <i className="fas fa-user fa-sm fa-fw mr-2 text-gray-400" />
-                                Profile
-                            </a>
-                            <Link to={"/admin"} className="dropdown-item" href="#">
-                                <i className="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400" />
-                                Logout
+                            <Link to={'/admin'} className="dropdown-item" href="#">
+                                <i className="fa-solid fa-arrow-right-from-bracket text-gray-400" />
+                                Đăng xuất
                             </Link>
                         </div>
                     </li>

@@ -35,7 +35,15 @@ function DetailsService({ serviceID, descrip }) {
             {loading ? (
                 <div className="row m-0 overflow-hidden main-rounded h-100" key={service.id}>
                     <div className="col-6 service-bg ps-0">
-                        {service.thumbnail ? <img className="img-fluid" src={service.thumbnail} alt="service-bg" /> : <span>Đang cập nhật</span>}
+                        <img
+                            className="img-fluid"
+                            src={
+                                service.thumbnail
+                                    ? require(`../../assets/img/services_img/${service.thumbnail}`)
+                                    : require(`../../assets/img/services_img/default/${service.def_thumbnail}`)
+                            }
+                            alt="service-bg"
+                        />
                     </div>
                     <div className="col-6 service-detail lg">
                         <div className="hot-sale">
@@ -84,7 +92,7 @@ function DetailsService({ serviceID, descrip }) {
                         <div className="service-detail_pic">
                             <div className="row">
                                 {service.imgs &&
-                                    service.imgs.map((value, index) => (
+                                    service.imgs.slice(0,2).map((value, index) => (
                                         <div className="col-lg-6 col-md-6 col-sm-6" key={index}>
                                             <img src={value} alt={index} />
                                         </div>

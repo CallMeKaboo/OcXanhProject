@@ -88,21 +88,18 @@ function ServiceDetail() {
                                 <div className="col-6 service-imgs d-flex">
                                     <div className="img-display">
                                         <div className="img-showcase d-flex">
-                                            {service.thumbnail ? (
-                                                <img src={selectedImage ? selectedImage : service.thumbnail} alt="bg" />
-                                            ) : (
-                                                <span>Đang cập nhật</span>
-                                            )}
+                                            <img
+                                                src={
+                                                    selectedImage
+                                                        ? selectedImage
+                                                        : service.thumbnail
+                                                        ? require(`../../../assets/img/services_img/${service.thumbnail}`)
+                                                        : require(`../../../assets/img/services_img/default/${service.def_thumbnail}`)
+                                                }
+                                                alt="bg"
+                                            />
                                         </div>
                                         <div className="img-select d-flex mt-2">
-                                            <div
-                                                className="img-item"
-                                                onClick={() => handleImageClick(service.thumbnail)}
-                                            >
-                                                <a>
-                                                    <img src={service.thumbnail} alt="bg" />
-                                                </a>
-                                            </div>
                                             {service.imgs
                                                 ? service.imgs.map((e, index) => (
                                                       <div

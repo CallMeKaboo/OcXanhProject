@@ -111,7 +111,13 @@ function ReportManager() {
                                     ))}
                                 </tbody>
                             ) : (
-                                <Loading />
+                                <tbody>
+                                    <tr>
+                                        <td colSpan={8} className='text-center'>
+                                            <Loading />
+                                        </td>
+                                    </tr>
+                                </tbody>
                             )}
                             <tfoot>
                                 <tr>
@@ -126,7 +132,7 @@ function ReportManager() {
                 </div>
                 
             </div>
-            <div class="row" style={{ margin: "80px 47px 0 47px" }}>
+            <div className="row" style={{ margin: "80px 47px 0 47px" }}>
                 <Pagination
                     totalItem={report.length}
                     itemPerPage={itemPerPage}

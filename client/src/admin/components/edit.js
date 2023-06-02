@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import '../styles/modal.css';
+
 import axios from 'axios';
 import ToastMessage from '../../components/CompoChild/Toast/toast';
+import '../styles/modal.css';
 
 function EditOverlay(props) {
     const [type, setType] = useState({});
     const [apiLoad, setApiLoad] = useState(false);
 
+    // console.log(props.type, type);
     // Toast
     const [message, setMessage] = useState('');
     const [variant, setVariant] = useState('');
@@ -37,7 +39,8 @@ function EditOverlay(props) {
         };
         fetchData();
     }, []);
-    console.log(inputService.sFeature);
+    // console.log(inputService.sFeature);
+    
     const handleService = async (e) => {
         e.preventDefault();
         try {
@@ -46,13 +49,13 @@ function EditOverlay(props) {
                 thumbnail: inputService.sThumbnail.split('\\').pop(),
                 // imgs: inputService.sImgs,
                 desc: inputService.sDesc,
-                feature: JSON.stringify(inputService.sFeature.split(',').map((feature) => feature.trim())),
+                feature: JSON.stringify(inputService.sFeature).split(',').map((feature) => feature.trim()),
                 price: inputService.sPrice,
                 service_id: inputService.sType,
                 duration: inputService.sDuration,
             });
 
-            setMessage('Thêm thành công');
+            setMessage('Cập nhật thành công');
             setVariant('success');
             setShowToast(true);
             setTimeout(() => window.location.reload(), 2000);
@@ -63,20 +66,21 @@ function EditOverlay(props) {
 
     const [inputStaff, setInputStaff] = useState({
         sfName: props.data.fullName,
-        sDob: new Date(props.data.dob).toISOString().substring(0, 10),
+        sDob: props.type === 2 ? new Date(props.data.dob).toISOString().substring(0, 10) : '',
         sGender: props.data.gender,
         sPhone: props.data.phone,
         sAddress: props.data.address,
         sSalary: props.data.salary,
-        sDIn: new Date(props.data.date_in).toISOString().substring(0, 10),
+        sDIn: props.type === 2 ? new Date(props.data.date_in).toISOString().substring(0, 10) : '',
         sAva: props.data.avatar,
     });
+
 
     const handleStaffChange = (event) => {
         setInputStaff({ ...inputStaff, [event.target.name]: event.target.value });
     };
-    const a = new Date(inputStaff.sDIn);
-    console.log(a);
+    // const a = new Date(inputStaff.sDIn);
+    console.log(inputStaff.sDob,inputStaff.sDIn)
 
     const handleStaff = (e) => {
         // e.preventDefault();
@@ -91,7 +95,7 @@ function EditOverlay(props) {
                 address: inputStaff.sAddress,
                 salary: inputStaff.sSalary,
             });
-            setMessage('Thêm thành công');
+            setMessage('Cập nhật thành công');
             setVariant('success');
             setShowToast(true);
             setTimeout(() => window.location.reload(), 2000);

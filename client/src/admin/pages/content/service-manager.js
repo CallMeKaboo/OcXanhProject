@@ -6,6 +6,7 @@ import AddOverlay from '../../../admin/components/add';
 import DeleteOverlay from '../../../admin/components/delete';
 import EditOverlay from '../../../admin/components/edit';
 import Pagination from '../../../components/CompoChild/Pagination/pagination';
+import Money from '../../../components/CompoChild/Money/money';
 function ServiceManager() {
     // console.log("kkk");
     const [service, setService] = useState([]);
@@ -16,10 +17,12 @@ function ServiceManager() {
     const [type, setType] = useState('');
 
     const [currentPage, setCurrentPage] = useState(1);
-    const [itemPerPage, setItemPerPage] = useState(6);
+    const [itemPerPage, setItemPerPage] = useState(5);
 
     const lastItemIndex = currentPage * itemPerPage;
     const firstItemIndex = lastItemIndex - itemPerPage;
+    // const firstItemIndex = (currentPage - 1) * itemPerPage;
+    // const lastItemIndex = firstItemIndex + itemPerPage;
 
     useEffect(() => {
         const fetchData = async () => {
@@ -105,7 +108,7 @@ function ServiceManager() {
                                     <th>Tính năng</th>
                                     <th>Thời lượng</th>
                                     <th>Giá</th>
-                                    <th>Công cụ</th>
+                                    <th style={{width: '7%'}}>Công cụ</th>
                                 </tr>
                             </thead>
                             {loading ? (
@@ -128,12 +131,14 @@ function ServiceManager() {
                                             <td>{value.type}</td>
                                             <td>{Array(value.feature).join(', ')}</td>
                                             <td>{value.duration} Tiếng</td>
-                                            <td>{value.price} VNĐ</td>
+                                            <td><Money value={value.price} /></td>
                                             <td className="text-center">
                                                 <a
                                                     className="edit"
                                                     data-toggle="modal"
-                                                    onClick={() => handleClickOverlay('edit', service[index])}
+                                                    onClick={() =>
+                                                        handleClickOverlay('edit', service[firstItemIndex + index])
+                                                    }
                                                 >
                                                     <i
                                                         className="fa-solid fa-pencil"
@@ -146,13 +151,19 @@ function ServiceManager() {
                                     ))}
                                 </tbody>
                             ) : (
-                                <Loading />
+                                <tbody>
+                                    <tr>
+                                        <td colSpan={8} className='text-center'>
+                                            <Loading />
+                                        </td>
+                                    </tr>
+                                </tbody>
                             )}
                         </table>
                     </div>
                 </div>
             </div>
-            <div class="row" style={{ margin: '80px 47px 0 47px' }}>
+            <div className="row" style={{ margin: '100px 47px 0 47px' }}>
                 <Pagination
                     totalItem={service.length}
                     itemPerPage={itemPerPage}
@@ -162,7 +173,7 @@ function ServiceManager() {
             </div>
             {/* Add */}
             {overlay && type === 'add' && (
-                <AddOverlay onCancelbutton={() => setOverlay(false)} name={'Thêm dịch vụ mới'} type={1}/>
+                <AddOverlay onCancelbutton={() => setOverlay(false)} name={'Thêm dịch vụ mới'} type={1} />
             )}
 
             {overlay && type === 'delete' && (
@@ -173,7 +184,12 @@ function ServiceManager() {
                 />
             )}
             {overlay && type === 'edit' && (
-                <EditOverlay onCancelbutton={() => setOverlay(false)} name={'Sửa dịch vụ'} type={1} data={selectedRow}/>
+                <EditOverlay
+                    onCancelbutton={() => setOverlay(false)}
+                    name={'Sửa dịch vụ'}
+                    type={1}
+                    data={selectedRow}
+                />
             )}
 
             {/* 

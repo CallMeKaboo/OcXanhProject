@@ -118,13 +118,19 @@ function UserManager() {
                                     ))}
                                 </tbody>
                             ) : (
-                                <Loading />
+                                <tbody>
+                                    <tr>
+                                        <td colSpan={8} className='text-center'>
+                                            <Loading />
+                                        </td>
+                                    </tr>
+                                </tbody>
                             )}
                         </table>
                     </div>
                 </div>
             </div>
-            <div class="row" style={{ margin: '80px 47px 0 47px' }}>
+            <div className="row" style={{ margin: '80px 47px 0 47px' }}>
                 <Pagination
                     totalItem={user.length}
                     itemPerPage={itemPerPage}
