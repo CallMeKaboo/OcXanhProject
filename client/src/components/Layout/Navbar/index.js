@@ -15,12 +15,12 @@ var logo = require('../../../assets/img/logo/Logo.png');
 var ava = require('../../../assets/img/avatar/Kh4.png');
 
 function AppNav() {
-    const { currentUser } = useContext(AuthContext);
+    const { currentUser, admin } = useContext(AuthContext);
     const [isDropDown, setDropDown] = useState(false);
 
     const handleMenu = () => {
         setDropDown(!isDropDown);
-        console.log(isDropDown);
+        // console.log(isDropDown);
     };
 
     let setLog = () => {

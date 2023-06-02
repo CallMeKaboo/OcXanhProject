@@ -26,9 +26,14 @@ const steps = [
 ];
 
 function BookingService() {
-    const [dataValid, setDataValid] = useState('');
+    const [dataValid, setDataValid] = useState(false);
     let componentToRender;
-    let tooltip;
+
+    const handleDataFromChild = (data) => {
+        setDataValid(data);
+    };
+    console.log(dataValid);
+
     const [error, setError] = useState('');
     // const tooltip = <Tooltip id="tooltip">{error}</Tooltip>;
     // const location = useLocation();
@@ -59,7 +64,7 @@ function BookingService() {
         let data = {
             user_id: JSON.parse(localStorage.getItem('user')).id,
             service_detail_id: localStorage.getItem('service_id'),
-            cleaner_id: localStorage.getItem('staff') ? JSON.parse(localStorage.getItem('staff')).id : {},
+            cleaner_id: localStorage.getItem('staff') !== 'null' ? JSON.parse(localStorage.getItem('staff')).id : {},
             payment_id: localStorage.getItem('payment_id'),
 
             cleaning_date: localStorage.getItem('date_stamp'),
@@ -94,25 +99,14 @@ function BookingService() {
     const totalSteps = steps.length;
     const width = `${(100 / (totalSteps - 1)) * (activeStep - 1)}%`;
 
-    const handleDataFromChild = (data) => {
-        setDataValid(data);
-    };
-
     if (screen === 1) {
         componentToRender = <OverviewDetail setDataValid={handleDataFromChild} />;
     } else if (screen === 2) {
-        componentToRender = <OrderDetail />;
+        componentToRender = <OrderDetail setDataValid={handleDataFromChild} />;
     } else if (screen === 3) {
-        componentToRender = <Payment />;
+        componentToRender = <Payment setDataValid={handleDataFromChild} />;
     }
 
-    const handleCheckData = () => {
-        if (dataValid === '') {
-            setError('Vui lòng chọn nhân viên để tiếp tục');
-            // tooltip = <Tooltip id="tooltip">{error}</Tooltip>;
-            return false;
-        } else return true;
-    };
     // update local data
     const updateInputsFromLocalStorage = () => {
         const data = localStorageData();
@@ -150,25 +144,20 @@ function BookingService() {
                 contact_email: inputs.contact_email,
             });
 
-            const user = localStorage.getItem('user');
-            const rememberedUsername = localStorage.getItem('rememberedUsername');
-            const rememberedPassword = localStorage.getItem('rememberedPassword');
-            const rememberedCheckbox = localStorage.getItem('rememberedCheckbox');
-
             // Xóa toàn bộ dữ liệu trong localStorage
             // Đặt lại 2 trường rememberedUsername và rememberedPassword
 
-            localStorage.clear();
-            localStorage.setItem('user', user);
-            localStorage.setItem('rememberedUsername', rememberedUsername);
-            localStorage.setItem('rememberedPassword', rememberedPassword);
-            localStorage.setItem('rememberedCheckbox', rememberedCheckbox);
+            localStorage.setItem('service_img', '');
+            localStorage.setItem('staff', 'null');
+            localStorage.setItem('date_stamp', null);
+            localStorage.setItem('time_stamp', null);
+
             setMessage('Đặt lịch thành công');
             setVariant('success');
             setShowToast(true);
             setTimeout(() => {
                 navigate('/service');
-            }, 1000);
+            }, 2000);
             console.log(res.data);
         } catch (err) {
             console.log(err);
@@ -180,7 +169,12 @@ function BookingService() {
     return (
         <>
             {showToast && (
-                <ToastMessage toast={showToast} setShowToast={setShowToast} message={message} variant={variant} />
+                <ToastMessage
+                    toast={showToast}
+                    setShowToast={setShowToast}
+                    message={error ? error : message}
+                    variant={variant}
+                />
             )}
             <main className="my-5 main-container">
                 <div className="progress-contain" style={{ '--after-width': width }}>
@@ -222,7 +216,7 @@ function BookingService() {
                     </button>
 
                     {activeStep === totalSteps ? (
-                        <button className="btn button-style" onClick={handleSubmit}>
+                        <button className="btn button-style" onClick={handleSubmit} disabled={dataValid}>
                             Hoàn thành
                         </button>
                     ) : (
@@ -230,6 +224,7 @@ function BookingService() {
                         <button
                             className="btn button-style"
                             onClick={activeStep === totalSteps ? null : nextStep}
+                            disabled={!dataValid}
                         >
                             Tiếp tục
                         </button>

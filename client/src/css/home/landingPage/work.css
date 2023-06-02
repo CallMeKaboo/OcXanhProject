@@ -1,0 +1,91 @@
+.work {
+    padding-bottom: 60px;
+    background-image: url('../../../assets/img/BG/work-bg.jpg');
+}
+.work.spad {
+    padding-top: 100px;
+    padding-bottom: 100px;
+}
+.set-bg {
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: top center;
+}
+.section-title {
+    margin-bottom: 50px;
+}
+.section-title span {
+    font-size: 16px;
+    color: #287ff9;
+    font-weight: 700;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    display: block;
+    margin-bottom: 16px;
+}
+.section-title h2 {
+    color: #111111;
+    font-size: 40px;
+    font-weight: 500;
+}
+.work__item {
+    text-align: center;
+    margin-bottom: 40px;
+}
+.work__item__icon {
+    position: relative;
+}
+.work__item h5 {
+    color: #111111;
+    font-size: 20px;
+    font-weight: 500;
+    margin-top: 36px;
+    margin-bottom: 12px;
+}
+.work__item p {
+    margin-bottom: 0;
+}
+.work__item__icon .icon {
+    height: 170px;
+    width: 170px;
+    background: #287ff9;
+    border-radius: 50%;
+    margin: 0 auto;
+    line-height: 170px;
+    text-align: center;
+    position: relative;
+    -webkit-box-shadow: 3px 0px 5px rgba(223, 223, 224, 0.5);
+    box-shadow: 3px 0px 5px rgba(223, 223, 224, 0.5);
+    -webkit-transition: all, 0.3s;
+    -o-transition: all, 0.3s;
+    transition: all, 0.3s;
+}
+.work__item__icon .icon span {
+    position: absolute;
+    left: 0;
+    top: 0;
+    font-size: 20px;
+    color: #111111;
+    font-weight: 700;
+    background: #ffd823;
+    display: inline-block;
+    height: 50px;
+    width: 50px;
+    text-align: center;
+    line-height: 50px;
+    border-radius: 50%;
+}
+.work__item__icon .icon i {
+    color: #ffffff;
+    display: inline-block;
+    transform: none;
+}
+.work__item__icon .icon [class^='flaticon-']:before,
+.work__item__icon .icon [class*=' flaticon-']:before,
+.work__item__icon .icon [class^='flaticon-']:after,
+.work__item__icon .icon [class*=' flaticon-']:after {
+    font-size: 62px;
+}
+.work__item:hover .work__item__icon .icon i {
+    color: #287ff9;
+}

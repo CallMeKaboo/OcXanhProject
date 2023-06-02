@@ -50,13 +50,24 @@ const postBooking = (req, res) => {
     }
   );
 };
-// const deleteService = (req, res) => {};
-// const updateService = (req, res) => {};
+// Delete multiple
+const deleteBooking = (req, res) => {
+  const id = req.body.id;
+  const query = "DELETE FROM booking WHERE id = ?";
 
+  connection.query(query, [id], (error, results) => {
+    if (error) {
+      console.error(error);
+      res.status(500).json({ message: "Failed to delete records" });
+    } else {
+      res.status(200).json({ message: "Records deleted successfully" });
+    }
+  });
+};
 module.exports = {
   getBooking,
   //   getCleaner,
   postBooking,
-  //   deleteService,
+  deleteBooking,
   //   updateService,
 };

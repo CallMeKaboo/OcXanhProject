@@ -4,8 +4,9 @@ import axios from 'axios';
 import { useContext } from 'react';
 import { AuthContext } from '../../../context/authContext';
 
-function OrderDetail() {
+function OrderDetail({ setDataValid }) {
     const { currentUser } = useContext(AuthContext);
+
     // Load address of VN
     const [provinces, setProvinces] = useState([]);
     const [districts, setDistricts] = useState([]);
@@ -17,7 +18,7 @@ function OrderDetail() {
             try {
                 const resProvince = await axios.get('/api/dropdowns/province');
                 setProvinces(resProvince.data);
-
+                setDataValid(false)
                 // console.log(loading);
             } catch (error) {
                 console.log(error);
@@ -28,7 +29,6 @@ function OrderDetail() {
     // Handle select province
 
     const [selectedProvince, setSelectedProvince] = useState('Tỉnh/Thành phố');
-
     const [selectedProvinceId, setSelectedProvinceId] = useState('');
 
     const handleSelectProvince = (event) => {
@@ -38,16 +38,15 @@ function OrderDetail() {
 
         setSelectedProvince(selectedValue);
         setSelectedProvinceId(selectedProvinceId);
+        setDataValid(true);
     };
 
     // Load districts
     useEffect(() => {
         const fetchData = async () => {
             try {
-                if (selectedProvinceId) {
-                    const resDis = await axios.get(`/api/dropdowns/district/${selectedProvinceId}`);
-                    setDistricts(resDis.data);
-                } else return 0;
+                const resDis = await axios.get(`/api/dropdowns/district`);
+                setDistricts(resDis.data);
 
                 // console.log(loading);
             } catch (error) {
@@ -74,10 +73,9 @@ function OrderDetail() {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                if (selectedDistrictId) {
-                    const resWard = await axios.get(`/api/dropdowns/ward/${selectedDistrictId}`);
-                    setWards(resWard.data);
-                } else return 0;
+                const resWard = await axios.get(`/api/dropdowns/ward`);
+                setWards(resWard.data);
+
                 // console.log(loading);
             } catch (error) {
                 console.log(error);

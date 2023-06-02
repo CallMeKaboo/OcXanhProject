@@ -39,8 +39,11 @@ function AddOverlay(props) {
         };
         fetchData();
     }, []);
-    // console.log(inputService);
-    const handleService = () => {
+    // console.log(inputService.);
+    const handleService = (e) => {
+        // e.preventDefault();
+        // console.log(inputService.sFeature);
+        // console.log(JSON.stringify(inputService.sFeature.split(',').map((feature) => feature.trim())));
         try {
             axios.post('/api/adminPost/addService', {
                 name: inputService.sName,
@@ -55,7 +58,9 @@ function AddOverlay(props) {
             setMessage('Thêm thành công');
             setVariant('success');
             setShowToast(true);
-            setTimeout(() => window.location.reload(), 2000);
+            setTimeout(() => {
+                window.location.replace(window.location.href);
+            }, 2000);
         } catch (error) {
             console.log(error);
         }
@@ -77,7 +82,7 @@ function AddOverlay(props) {
     };
 
     const handleStaff = (e) => {
-        e.preventDefault()
+        e.preventDefault();
         try {
             axios.post('/api/adminPost/addStaff', {
                 fullName: inputStaff.sfName,
@@ -92,7 +97,9 @@ function AddOverlay(props) {
             setMessage('Thêm thành công');
             setVariant('success');
             setShowToast(true);
-            setTimeout(() => window.location.reload(), 2000);
+            setTimeout(() => {
+                window.location.replace(window.location.href);
+            }, 2000);
         } catch (error) {
             console.log(error);
         }
@@ -170,7 +177,7 @@ function AddOverlay(props) {
                                             name="sDesc"
                                             value={inputService.sDesc}
                                             onChange={handleServiceChange}
-                                            style={{height:"130px",resize: "none"}}
+                                            style={{ height: '130px', resize: 'none' }}
                                         />
                                     </div>
                                     <div className="form-group d-flex justify-content-between">

@@ -3,10 +3,13 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import ToastMessage from '../../components/CompoChild/Toast/toast';
 import '../styles/modal.css';
+import {  useNavigate } from 'react-router-dom';
 
 function EditOverlay(props) {
     const [type, setType] = useState({});
     const [apiLoad, setApiLoad] = useState(false);
+
+    const navigate = useNavigate();
 
     // console.log(props.type, type);
     // Toast
@@ -39,26 +42,40 @@ function EditOverlay(props) {
         };
         fetchData();
     }, []);
-    // console.log(inputService.sFeature);
-    
-    const handleService = async (e) => {
+
+    // console.log(typeof props.data.feature)
+    // console.log(JSON.stringify(inputService.sFeature));
+    // console.log(
+    //     typeof JSON.stringify(inputService.sFeature)
+    //         .split(',')
+    //         .map((feature) => feature.trim())
+    //         .join(','),
+    // );
+    const handleService = (e) => {
         e.preventDefault();
         try {
-            const res = await axios.put('/api/adminUpdate/service/' + props.data.id, {
+            const res = axios.put('/api/adminUpdate/service/' + props.data.id, {
                 name: inputService.sName,
                 thumbnail: inputService.sThumbnail.split('\\').pop(),
                 // imgs: inputService.sImgs,
                 desc: inputService.sDesc,
-                feature: JSON.stringify(inputService.sFeature).split(',').map((feature) => feature.trim()),
+                feature: JSON.stringify(inputService.sFeature)
+                    .split(',')
+                    .map((feature) => feature.trim())
+                    .join(','),
                 price: inputService.sPrice,
                 service_id: inputService.sType,
                 duration: inputService.sDuration,
             });
+            console.log(res.data);
 
             setMessage('Cập nhật thành công');
             setVariant('success');
             setShowToast(true);
-            setTimeout(() => window.location.reload(), 2000);
+            // setTimeout(() => window.location.reload(), 2000);
+            setTimeout(() => {
+                window.location.replace(window.location.href);
+            }, 2000);
         } catch (error) {
             console.log(error);
         }
@@ -75,17 +92,15 @@ function EditOverlay(props) {
         sAva: props.data.avatar,
     });
 
-
     const handleStaffChange = (event) => {
         setInputStaff({ ...inputStaff, [event.target.name]: event.target.value });
     };
     // const a = new Date(inputStaff.sDIn);
-    console.log(inputStaff.sDob,inputStaff.sDIn)
 
     const handleStaff = (e) => {
-        // e.preventDefault();
+        e.preventDefault();
         try {
-            axios.put('/api/adminUpdate/staff/' + props.data.id, {
+            const res = axios.put('/api/adminUpdate/staff/' + props.data.id, {
                 fullName: inputStaff.sfName,
                 avatar: inputStaff.sAva.split('\\').pop(),
                 date_in: inputStaff.sDIn,
@@ -95,10 +110,13 @@ function EditOverlay(props) {
                 address: inputStaff.sAddress,
                 salary: inputStaff.sSalary,
             });
+            console.log(res.data);
             setMessage('Cập nhật thành công');
             setVariant('success');
             setShowToast(true);
-            setTimeout(() => window.location.reload(), 2000);
+            setTimeout(() => {
+                window.location.replace(window.location.href);
+            }, 2000);
         } catch (error) {
             console.log(error);
         }

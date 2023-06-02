@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import '../../../css/booking/screen/payment.css';
 
-function Payment() {
+function Payment({ setDataValid }) {
     const [selectedOption, setSelectedOption] = useState(null);
 
     const handleOptionChange = (event) => {
         setSelectedOption(event.target.id);
+        setDataValid(false);
     };
 
     useEffect(() => {

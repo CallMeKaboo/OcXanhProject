@@ -10,7 +10,6 @@ function OverviewDetail({ setDataValid }) {
     const [cleaner, setCleaner] = useState([]);
     const [overlay, setoverlay] = useState(false);
     const [loading, setLoading] = useState(false);
-    
 
     useEffect(() => {
         const fetchData = async () => {
@@ -27,19 +26,23 @@ function OverviewDetail({ setDataValid }) {
     }, []);
 
     const localStorageStaff = () => {
-        if (loading) {
-            let newLocalData = localStorage.getItem('staff');
-            if (newLocalData === null) {
-                return null;
-            } else {
-                return newLocalData;
-            }
-        } else return [];
+        let newLocalData = localStorage.getItem('staff');
+        // console.log(newLocalData);
+        if (newLocalData === 'null') {
+            setDataValid(false);
+            return null;
+        } else {
+            setDataValid(true);
+            return newLocalData;
+        }
     };
-    const [isDivClicked, setIsDivClicked] = useState(localStorageStaff());
+
+    const [isDivClicked, setIsDivClicked] = useState(JSON.parse(localStorageStaff()));
+
+    // console.log(isDivClicked == null );
     const handleDivClick = (data) => {
         setIsDivClicked(data);
-        setDataValid(data);
+        setDataValid(true);
     };
 
     const handleClick = () => {
@@ -67,7 +70,13 @@ function OverviewDetail({ setDataValid }) {
                             </div>
                             <div className="row me-0 ms-2 service-row">
                                 <div className="col-6 service-img ps-0">
-                                    <img src={localStorage.getItem('service_img')} className="d-block w-100" alt="" />
+                                    <img
+                                        src={require(`../../../assets/img/services_img/${localStorage.getItem(
+                                            'service_img',
+                                        )}`)}
+                                        className="d-block w-100"
+                                        alt=""
+                                    />
                                 </div>
                                 <div className="col-6 ps-1 ">
                                     <p className="dis info mb-2 font-weight-bold" style={{ fontSize: 20 + 'px' }}>
@@ -118,17 +127,21 @@ function OverviewDetail({ setDataValid }) {
                             <div className="ps-1">
                                 <div className="list-group staff-group mb-2 ps-0">
                                     {loading ? (
-                                        cleaner.map((value) => (
+                                        cleaner.map((value, index) => (
                                             <div
                                                 className={`row staff-box ms-0 ps-0 ${
-                                                    isDivClicked && isDivClicked.id === value.id ? 'active' : ''
+                                                    isDivClicked != null && isDivClicked.id === value.id ? 'active' : ''
                                                 }`}
-                                                onClick={() => handleDivClick(value)}
+                                                onClick={() => handleDivClick(cleaner[index])}
                                                 key={value.id}
                                             >
                                                 <div className="col-4 text-center">
                                                     <img
-                                                        src={require(`../../../assets/img/avatar/staff-logo/${value.avatar}`)}
+                                                        src={
+                                                            value.avatar
+                                                                ? require(`../../../assets/img/avatar/staff-logo/${value.avatar}`)
+                                                                : require('../../../assets/img/avatar/staff-logo/default.webp')
+                                                        }
                                                         alt="avatar"
                                                         className="rounded-circle"
                                                         width={100}

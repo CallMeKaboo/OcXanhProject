@@ -14,6 +14,6 @@ router.post("/register", register);
 router.post("/login", login);
 router.post("/logout", lougout);
 router.get("/user/:user_id", getUsersInfor);
-router.put("/users/:user_id", updateUserInfor);
-router.put("/users/changepass", updatePassword);
+router.put("/users/update/:user_id", updateUserInfor);
+router.post("/users/changepass", updatePassword);
 module.exports = router;

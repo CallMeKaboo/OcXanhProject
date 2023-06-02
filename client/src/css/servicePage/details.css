@@ -215,17 +215,7 @@
     display: inline-block;
     vertical-align: middle;
 }
-[class^='icon-'],
-[class*='icon-'] {
-    background-image: url(//cdn.tgdd.vn/mwgcart/mwgcore/ContentMwg/images/homev2/desk/icon_common@2x.webp);
-    background-repeat: no-repeat;
-    display: inline-block;
-    height: 30px;
-    width: 30px;
-    line-height: 30px;
-    vertical-align: middle;
-    background-size: 300px 200px;
-}
+
 .icon-star {
     background-position: -205px -60px;
     height: 12px;

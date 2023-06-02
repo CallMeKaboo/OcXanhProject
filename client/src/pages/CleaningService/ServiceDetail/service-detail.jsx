@@ -140,7 +140,7 @@ function ServiceDetail() {
                                     <div className="col-lg-6 col-md-6 col-sm-6 ">
                                         <ul className="p-0 feature-list">
                                             {service.feature
-                                                ? service.feature.map((e, index) => (
+                                                ? service.feature.split(',').map((e, index) => (
                                                       <li key={index}>
                                                           <span className="icon_check" />
                                                           <span className="ms-2">{e}</span>

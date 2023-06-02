@@ -68,7 +68,7 @@ function DetailsService({ serviceID, descrip }) {
                                 <div className="col-lg-6 col-md-6 col-sm-6">
                                     <ul>
                                         {service.feature &&
-                                            service.feature.slice(0, 3).map((value, index) => (
+                                            service.feature.split(',').slice(0, 3).map((value, index) => (
                                                 <li key={index}>
                                                     <span className="icon_check" />
                                                     {value}
@@ -79,12 +79,13 @@ function DetailsService({ serviceID, descrip }) {
                                 <div className="col-lg-6 col-md-6 col-sm-6">
                                     <ul>
                                         {service.feature &&
-                                            service.feature.slice(3, 6).map((value, index) => (
+                                            service.feature.split(',').slice(3, 6).map((value, index) => (
                                                 <li key={index}>
                                                     <span className="icon_check" />
                                                     {value}
                                                 </li>
-                                            ))}
+                                            ))
+                                        }
                                     </ul>
                                 </div>
                             </div>

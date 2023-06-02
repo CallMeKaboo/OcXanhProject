@@ -4,9 +4,9 @@ import AppSlide from './slide';
 import AppAbout from './about';
 
 // import AppLogin from './pages/user/login';
-import AppContact from './contact';
 import AppClient from './client-talk';
 import HomeServices from './services';
+import AppHowWork from './work';
 
 function Home() {
     return (
@@ -15,7 +15,7 @@ function Home() {
             <AppAbout />
             <HomeServices />
             <AppClient />
-            <AppContact />
+            <AppHowWork />
         </main>
     );
 }

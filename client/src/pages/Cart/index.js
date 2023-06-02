@@ -6,11 +6,26 @@ import Loading from '../../components/CompoChild/Loading/loading';
 import { useContext } from 'react';
 import { AuthContext } from '../../context/authContext';
 import Pagination from '../../components/CompoChild/Pagination/pagination';
+import DeleteOverlay from '../../components/CompoChild/Dialog/dialog';
 
 function CartHistory() {
     const { currentUser } = useContext(AuthContext);
     const [booking, setBooking] = useState([]);
     const [loading, setLoading] = useState(false);
+    const [showIcon, setShowIcon] = useState(true);
+
+    // icon gone after 5'
+    useEffect(() => {
+        const timeout = setTimeout(() => {
+            setShowIcon(false);
+        }, 5 * 60 * 1000);
+
+        return () => {
+            clearTimeout(timeout);
+        };
+    }, []);
+
+    const [selectedRow, setSelectedRow] = useState(null);
 
     const [overlay, setOverlay] = useState(false);
     const [type, setType] = useState('');
@@ -31,9 +46,10 @@ function CartHistory() {
         fetchData();
     }, [currentUser.id]);
 
-    const handleClickOverlay = (overlayType) => {
+    const handleClickOverlay = (overlayType, rowData) => {
         setType(overlayType);
         setOverlay(true);
+        setSelectedRow(rowData);
     };
 
     const lastItemIndex = currentPage * itemPerPage;
@@ -81,26 +97,34 @@ function CartHistory() {
                                             <td>{value.address}</td>
 
                                             <td className="text-success">
-                                                {value.status === 0 ? 'Đang chuẩn bị' : 'Sẵn sàng'}
+                                                {value.status === 0 ? 'Đang chuẩn bị' : 'Hoàn thành'}
                                             </td>
                                             <td className="text-center">
-                                                <a
-                                                    className="delete"
-                                                    data-toggle="modal"
-                                                    onClick={() => handleClickOverlay('delete')}
-                                                >
-                                                    <i
-                                                        class="fa-solid fa-trash"
-                                                        data-toggle="tooltip"
-                                                        title="Delete"
-                                                    ></i>
-                                                </a>
+                                                {value.status === 0 && showIcon && (
+                                                    <a
+                                                        className="delete"
+                                                        data-toggle="modal"
+                                                        onClick={() => handleClickOverlay('delete', booking[index])}
+                                                    >
+                                                        <i
+                                                            class="fa-solid fa-trash"
+                                                            data-toggle="tooltip"
+                                                            title="Delete"
+                                                        ></i>
+                                                    </a>
+                                                )}
                                             </td>
                                         </tr>
                                     ))}
                                 </tbody>
                             ) : (
-                                <Loading />
+                                <tbody>
+                                    <tr>
+                                        <td colSpan={12} className="text-center">
+                                            <Loading />
+                                        </td>
+                                    </tr>
+                                </tbody>
                             )}
                         </table>
                         <div className="row" style={{ marginTop: 80 + 'px' }}>
@@ -114,11 +138,9 @@ function CartHistory() {
                     </div>
                 </div>
             </div>
-            {/* Add */}
-            {/* {overlay && type === 'add' && <AddOverlay onCancelbutton={() => setOverlay(false)} />}
-
-            {overlay && type === 'delete' && <DeleteOverlay onCancelbutton={() => setOverlay(false)} />}
-            {overlay && type === 'edit' && <EditOverlay onCancelbutton={() => setOverlay(false)} />} */}
+            {overlay && type === 'delete' && (
+                <DeleteOverlay onCancelbutton={() => setOverlay(false)} data={selectedRow} />
+            )}
 
             {/* 
                 

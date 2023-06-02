@@ -1,56 +1,58 @@
-import React from 'react';
-import './dialog.css'
-function Dialog() {
+import axios from 'axios';
+import React, { useState } from 'react';
+import ToastMessage from '../../../components/CompoChild/Toast/toast';
+
+function DeleteOverlay(props) {
+    // Toast
+    const [message, setMessage] = useState('');
+    const [variant, setVariant] = useState('');
+    const [showToast, setShowToast] = useState(false);
+    const bookingDelete = async () => {
+        try {
+            const res = await axios.post('/api/bookings/deleteBooking', { id: props.data.id });
+            setMessage('Xóa thành công');
+            setVariant('success');
+            setShowToast(true);
+
+            setTimeout(() => window.location.reload(), 1000);
+        } catch (error) {
+            console.log(error);
+        }
+    };
     return (
         <>
-            <button type="button" className="btn btn-primary launch" data-toggle="modal" data-target="#staticBackdrop">
-                {' '}
-                <i className="fa fa-info" /> Get information
-            </button>
-            <div
-                className="modal fade"
-                id="staticBackdrop"
-                data-backdrop="static"
-                data-keyboard="false"
-                tabIndex={-1}
-                aria-labelledby="staticBackdropLabel"
-                aria-hidden="true"
-            >
-                <div className="modal-dialog">
-                    <div className="modal-content">
-                        <div className="modal-body ">
-                            <div className="text-right">
-                                {' '}
-                                <i className="fa fa-close close" data-dismiss="modal" />{' '}
-                            </div>
-                            <div className="px-4 py-5">
-                                <h5 className="text-uppercase">Jonathan Adler</h5>
-                                <h4 className="mt-5 theme-color mb-5">Thanks for your order</h4>
-                                <span className="theme-color">Payment Summary</span>
-                                <div className="mb-3">
-                                    <hr className="new1" />
-                                </div>
-                                <div className="d-flex justify-content-between">
-                                    <span className="font-weight-bold">Ether Chair(Qty:1)</span>
-                                    <span className="text-muted">$1750.00</span>
-                                </div>
-                                <div className="d-flex justify-content-between">
-                                    <small>Shipping</small>
-                                    <small>$175.00</small>
-                                </div>
-                                <div className="d-flex justify-content-between">
-                                    <small>Tax</small>
-                                    <small>$200.00</small>
-                                </div>
-                                <div className="d-flex justify-content-between mt-3">
-                                    <span className="font-weight-bold">Total</span>
-                                    <span className="font-weight-bold theme-color">$2125.00</span>
-                                </div>
-                                <div className="text-center mt-5">
-                                    <button className="btn btn-primary">Track your order</button>
-                                </div>
-                            </div>
-                        </div>
+            {showToast && (
+                <ToastMessage toast={showToast} setShowToast={setShowToast} message={message} variant={variant} />
+            )}
+            <div className="modal-admin modal-dialog">
+                <div className="modal-content">
+                    <div className="modal-header">
+                        <h4 className="modal-title">Xóa bản ghi</h4>
+                        <button
+                            type="button"
+                            className="close"
+                            data-dismiss="modal"
+                            aria-hidden="true"
+                            onClick={props.onCancelbutton}
+                        >
+                            ×
+                        </button>
+                    </div>
+                    <div className="modal-body">
+                        <p>Bạn có chắc muốn hủy không ?</p>
+                        <p className="text-warning">
+                            <small>Hành dộng này không thể khôi phục.</small>
+                        </p>
+                    </div>
+                    <div className="modal-footer">
+                        <button
+                            type="submit"
+                            className="btn btn-danger ms-3"
+                            defaultValue="Delete"
+                            onClick={bookingDelete}
+                        >
+                            Đồng ý
+                        </button>
                     </div>
                 </div>
             </div>
@@ -58,4 +60,4 @@ function Dialog() {
     );
 }
 
-export default Dialog;
+export default DeleteOverlay;

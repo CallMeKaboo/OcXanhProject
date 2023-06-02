@@ -113,33 +113,34 @@ const updateUserInfor = (req, res) => {
 // update password
 const updatePassword = (req, res) => {
   const errors = {};
-  const { currentPassword, newPassword } = req.body;
+  const { id, currentPassword, newPassword } = req.body;
   // Check newpassword === confirmpassword
 
   const q = "select username,password from user where role_id =2 and id = ?";
-  connection.query(q, [req.params.id], (err, result) => {
+  connection.query(q, [id], (err, result) => {
     if (err) return res.json(err);
 
     // Kiểm tra mật khẩu hiện tại có khớp hay không
-    const isMatch = bcrypt.compareSync(currentPassword, result.password);
+    const isMatch = bcrypt.compareSync(currentPassword, result[0].password);
     if (!isMatch) {
-      errors.pass = "Mật khẩu hiện tại không đúng";
-      return res.status(400).json({ errors });
+      message = "Mật khẩu hiện tại không đúng";
+      return res.status(400).json({ message });
     }
-  });
-  if (Object.keys(errors).length === 0) {
-    //Hash pass
+
+    // Hash pass
     const salt = bcrypt.genSaltSync(10);
     const hashPass = bcrypt.hashSync(newPassword, salt);
 
-    // create user
+    console.log(hashPass);
+
+    // update user
     const query =
       "UPDATE cleaning_services.user SET password = ? WHERE id = ? AND role_id = 2";
-    connection.query(query, [hashPass, req.query.id], (err) => {
+    connection.query(query, [hashPass, id], (err) => {
       if (err) return res.json(err);
       return res.status(200).json("Password updated successfully");
     });
-  } else return errors;
+  });
 };
 
 module.exports = {

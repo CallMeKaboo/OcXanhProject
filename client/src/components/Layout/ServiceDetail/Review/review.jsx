@@ -97,6 +97,7 @@ function Reviews(props) {
                                     value={comment}
                                     onChange={handleChangeComment}
                                     className="ct"
+                                    style={{height: "10vh"}}
                                     name="comment"
                                     placeholder="Mời bạn chia sẻ thêm một số cảm nhận về sản phẩm ..."
                                     defaultValue={''}
@@ -124,7 +125,7 @@ function Reviews(props) {
                                         {Array(val.rating)
                                             .fill()
                                             .map((index) => (
-                                                <i className="icon-star" key={index} />
+                                                <i className="fas fa-star" key={index} style={{color: "yellow"}}></i>
                                             ))}
                                     </div>
                                 </div>

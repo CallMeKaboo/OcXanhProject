@@ -1,9 +1,13 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import '../styles/navbar.css';
 import logo from '../../assets/img/avatar/KH-logo/Kh1.png';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { AuthContext } from '../../context/authContext';
 function NavBar() {
+    const { admin } = useContext(AuthContext);
+    console.log(admin);
+
     const [show, setShow] = useState(false);
 
     const handleClick = () => {
@@ -74,7 +78,7 @@ function NavBar() {
                                 show ? 'show' : ''
                             }`}
                             aria-labelledby="userDropdown"
-                            style={{right: '-19px',top:'75px'}}
+                            style={{ right: '-19px', top: '75px' }}
                         >
                             <Link to={'/admin'} className="dropdown-item" href="#">
                                 <i className="fa-solid fa-arrow-right-from-bracket text-gray-400" />

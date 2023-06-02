@@ -9,16 +9,18 @@ import Tab from 'react-bootstrap/Tab';
 import Tabs from 'react-bootstrap/Tabs';
 import ava from '../../assets/img/avatar/Kh4.png';
 import axios from 'axios';
+import validation from './validation';
 
 function ProfileUser() {
     const { currentUser, updateUserProfile } = useContext(AuthContext);
+
     const [modalShow, setModalShow] = useState(false);
     const [imageCrop, setImageCrop] = useState(false);
     const [image, setImage] = useState([]);
 
     const [key, setKey] = useState('profile');
-    const [eye, seteye] = useState(true);
-    const [type, setType] = useState('password');
+    const [eye, setEye] = useState(true);
+    const [showPassword, setShowPassword] = useState(false);
 
     const [inputs, setInputs] = useState({
         currentPassword: '',
@@ -26,7 +28,7 @@ function ProfileUser() {
         confirmNewPassword: '',
     });
 
-    const [error, setError] = useState('');
+    const [error, setError] = useState({});
 
     // Toast
     const [message, setMessage] = useState('');
@@ -71,7 +73,7 @@ function ProfileUser() {
 
         if (key === 'profile') {
             try {
-                await axios.put('/api/auth/users/' + currentUser.id, {
+                await axios.put('/api/auth/users/update/' + currentUser.id, {
                     fullName: values.fullName ? values.fullName : '',
                     avatar: imgShow[imgShow.length - 1],
                     city: values.city ? values.city : '',
@@ -98,36 +100,48 @@ function ProfileUser() {
         }
         if (key === 'pass') {
             if (inputs.newPassword !== inputs.confirmNewPassword) {
-                setError('Mật khẩu mới không khớp');
+                setError({ ...error, pass: 'Mật khẩu mới không khớp' });
+                return;
+            }
+            const validationErrors = validation(inputs);
+
+            if (validationErrors.newPassword !== '') {
+                setError({ ...error, vali: validationErrors.newPassword });
+                return;
             }
 
             try {
-                const response = await axios.put('/api/auth/users/changepass', {
+                const response = await axios.post('/api/auth/users/changepass', {
+                    id: currentUser.id,
                     currentPassword: inputs.currentPassword,
                     newPassword: inputs.newPassword,
                 });
 
                 console.log(response.data);
 
-                setInputs({});
-                setError('');
+                setMessage('Cập nhật thành công');
+                setVariant('success');
+                setShowToast(true);
+                // setTimeout(() => window.location.reload(), 2000);
+                setTimeout(() => window.location.reload(), 1000);
+
+                
             } catch (err) {
-                console.error(err);
-                setError(err.response.data.errors.pass);
+                console.error(err.response.data.message);
+                setError({ ...error, message: err.response.data.message });
             }
             return;
         }
     };
-    const Eye = (e) => {
-        if (type === 'password') {
-            setType('text');
-            seteye(false);
-        } else {
-            setType('password');
-            seteye(true);
-        }
+    const handleTogglePassword = (event) => {
+        event.stopPropagation();
+        setShowPassword(!showPassword);
+        setEye(!eye);
     };
-
+    const handleFocus = () => {
+        setError({});
+    };
+    console.log(error);
     return (
         <>
             {showToast && (
@@ -278,56 +292,67 @@ function ProfileUser() {
                                                 aria-labelledby="home-tab"
                                             >
                                                 <div className="row mb-3">
-                                                    <div className="col-md-6">
+                                                    <div className="col-md-5">
                                                         <label>Nhập mật khẩu cũ</label>
                                                     </div>
-                                                    <div className="col-md-6 d-flex align-items-center hover">
+                                                    <div className="col-md-7 align-items-center hover ">
                                                         <input
+                                                            className="w-100"
                                                             type="password"
                                                             name="currentPassword"
                                                             value={inputs.currentPassword}
                                                             onChange={handleChange}
+                                                            onFocus={handleFocus}
                                                         />
+                                                        {error && (
+                                                            <small className="text-danger">{error.message}</small>
+                                                        )}
                                                     </div>
                                                 </div>
                                                 <div className="row mb-3">
-                                                    <div className="col-md-6">
+                                                    <div className="col-md-5">
                                                         <label>Nhập mật khẩu mới</label>
                                                     </div>
-                                                    <div className="col-md-6 d-flex align-items-center hover position-relative">
+                                                    <div className="col-md-7 hover position-relative">
                                                         <input
-                                                            type={type}
+                                                            className="w-100"
+                                                            type={showPassword ? 'text' : 'password'}
                                                             name="newPassword"
                                                             value={inputs.newPassword}
                                                             onChange={handleChange}
+                                                            onFocus={handleFocus}
                                                         />
                                                         <i
                                                             style={{
                                                                 color: 'var(--main-color)',
                                                             }}
-                                                            onClick={(e) => Eye(e.target.name)}
+                                                            onClick={handleTogglePassword}
                                                             className={`eye fa ${eye ? 'fa-eye-slash' : 'fa-eye'}`}
                                                         ></i>
+                                                        {error && <small className="text-danger">{error.vali}</small>}
                                                     </div>
                                                 </div>
                                                 <div className="row mb-3">
-                                                    <div className="col-md-6">
+                                                    <div className="col-md-5">
                                                         <label>Nhập lại mật khẩu mới</label>
                                                     </div>
-                                                    <div className="col-md-6 d-flex align-items-center hover position-relative">
+                                                    <div className="col-md-7 hover position-relative">
                                                         <input
-                                                            type={type}
+                                                            className="w-100"
+                                                            type={showPassword ? 'text' : 'password'}
                                                             name="confirmNewPassword"
                                                             value={inputs.confirmNewPassword}
                                                             onChange={handleChange}
+                                                            onFocus={handleFocus}
                                                         />
                                                         <i
                                                             style={{
                                                                 color: 'var(--main-color)',
                                                             }}
-                                                            onClick={(e) => Eye(e.target.name)}
+                                                            onClick={handleTogglePassword}
                                                             className={`eye fa ${eye ? 'fa-eye-slash' : 'fa-eye'}`}
                                                         ></i>
+                                                        {error && <small className="text-danger">{error.pass}</small>}
                                                     </div>
                                                 </div>
                                             </div>
