@@ -6,7 +6,7 @@ import { AuthContext } from '../../../context/authContext';
 import '../../../css/servicePage/details.css';
 import Loading from '../../../components/CompoChild/Loading/loading';
 import BookingTime from '../../../components/CompoChild/TimeCard/time-form';
-import Money from '../../../components/CompoChild/Money/money';
+import Money from '../../../utils/money';
 import Reviews from '../../../components/Layout/ServiceDetail/Review/review';
 
 function ServiceDetail() {

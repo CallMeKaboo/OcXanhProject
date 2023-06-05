@@ -5,7 +5,7 @@ export const AuthContext = createContext();
 
 export const AuthContextProvider = ({ children }) => {
     const [currentUser, setCurrentUser] = useState(JSON.parse(localStorage.getItem('user')) || null);
-    const [admin, setAdmin] = useState(null);
+    const [admin, setAdmin] = useState(JSON.parse(localStorage.getItem('admin')) || null);
     const login = async (inputs) => {
         const res = await axios.post('/api/auth/login', inputs, {
             withCredentials: true,
@@ -14,7 +14,7 @@ export const AuthContextProvider = ({ children }) => {
     };
     const loginAdmin = async (inputs) => {
         const res = await axios.post('/api/adminPost/login', inputs, {
-            withCredentials: true,
+            withCredentials: true,  
         });
         setAdmin(res.data);
     };
@@ -44,7 +44,8 @@ export const AuthContextProvider = ({ children }) => {
     };
     useEffect(() => {
         localStorage.setItem('user', JSON.stringify(currentUser));
-    }, [currentUser]);
+        localStorage.setItem('admin', JSON.stringify(admin));
+    }, [currentUser,admin]);
     return (
         <AuthContext.Provider value={{ currentUser, admin, loginAdmin, login, logout, logoutAdmin, updateUserProfile }}>
             {children}

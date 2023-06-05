@@ -1,8 +1,8 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import Loading from '../../components/CompoChild/Loading/loading';
-import { useState } from 'react';
-import '../../css/modelOverlay/staff.css';
 import axios from 'axios';
+import formatDate from '../../utils/formatDate';
+import '../../css/modelOverlay/staff.css';
 
 function OurStaff({ staffID }) {
     const [cleaner, setCleaner] = useState({});
@@ -43,7 +43,7 @@ function OurStaff({ staffID }) {
                             <p>{cleaner.fullName}</p>
                         </div>
                         <div className="">
-                            <p>Ngày sinh: {cleaner.dob}</p>
+                            <p>Ngày sinh: {formatDate(cleaner.dob)}</p>
                         </div>
                         <div className="">
                             <p>Giới tính: {cleaner.gender}</p>

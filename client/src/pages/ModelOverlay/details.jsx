@@ -3,7 +3,7 @@ import axios from 'axios';
 
 import '../../css/modelOverlay/detail.css';
 import Loading from '../../components/CompoChild/Loading/loading';
-import Money from '../../components/CompoChild/Money/money';
+import Money from '../../utils/money';
 
 function DetailsService({ serviceID, descrip }) {
     // const [data, setData] = useState('');

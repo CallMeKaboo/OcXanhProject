@@ -6,7 +6,7 @@ import { Link, useLocation } from 'react-router-dom';
 import Loading from '../../components/CompoChild/Loading/loading';
 import ModelOverlay from '../ModelOverlay';
 import Pagination from '../../components/CompoChild/Pagination/pagination';
-import Money from '../../components/CompoChild/Money/money';
+import Money from '../../utils/money';
 
 import bg from '../../assets/img/BG/2.jpg';
 import '../..//css/servicePage/cleaning.css';
@@ -33,7 +33,7 @@ function CleaningService() {
     const [services, setServices] = useState([]);
     const [serviceID, setServiceID] = useState('');
     const [index, setIndex] = useState('');
-    const servicesID = useLocation().search; //Get id from location
+    const servicesID = useLocation().search; //Get id from  location
     const [loading, setLoading] = useState(false);
 
     const [currentPage, setCurrentPage] = useState(1);

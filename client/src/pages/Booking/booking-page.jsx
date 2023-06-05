@@ -210,7 +210,7 @@ function BookingService() {
                     {/* /.job-tab */}
                 </div>
                 <section className="mt-5">{componentToRender}</section>
-                <div className="button-contain mt-0">
+                <div className="button-contain mt-4">
                     <button className="btn button-style" onClick={prevStep} disabled={activeStep === 1 ? true : false}>
                         Trước
                     </button>

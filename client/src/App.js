@@ -8,26 +8,24 @@ import axios from 'axios';
 import LoginAdmin from './admin/pages/login/login';
 import { adminRoutes } from './routes/admin';
 import AppAdmin from './admin/admin';
-import { useContext } from 'react';
-import { AuthContext } from './context/authContext';
+import RequireAuth from './routes/RequireAuth';
 
 axios.defaults.baseURL = 'http://localhost:8800';
 
 function App() {
-    const { admin } = useContext(AuthContext);
-    
     return (
         <>
             <BrowserRouter>
                 <Routes>
                     <Route path="/admin" element={<LoginAdmin />} />
 
-                    <Route path="/admin/home" element={<AppAdmin />}>
-                        {adminRoutes.map((route, index) => {
-                            return <Route key={index} path={route.path} element={route.element} />;
-                        })}
+                    <Route element={<RequireAuth />}>
+                        <Route path="/admin/home" element={<AppAdmin />}>
+                            {adminRoutes.map((route, index) => {
+                                return <Route key={index} path={route.path} element={route.element} />;
+                            })}
+                        </Route>
                     </Route>
-
                     <Route path="/" element={<DefaultLayout />}>
                         <Route index element={publicRoutes[0].element} />
                         {publicRoutes.slice(1).map((route, index) => {

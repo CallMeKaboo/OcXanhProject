@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { format } from 'date-fns';
-import '../../../css/booking/screen/overview.css';
+import formatDate from '../../../utils/formatDate';
 import Loading from '../../../components/CompoChild/Loading/loading';
-import Money from '../../../components/CompoChild/Money/money';
+import Money from '../../../utils/money';
 import ModelOverlay from '../../../pages/ModelOverlay';
+import '../../../css/booking/screen/overview.css';
 
 function OverviewDetail({ setDataValid }) {
     const [cleaner, setCleaner] = useState([]);
@@ -49,9 +49,7 @@ function OverviewDetail({ setDataValid }) {
         setoverlay(true);
     };
 
-    const formattedDate = localStorage.getItem('date_stamp')
-        ? format(new Date(localStorage.getItem('date_stamp')), 'dd-MM-yyyy')
-        : '';
+    const formattedDate = localStorage.getItem('date_stamp') ? formatDate(localStorage.getItem('date_stamp')) : '';
 
     // sessionStorage.removeItem("staff")
     useEffect(() => {
@@ -66,7 +64,7 @@ function OverviewDetail({ setDataValid }) {
                     <div className="col-6 box-1 user p-0">
                         <div className="box-inner-1 py-4 px-3">
                             <div className="row m-0 title">
-                                <p className="p-0">Chi tiết yêu cầu dịch vụ</p>
+                                <p className='pt-0'>Chi tiết yêu cầu dịch vụ</p>
                             </div>
                             <div className="row me-0 ms-2 service-row">
                                 <div className="col-6 service-img ps-0">

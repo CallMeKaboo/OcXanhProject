@@ -60,9 +60,9 @@ function NavBar() {
 
                     {/* Nav Item - User Information */}
                     <li className="nav-item dropdown no-arrow me-3" onClick={handleClick}>
-                        <a
+                        <Link
                             className="nav-link dropdown-toggle"
-                            href="#"
+                            href=""
                             id="userDropdown"
                             role="button"
                             data-toggle="dropdown"
@@ -71,7 +71,7 @@ function NavBar() {
                         >
                             <span className="mr-2 d-none d-lg-inline text-dark small me-2">Admin</span>
                             <img className="img-profile rounded-circle" src={logo} alt="" />
-                        </a>
+                        </Link>
                         {/* Dropdown - User Information */}
                         <div
                             className={`dropdown-menu dropdown-menu-right shadow animated--grow-in ${
@@ -80,7 +80,7 @@ function NavBar() {
                             aria-labelledby="userDropdown"
                             style={{ right: '-19px', top: '75px' }}
                         >
-                            <Link to={'/admin'} className="dropdown-item" href="#" onclick={logoutAdmin}>
+                            <Link to={'/admin'} className="dropdown-item" href="#" onClick={logoutAdmin}>
                                 <i className="fa-solid fa-arrow-right-from-bracket text-gray-400" />
                                 Đăng xuất
                             </Link>

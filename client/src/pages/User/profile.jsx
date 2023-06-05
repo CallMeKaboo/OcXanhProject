@@ -9,7 +9,7 @@ import Tab from 'react-bootstrap/Tab';
 import Tabs from 'react-bootstrap/Tabs';
 import ava from '../../assets/img/avatar/Kh4.png';
 import axios from 'axios';
-import validation from './validation';
+import validation from '../../utils/validation';
 
 function ProfileUser() {
     const { currentUser, updateUserProfile } = useContext(AuthContext);

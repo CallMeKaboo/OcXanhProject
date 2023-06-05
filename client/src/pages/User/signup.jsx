@@ -4,7 +4,7 @@ import { Link, useNavigate } from 'react-router-dom';
 
 import bgSignup from '../../assets/img/BG/bg-regis.jpg';
 import '../../css/user/user-page.css';
-import validation from './validation';
+import validation from '../../utils/validation';
 import ToastMessage from '../../components/CompoChild/Toast/toast';
 
 function AppSignup() {

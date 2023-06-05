@@ -4,7 +4,6 @@ import { AuthContext } from '../../../context/authContext';
 
 function OverviewDash() {
     const { admin } = useState(AuthContext);
-    console.log(admin);
 
     const handleNavigateContact = () => {
         window.location.href = '/admin/home/contact';

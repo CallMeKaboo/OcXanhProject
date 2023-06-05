@@ -35,7 +35,7 @@ const sideBarData = [
 ];
 
 function SideBar() {
-    const [active, setActive] = useState(null);
+    const [active, setActive] = useState(0);
     const handleOnClick = (index) => {
         setActive(index);
     };

@@ -8,14 +8,14 @@ import { Link, useLocation } from 'react-router-dom';
 import { useContext, useState } from 'react';
 
 import './navbar.css';
-import MenuContext from '../../../components/CompoChild/ContextMenu/ContextMenu.jsx';
+import MenuContext from '../../CompoChild/ContextMenu/ContextMenu.jsx';
 import SearchBar from './search/search-bar.js';
 
 var logo = require('../../../assets/img/logo/Logo.png');
 var ava = require('../../../assets/img/avatar/Kh4.png');
 
 function AppNav() {
-    const { currentUser, admin } = useContext(AuthContext);
+    const { currentUser } = useContext(AuthContext);
     const [isDropDown, setDropDown] = useState(false);
 
     const handleMenu = () => {

@@ -6,7 +6,7 @@ import AddOverlay from '../../../admin/components/add';
 import DeleteOverlay from '../../../admin/components/delete';
 import EditOverlay from '../../../admin/components/edit';
 import Pagination from '../../../components/CompoChild/Pagination/pagination';
-import Money from '../../../components/CompoChild/Money/money';
+import Money from '../../../utils/money';
 function ServiceManager() {
     // console.log("kkk");
     const [service, setService] = useState([]);

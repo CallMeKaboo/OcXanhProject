@@ -8,7 +8,7 @@ import DeleteOverlay from '../../../admin/components/delete';
 import EditOverlay from '../../../admin/components/edit';
 import Loading from '../../../components/CompoChild/Loading/loading';
 import Pagination from '../../../components/CompoChild/Pagination/pagination';
-import Money from '../../../components/CompoChild/Money/money';
+import Money from '../../../utils/money';
 
 function StaffManager() {
     const [staff, setStaff] = useState([]);

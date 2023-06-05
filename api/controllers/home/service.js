@@ -3,8 +3,8 @@ const connection = require("../../database/database");
 // Select all kind of services of services have id
 const getServices = (req, res) => {
   const q = req.query.service_id
-    ? "SELECT service_details.id, service_details.name,service.thumbnail as `def_thumbnail`, service_details.thumbnail, service.start_price,service.description "+
-    +"FROM service_details JOIN service ON service.id = service_details.service_id WHERE service_id = ?"
+    ? "SELECT service_details.id, service_details.name, service.thumbnail as `def_thumbnail`, service_details.thumbnail, service.start_price,service.description "+
+    " FROM service_details JOIN service ON service.id = service_details.service_id WHERE service_id = ?"
     : "SELECT * FROM service_view";
 
   connection.query(q, [req.query.service_id], (err, result) => {

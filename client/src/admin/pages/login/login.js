@@ -1,4 +1,4 @@
-import React, {  useState } from 'react';
+import React, { useState } from 'react';
 import '../../styles/login.css';
 import ToastMessage from '../../../components/CompoChild/Toast/toast';
 
@@ -102,7 +102,7 @@ function LoginAdmin() {
                                                     style={{
                                                         color: 'var(--main-color)',
                                                         top: '40%',
-                                                        right:'20px'
+                                                        right: '20px',
                                                     }}
                                                     onClick={handleTogglePassword}
                                                     className={`eye fa ${eye ? 'fa-eye-slash' : 'fa-eye'}`}

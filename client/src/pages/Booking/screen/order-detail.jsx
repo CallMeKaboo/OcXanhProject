@@ -137,7 +137,7 @@ function OrderDetail({ setDataValid }) {
             <div className="col-6 dropdown ps-0">
                 <div className="box-inner-1 py-4 px-3 mb-4 ">
                     <div className="row m-0 title">
-                        <p>Chọn địa chỉ</p>
+                        <p className='pt-0'>Chọn địa chỉ</p>
                     </div>
 
                     <div className="row m-0 pe-3">

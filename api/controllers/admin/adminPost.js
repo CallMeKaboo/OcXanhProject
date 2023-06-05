@@ -18,7 +18,7 @@ const login = (req, res) => {
     // create token with userid, secretkey to sign and indetify user
     const token = jwt.sign({ username: username }, "secretkey");
 
-    const { password, ...others } = data[0]; // take all except pass to show
+    const { password, role_id, ...others } = data[0]; // take all except pass to show
     res
       .cookie("accessToken", token, {
         httpOnly: true,
@@ -140,5 +140,5 @@ module.exports = {
   deleteMultipleBooking,
   deleteMultipleContact,
   postStaff,
-  postService
+  postService,
 };
