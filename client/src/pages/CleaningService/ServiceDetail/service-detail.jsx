@@ -15,6 +15,7 @@ function ServiceDetail() {
     const location = useLocation();
     const id = location.pathname.split('/').pop();
     const [show, setShow] = useState(false);
+
     // Loading
     const [loading, setLoading] = useState(false);
     // Load data
@@ -94,14 +95,16 @@ function ServiceDetail() {
                                                         ? selectedImage
                                                         : service.thumbnail
                                                         ? require(`../../../assets/img/services_img/${service.thumbnail}`)
-                                                        : require(`../../../assets/img/services_img/default/${service.def_thumbnail}`)
+                                                        : require(`../../../assets/img/services_img/default/${localStorage.getItem(
+                                                              'def_thumbnail',
+                                                          )}`)
                                                 }
                                                 alt="bg"
                                             />
                                         </div>
                                         <div className="img-select d-flex mt-2">
                                             {service.imgs
-                                                ? service.imgs.map((e, index) => (
+                                                ? service.imgs.split(',').map((e, index) => (
                                                       <div
                                                           className="img-item"
                                                           onClick={() => handleImageClick(e)}
@@ -197,6 +200,7 @@ function ServiceDetail() {
                             </div>
                         </div>
                     </div>
+
                     <Reviews service_detail_id={id} />
                 </div>
             </main>

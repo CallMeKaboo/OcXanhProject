@@ -9,9 +9,11 @@ function ModelOverlay(props) {
     // const { currentUser } = useContext(AuthContext);
     const navigate = useNavigate();
     const [screen, setScreen] = useState('');
+    
     // navigate to login orm
     const handleDetail = () => {
         navigate(`/service/detail/${props.serviceID}`);
+        localStorage.setItem('def_thumbnail',props.def_thumbnail)
     };
     // tooltip
     const tooltip = <Tooltip id="tooltip">Đi tới trang chi tiết</Tooltip>;
@@ -38,7 +40,7 @@ function ModelOverlay(props) {
     }, [props.serviceID, props.staffID]);
 
     if (props.serviceID) {
-        showScreen = <DetailsService serviceID={props.serviceID} descrip={props.descrip} />;
+        showScreen = <DetailsService serviceID={props.serviceID} descrip={props.descrip} def_thumbnail={props.def_thumbnail}/>;
     }
     if (props.staffID) {
         showScreen = <OurStaff staffID={props.staffID} />;

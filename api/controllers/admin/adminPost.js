@@ -31,14 +31,14 @@ const login = (req, res) => {
 };
 // Add serv
 const postService = (req, res) => {
-  const { name, thumbnail, desc, feature, price, service_id, duration } =
+  const { name, thumbnail,imgs, desc, feature, price, service_id, duration } =
     req.body;
   // create user
   const query =
-    "INSERT INTO `cleaning_services`.`service_details` ( `name`, `thumbnail`, `desc`, `feature`, `price`, `service_id`, `duration`) VALUES (?,?,?,?,?,?,?)";
+    "INSERT INTO `cleaning_services`.`service_details` ( `name`, `thumbnail`, `imgs`, `desc`, `feature`, `price`, `service_id`, `duration`) VALUES (?,?,?,?,?,?,?,?)";
   connection.query(
     query,
-    [name, thumbnail, desc, feature, price, service_id, duration],
+    [name, thumbnail,imgs, desc, feature, price, service_id, duration],
     (err, data) => {
       if (err) return res.json(err);
       return res.status(200).json("Request send successfully");

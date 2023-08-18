@@ -17,18 +17,20 @@ function Reviews(props) {
     };
 
     useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const res = await axios.get(`/api/reviews/${props.service_detail_id}`);
-                setReview(res.data);
-                setLoading(true);
-                // console.log(loading);
-            } catch (error) {
-                console.log(error);
-            }
-        };
+        // Gọi API để tải danh sách đánh giá ban đầu khi component được tạo
         fetchData();
-    }, [props.service_detail_id]);
+    }, []);
+
+    const fetchData = async () => {
+        try {
+            const res = await axios.get(`/api/reviews/${props.service_detail_id}`);
+            setReview(res.data);
+            setLoading(true);
+            // console.log(loading);
+        } catch (error) {
+            console.log(error);
+        }
+    };
 
     const [activeItems, setActiveItems] = useState([]);
     const isItemActive = (value) => {
@@ -44,7 +46,9 @@ function Reviews(props) {
     const sendReview = async (e) => {
         e.preventDefault();
         try {
-            if (activeItems.length == 0 && comment === '') {
+            if (currentUser === null) {
+                setError('Vui lòng đăng nhập để đánh giá');
+            } else if (activeItems.length === 0 && comment === '') {
                 setError('Vui lòng chọn sao và nhập đánh giá');
             } else {
                 const res = await axios.post('/api/reviews/post', {
@@ -53,8 +57,10 @@ function Reviews(props) {
                     rating: activeItems.length,
                     comment: comment,
                 });
+                // console.log(res.data);
                 setComment('');
                 setActiveItems([]);
+                fetchData();
             }
         } catch (error) {
             console.log(error);
@@ -97,7 +103,7 @@ function Reviews(props) {
                                     value={comment}
                                     onChange={handleChangeComment}
                                     className="ct"
-                                    style={{height: "10vh"}}
+                                    style={{ height: '10vh' }}
                                     name="comment"
                                     placeholder="Mời bạn chia sẻ thêm một số cảm nhận về sản phẩm ..."
                                     defaultValue={''}
@@ -118,14 +124,14 @@ function Reviews(props) {
                         review.map((val, index) => (
                             <div className="comment__item par" id="r-54303832">
                                 <div className="item-top">
-                                    <p className="txtname m-0">{val.fullName}</p>
+                                    <p className="txtname m-0">{val.username}</p>
                                 </div>
                                 <div className="item-rate">
                                     <div className="comment-star">
                                         {Array(val.rating)
                                             .fill()
                                             .map((index) => (
-                                                <i className="fas fa-star" key={index} style={{color: "yellow"}}></i>
+                                                <i className="fas fa-star" key={index} style={{ color: 'yellow' }}></i>
                                             ))}
                                     </div>
                                 </div>

@@ -9,11 +9,11 @@ function ToastMessage(props) {
         setShowToast(toast);
     }, [toast, setShowToast]);
     return (
-        <ToastContainer position="top-end">
+        <ToastContainer position={props.position ? props.position : 'top-end'}>
             <Toast
                 className="d-inline-block m-1"
                 bg={props.variant}
-                // onClose={() => setShowToast(false)}
+                onClose={() => setShowToast(false)}
                 show={toast}
                 delay={1000}
             >
@@ -22,9 +22,7 @@ function ToastMessage(props) {
                     <strong className="me-auto">Thông báo</strong>
                     <small>1s trước</small>
                 </Toast.Header>
-                <Toast.Body className={props.variant === 'success' && 'text-white'}>
-                    {props.message}
-                </Toast.Body>
+                <Toast.Body className="text-white">{props.message}</Toast.Body>
             </Toast>
         </ToastContainer>
     );

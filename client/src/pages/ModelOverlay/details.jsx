@@ -5,12 +5,14 @@ import '../../css/modelOverlay/detail.css';
 import Loading from '../../components/CompoChild/Loading/loading';
 import Money from '../../utils/money';
 
-function DetailsService({ serviceID, descrip }) {
+
+function DetailsService({ serviceID, descrip, def_thumbnail }) {
     // const [data, setData] = useState('');
     // const serviceID = props.serviceID;
     const [service, setService] = useState({});
     const [loading, setLoading] = useState(false);
 
+    // console.log(def_thumbnail);
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -40,7 +42,7 @@ function DetailsService({ serviceID, descrip }) {
                             src={
                                 service.thumbnail
                                     ? require(`../../assets/img/services_img/${service.thumbnail}`)
-                                    : require(`../../assets/img/services_img/default/${service.def_thumbnail}`)
+                                    : require(`../../assets/img/services_img/default/${def_thumbnail}`)
                             }
                             alt="service-bg"
                         />
@@ -68,24 +70,29 @@ function DetailsService({ serviceID, descrip }) {
                                 <div className="col-lg-6 col-md-6 col-sm-6">
                                     <ul>
                                         {service.feature &&
-                                            service.feature.split(',').slice(0, 3).map((value, index) => (
-                                                <li key={index}>
-                                                    <span className="icon_check" />
-                                                    {value}
-                                                </li>
-                                            ))}
+                                            service.feature
+                                                .split(',')
+                                                .slice(0, 3)
+                                                .map((value, index) => (
+                                                    <li key={index}>
+                                                        <span className="icon_check" />
+                                                        {value}
+                                                    </li>
+                                                ))}
                                     </ul>
                                 </div>
                                 <div className="col-lg-6 col-md-6 col-sm-6">
                                     <ul>
                                         {service.feature &&
-                                            service.feature.split(',').slice(3, 6).map((value, index) => (
-                                                <li key={index}>
-                                                    <span className="icon_check" />
-                                                    {value}
-                                                </li>
-                                            ))
-                                        }
+                                            service.feature
+                                                .split(',')
+                                                .slice(3, 6)
+                                                .map((value, index) => (
+                                                    <li key={index}>
+                                                        <span className="icon_check" />
+                                                        {value}
+                                                    </li>
+                                                ))}
                                     </ul>
                                 </div>
                             </div>
@@ -93,7 +100,7 @@ function DetailsService({ serviceID, descrip }) {
                         <div className="service-detail_pic">
                             <div className="row">
                                 {service.imgs &&
-                                    service.imgs.slice(0,2).map((value, index) => (
+                                    service.imgs.split(',').slice(0, 2).map((value, index) => (
                                         <div className="col-lg-6 col-md-6 col-sm-6" key={index}>
                                             <img src={value} alt={index} />
                                         </div>

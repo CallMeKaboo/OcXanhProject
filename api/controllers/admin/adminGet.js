@@ -49,7 +49,7 @@ const getBooking = (req, res) => {
   const q =
     "SELECT booking.id,user.username, contact_name,contact_phone,contact_email,service_details.name,cleaner.fullName,CONCAT (cleaning_time, ' ', cleaning_date) as time_stamp,booking.address, booking.status " +
     "FROM cleaning_services.booking join service_details " +
-    "on booking.service_detail_id = service_details.id join user on user.id = booking.user_id join cleaner on cleaner.id = booking.cleaner_id";
+    "on booking.service_detail_id = service_details.id join user on user.id = booking.user_id join cleaner on cleaner.id = booking.cleaner_id where date(booking.created_at) >= date(now())";
 
   connection.query(q, (err, result) => {
     if (err) return res.send(err);
@@ -91,6 +91,17 @@ const getReport = (req, res) => {
     return res.status(200).json(result);
   });
 };
+// total
+const getTotal = (req, res) => {
+  const q =
+    "SELECT (SUM(service_details.price + 50000)) AS tong  FROM service_details JOIN booking ON service_details.id = booking.service_detail_id ";
+
+  connection.query(q, (err, result) => {
+    if (err) return res.send(err);
+
+    return res.status(200).json(result[0].tong);
+  });
+};
 module.exports = {
   getService,
   getServiceDetail,
@@ -99,4 +110,5 @@ module.exports = {
   getBooking,
   getContact,
   getReport,
+  getTotal
 };

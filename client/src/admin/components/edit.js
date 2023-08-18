@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import ToastMessage from '../../components/CompoChild/Toast/toast';
 import '../styles/modal.css';
-import {  useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 function EditOverlay(props) {
     const [type, setType] = useState({});
@@ -43,8 +43,8 @@ function EditOverlay(props) {
         fetchData();
     }, []);
 
-    // console.log(typeof props.data.feature)
-    // console.log(JSON.stringify(inputService.sFeature));
+    console.log(props.data.feature);
+    console.log(JSON.stringify(inputService.sFeature));
     // console.log(
     //     typeof JSON.stringify(inputService.sFeature)
     //         .split(',')
@@ -144,19 +144,19 @@ function EditOverlay(props) {
                         <div className="modal-body">
                             {props.type === 1 && (
                                 <>
-                                    <div className="form-group">
+                                    <div className="form-group mb-2">
                                         <label>Tên dịch vụ</label>
                                         <input
                                             type="text"
                                             className="form-control"
-                                            required=""
+                                            required
                                             name="sName"
                                             value={inputService.sName}
                                             onChange={handleServiceChange}
                                         />
                                     </div>
 
-                                    <div className="form-group">
+                                    <div className="form-group mb-2">
                                         <label>Loại dịch vụ</label>
                                         <select
                                             value={inputService.sType}
@@ -173,18 +173,18 @@ function EditOverlay(props) {
                                                 : null}
                                         </select>
                                     </div>
-                                    <div className="form-group">
+                                    <div className="form-group mb-2">
                                         <label>Tính năng</label>
                                         <input
                                             type="text"
                                             className="form-control"
-                                            required=""
+                                            required
                                             name="sFeature"
                                             value={inputService.sFeature}
                                             onChange={handleServiceChange}
                                         />
                                     </div>
-                                    <div className="form-group">
+                                    <div className="form-group mb-2">
                                         <label>Mô tả</label>
                                         <textarea
                                             type="text"
@@ -196,13 +196,13 @@ function EditOverlay(props) {
                                             style={{ height: '130px', resize: 'none' }}
                                         />
                                     </div>
-                                    <div className="form-group d-flex justify-content-between">
+                                    <div className="form-group d-flex justify-content-between mb-2">
                                         <div className="col-6" style={{ width: '45%' }}>
                                             <label>Thời lượng</label>
                                             <input
-                                                type="text"
+                                                type="number"
                                                 className="form-control"
-                                                required=""
+                                                required
                                                 name="sDuration"
                                                 value={inputService.sDuration}
                                                 onChange={handleServiceChange}
@@ -213,14 +213,14 @@ function EditOverlay(props) {
                                             <input
                                                 type="text"
                                                 className="form-control"
-                                                required=""
+                                                required
                                                 name="sPrice"
                                                 value={inputService.sPrice}
                                                 onChange={handleServiceChange}
                                             />
                                         </div>
                                     </div>
-                                    <div className="form-group">
+                                    <div className="form-group mb-2">
                                         <label>Ảnh bìa</label>
                                         <input
                                             type={inputService.sThumbnail ? 'text' : 'file'}
@@ -235,84 +235,86 @@ function EditOverlay(props) {
                             )}
                             {props.type === 2 && (
                                 <>
-                                    <div className="form-group">
+                                    <div className="form-group mb-2">
                                         <label>Họ và tên</label>
                                         <input
                                             type="text"
                                             className="form-control"
-                                            required=""
+                                            required
                                             name="sfName"
                                             value={inputStaff.sfName}
                                             onChange={handleStaffChange}
                                         />
                                     </div>
 
-                                    <div className="form-group">
+                                    <div className="form-group mb-2">
                                         <label>Ngày sinh</label>
                                         <input
                                             type="date"
                                             value={inputStaff.sDob}
                                             name="sDob"
+                                            required
                                             className="form-control"
                                             onChange={handleStaffChange}
                                         />
                                     </div>
-                                    <div className="form-group">
+                                    <div className="form-group mb-2">
                                         <label>Giới tính</label>
                                         <input
                                             type="text"
                                             className="form-control"
-                                            required=""
+                                            required
                                             name="sGender"
                                             value={inputStaff.sGender}
                                             onChange={handleStaffChange}
                                         />
                                     </div>
-                                    <div className="form-group">
+                                    <div className="form-group mb-2">
                                         <label>Ngày vào</label>
                                         <input
                                             type="date"
                                             value={inputStaff.sDIn}
                                             name="sDIn"
+                                            required
                                             className="form-control"
                                             onChange={handleStaffChange}
                                         />
                                     </div>
-                                    <div className="form-group">
+                                    <div className="form-group mb-2">
                                         <label>Điện thoại</label>
                                         <input
                                             type="text"
                                             className="form-control"
-                                            required=""
+                                            required
                                             name="sPhone"
                                             value={inputStaff.sPhone}
                                             onChange={handleStaffChange}
                                         />
                                     </div>
-                                    <div className="form-group ">
+                                    <div className="form-group mb-2">
                                         <label>Địa chỉ</label>
                                         <input
                                             type="text"
                                             className="form-control"
-                                            required=""
+                                            required
                                             name="sAddress"
                                             value={inputStaff.sAddress}
                                             onChange={handleStaffChange}
                                         />
                                     </div>
-                                    <div className="form-group ">
+                                    <div className="form-group mb-2">
                                         <label>Lương</label>
                                         <input
                                             type="text"
                                             className="form-control"
-                                            required=""
+                                            required
                                             name="sSalary"
                                             value={inputStaff.sSalary}
                                             onChange={handleStaffChange}
                                         />
                                     </div>
 
-                                    <div className="form-group">
+                                    <div className="form-group mb-2">
                                         <label>Ảnh đại diện</label>
                                         <input
                                             type={inputStaff.sAva ? 'text' : 'file'}

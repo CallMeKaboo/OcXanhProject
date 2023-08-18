@@ -7,6 +7,7 @@ const {
   getContact,
   getReport,
   getServiceDetail,
+  getTotal,
 } = require("../controllers/admin/adminGet");
 
 const router = express.Router();
@@ -18,5 +19,6 @@ router.get("/staff", getStaffs);
 router.get("/booking", getBooking);
 router.get("/contact", getContact);
 router.get("/report", getReport);
+router.get("/total", getTotal);
 
 module.exports = router;

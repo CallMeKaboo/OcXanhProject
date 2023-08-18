@@ -2,6 +2,7 @@ import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Button from 'react-bootstrap/Button';
+// import{ momo }from '../../Booking/momo';
 import '../../../css/home/landingPage/services.css';
 
 let reviewData = [
@@ -26,6 +27,9 @@ let reviewData = [
 ];
 
 function HomeServices() {
+    // const handle = () => {
+    //     momo();
+    // };
     return (
         <div id="service">
             <Container>
@@ -51,7 +55,7 @@ function HomeServices() {
                     ))}
                 </Row>
                 <div className="overview-btn">
-                    <Button variant="primary" type='submit'>
+                    <Button variant="primary" type="submit">
                         Đặt dịch vụ ngay
                     </Button>
                 </div>

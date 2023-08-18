@@ -116,7 +116,7 @@ function BookingManager() {
                                         </span>
                                     </th>
                                     <th>Tài khoản</th>
-                                    <th>Người đặt</th>
+                                    {/* <th>Người đặt</th> */}
                                     <th>Điện thoại</th>
                                     <th>Email</th>
                                     <th>Dịch vụ</th>
@@ -124,7 +124,7 @@ function BookingManager() {
                                     <th>Lịch đặt</th>
                                     <th>Địa chỉ</th>
                                     <th>Trạng thái</th>
-                                    <th style={{width: "5%"}}>Công cụ</th>
+                                    <th style={{ width: '5%' }}>Công cụ</th>
                                 </tr>
                             </thead>
                             {loading ? (
@@ -144,7 +144,7 @@ function BookingManager() {
                                                 </span>
                                             </td>
                                             <td>{value.username}</td>
-                                            <td>{value.contact_name}</td>
+                                            {/* <td>{value.contact_name}</td> */}
                                             <td>{value.contact_phone}</td>
                                             <td>{value.contact_email}</td>
                                             <td>{value.name}</td>
@@ -162,6 +162,7 @@ function BookingManager() {
                                                 >
                                                     <i
                                                         className="fa-solid fa-circle-check"
+                                                        style={{ color: value.status === 0 ? 'ffc107' : '#4fe37b' }}
                                                         data-toggle="tooltip"
                                                         title="check"
                                                     ></i>
@@ -173,7 +174,7 @@ function BookingManager() {
                             ) : (
                                 <tbody>
                                     <tr>
-                                        <td colSpan={12} className='text-center'>
+                                        <td colSpan={12} className="text-center">
                                             <Loading />
                                         </td>
                                     </tr>

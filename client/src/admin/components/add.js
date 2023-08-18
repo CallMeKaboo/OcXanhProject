@@ -22,11 +22,20 @@ function AddOverlay(props) {
         sDuration: '',
         sPrice: '',
         sThumbnail: '',
+        // sImgs: '',
     });
+    // const [files, setFiles] = useState('');
 
     const handleServiceChange = (event) => {
         setInputService({ ...inputService, [event.target.name]: event.target.value });
     };
+    // const handleFileChange = (event) => {
+    //     const filess = Array.from(event.target.files);
+    //     setFiles(filess);
+
+    //     setInputService({ ...inputService, sImgs: event.target.value });
+    // };
+    // console.log(inputService.sImgs.files);
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -40,17 +49,19 @@ function AddOverlay(props) {
         fetchData();
     }, []);
     // console.log(inputService.);
-    const handleService = (e) => {
+    const handleService = async () => {
         // e.preventDefault();
-        // console.log(inputService.sFeature);
-        // console.log(JSON.stringify(inputService.sFeature.split(',').map((feature) => feature.trim())));
+        // console.log(JSON.stringify(files.map((file) => file.name).join(',')));
+        // console.log(JSON.stringify(inputService.sFeature).trim());
+        // console.log(JSON.parse(JSON.stringify(inputService.sFeature.split(','))));
+        // console.log(JSON.parse(JSON.stringify(inputService.sFeature.split(',').map((feature) => feature.trim()))));
         try {
-            axios.post('/api/adminPost/addService', {
+             await axios.post('/api/adminPost/addService', {
                 name: inputService.sName,
                 thumbnail: inputService.sThumbnail.split('\\').pop(),
-                // imgs: inputService.sImgs,
+                // imgs: JSON.stringify(files.map((file) => file.name).join(',')),
                 desc: inputService.sDesc,
-                feature: JSON.stringify(inputService.sFeature.split(',').map((feature) => feature.trim())),
+                feature: JSON.stringify(inputService.sFeature),
                 price: inputService.sPrice,
                 service_id: inputService.sType,
                 duration: inputService.sDuration,
@@ -81,10 +92,10 @@ function AddOverlay(props) {
         setInputStaff({ ...inputStaff, [event.target.name]: event.target.value });
     };
 
-    const handleStaff = (e) => {
-        e.preventDefault();
+    const handleStaff = async (e) => {
+        // e.preventDefault();
         try {
-            axios.post('/api/adminPost/addStaff', {
+            await axios.post('/api/adminPost/addStaff', {
                 fullName: inputStaff.sfName,
                 avatar: inputStaff.sAva.split('\\').pop(),
                 date_in: inputStaff.sDIn,
@@ -128,19 +139,19 @@ function AddOverlay(props) {
                         <div className="modal-body">
                             {props.type === 1 && (
                                 <>
-                                    <div className="form-group">
+                                    <div className="form-group mb-2">
                                         <label>Tên dịch vụ</label>
                                         <input
                                             type="text"
                                             className="form-control"
-                                            required=""
+                                            required
                                             name="sName"
                                             value={inputService.sName}
                                             onChange={handleServiceChange}
                                         />
                                     </div>
 
-                                    <div className="form-group">
+                                    <div className="form-group mb-2">
                                         <label>Loại dịch vụ</label>
                                         <select
                                             value={inputService.sType}
@@ -157,18 +168,18 @@ function AddOverlay(props) {
                                                 : null}
                                         </select>
                                     </div>
-                                    <div className="form-group">
+                                    <div className="form-group mb-2">
                                         <label>Tính năng</label>
                                         <input
                                             type="text"
                                             className="form-control"
-                                            required=""
+                                            required
                                             name="sFeature"
                                             value={inputService.sFeature}
                                             onChange={handleServiceChange}
                                         />
                                     </div>
-                                    <div className="form-group">
+                                    <div className="form-group mb-2">
                                         <label>Mô tả</label>
                                         <textarea
                                             type="text"
@@ -180,13 +191,13 @@ function AddOverlay(props) {
                                             style={{ height: '130px', resize: 'none' }}
                                         />
                                     </div>
-                                    <div className="form-group d-flex justify-content-between">
+                                    <div className="form-group d-flex justify-content-between mb-2">
                                         <div className="col-6" style={{ width: '45%' }}>
                                             <label>Thời lượng</label>
                                             <input
-                                                type="text"
+                                                type="number"
                                                 className="form-control"
-                                                required=""
+                                                required
                                                 name="sDuration"
                                                 value={inputService.sDuration}
                                                 onChange={handleServiceChange}
@@ -197,14 +208,14 @@ function AddOverlay(props) {
                                             <input
                                                 type="text"
                                                 className="form-control"
-                                                required=""
+                                                required
                                                 name="sPrice"
                                                 value={inputService.sPrice}
                                                 onChange={handleServiceChange}
                                             />
                                         </div>
                                     </div>
-                                    <div className="form-group">
+                                    <div className="form-group mb-2">
                                         <label>Ảnh bìa</label>
                                         <input
                                             type="file"
@@ -215,106 +226,106 @@ function AddOverlay(props) {
                                             onChange={handleServiceChange}
                                         />
                                     </div>
-                                    {/* <div className="form-group">
+                                    {/* <div className="form-group mb-2">
                                         <label>Ảnh phụ</label>
                                         <input
                                             type="file"
                                             multiple
                                             className="form-control"
                                             required=""
-                                            name="sImgs"
                                             value={inputService.sImgs}
-                                            onChange={handleServiceChange}
+                                            onChange={handleFileChange}
                                         />
-                                        {inputService.sImgs ? inputService.sImgs.split('\\').pop() : inputService.sImg}
                                     </div> */}
                                 </>
                             )}
                             {props.type === 2 && (
                                 <>
-                                    <div className="form-group">
+                                    <div className="form-group mb-2">
                                         <label>Họ và tên</label>
                                         <input
                                             type="text"
                                             className="form-control"
-                                            required=""
+                                            required
                                             name="sfName"
                                             value={inputStaff.sfName}
                                             onChange={handleStaffChange}
                                         />
                                     </div>
 
-                                    <div className="form-group">
+                                    <div className="form-group mb-2">
                                         <label>Ngày sinh</label>
                                         <input
                                             type="date"
                                             value={inputStaff.sDob}
                                             name="sDob"
+                                            required
                                             className="form-control"
                                             onChange={handleStaffChange}
                                         />
                                     </div>
-                                    <div className="form-group">
+                                    <div className="form-group mb-2">
                                         <label>Giới tính</label>
                                         <input
                                             type="text"
                                             className="form-control"
-                                            required=""
+                                            required
                                             name="sGender"
                                             value={inputStaff.sGender}
                                             onChange={handleStaffChange}
                                         />
                                     </div>
-                                    <div className="form-group">
+                                    <div className="form-group mb-2">
                                         <label>Ngày vào</label>
                                         <input
                                             type="date"
                                             value={inputStaff.sDIn}
                                             name="sDIn"
+                                            required
                                             className="form-control"
                                             onChange={handleStaffChange}
                                         />
                                     </div>
-                                    <div className="form-group">
+                                    <div className="form-group mb-2">
                                         <label>Điện thoại</label>
                                         <input
                                             type="text"
                                             className="form-control"
-                                            required=""
+                                            required
                                             name="sPhone"
                                             value={inputStaff.sPhone}
                                             onChange={handleStaffChange}
                                         />
                                     </div>
-                                    <div className="form-group ">
+                                    <div className="form-group mb-2">
                                         <label>Địa chỉ</label>
                                         <input
                                             type="text"
                                             className="form-control"
-                                            required=""
+                                            required
                                             name="sAddress"
                                             value={inputStaff.sAddress}
                                             onChange={handleStaffChange}
                                         />
                                     </div>
-                                    <div className="form-group ">
+                                    <div className="form-group mb-2">
                                         <label>Lương</label>
                                         <input
                                             type="text"
                                             className="form-control"
-                                            required=""
+                                            required
                                             name="sSalary"
                                             value={inputStaff.sSalary}
                                             onChange={handleStaffChange}
                                         />
                                     </div>
 
-                                    <div className="form-group">
+                                    <div className="form-group mb-2">
                                         <label>Ảnh đại diện</label>
                                         <input
                                             type="file"
                                             className="form-control"
-                                            required=""
+                                            required
                                             name="sAva"
                                             value={inputStaff.sAva}
                                             onChange={handleStaffChange}

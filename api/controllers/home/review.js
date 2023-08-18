@@ -3,7 +3,7 @@ const connection = require("../../database/database");
 // Select all kind of services of services have id
 const getReviews = (req, res) => {
   const q =
-    "select user.fullName, rating, comment from review join user on review.user_id = user.id where service_detail_id = ?";
+    "select user.username, rating, comment from review join user on review.user_id = user.id where service_detail_id = ?";
 
   connection.query(q, [req.params.service_detail_id], (err, result) => {
     if (err) return res.send(err);

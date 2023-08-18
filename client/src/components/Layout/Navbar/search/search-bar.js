@@ -29,7 +29,7 @@ const SearchBar = () => {
         handleSearch(value);
     };
     const handleServiceClick = (id) => {
-        navigate(`/service/?service_id=${id}`); // Điều hướng tới trang dịch vụ với id tương ứng
+        navigate(`/service/detail/${id}`); // Điều hướng tới trang dịch vụ với id tương ứng
         setSearchResults('');
         setSearchTerm('');
     };
@@ -59,7 +59,7 @@ const SearchBar = () => {
                         <div
                             className="search-res_list "
                             key={result.id}
-                            onClick={() => handleServiceClick(result.service_id)}
+                            onClick={() => handleServiceClick(result.id)}
                         >
                             <p>{result.name}</p>
                         </div>

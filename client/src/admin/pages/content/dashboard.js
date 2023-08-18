@@ -1,10 +1,43 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useState } from 'react';
 import { AuthContext } from '../../../context/authContext';
+import Loading from '../../../components/CompoChild/Loading/loading';
+
+import axios from 'axios';
+import Money from '../../../utils/money';
 
 function OverviewDash() {
     const { admin } = useState(AuthContext);
+    const [loading, setLoading] = useState(false);
+    const [total, setTotal] = useState(0);
 
+    const [count, setCount] = useState(0);
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const res = await axios.get(`/api/adminGet/total`);
+                setTotal(res.data);
+                setLoading(true);
+            } catch (error) {
+                console.log(error);
+            }
+        };
+        fetchData();
+    }, []);
+    // console.log(total);
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const res = await axios.get(`/api/adminGet/contact`);
+                setCount(res.data);
+                setLoading(true);
+            } catch (error) {
+                console.log(error);
+            }
+        };
+        fetchData();
+    }, []);
+    console.log(count);
     const handleNavigateContact = () => {
         window.location.href = '/admin/home/contact';
     };
@@ -32,10 +65,12 @@ function OverviewDash() {
                                         <div className="text-xs font-weight-bold text-primary text-uppercase mb-1">
                                             Tổng doanh thu
                                         </div>
-                                        <div className="h5 mb-0 font-weight-bold text-gray-800">{localStorage.getItem('total')} VNĐ</div>
+                                        <div className="h5 mb-0 font-weight-bold text-gray-800">
+                                            {loading ? <Money value={total} /> : <Loading />}
+                                        </div>
                                     </div>
                                     <div className="col-auto">
-                                    <i className="fas fa-dollar-sign fa-2x text-gray-300" />
+                                        <i className="fas fa-dollar-sign fa-2x text-gray-300" />
                                     </div>
                                 </div>
                             </div>
@@ -70,7 +105,7 @@ function OverviewDash() {
                                             Yêu cầu hỗ trợ
                                         </div>
                                         <div className="h5 mb-0 font-weight-bold text-gray-800">
-                                            {localStorage.getItem('contact_request')}
+                                            {loading ? count.length : <Loading />}
                                         </div>
                                     </div>
                                     <div className="col-auto">

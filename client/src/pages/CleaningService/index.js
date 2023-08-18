@@ -9,7 +9,7 @@ import Pagination from '../../components/CompoChild/Pagination/pagination';
 import Money from '../../utils/money';
 
 import bg from '../../assets/img/BG/2.jpg';
-import '../..//css/servicePage/cleaning.css';
+import '../../css/servicePage/cleaning.css';
 
 const listData = [
     {
@@ -32,6 +32,8 @@ function CleaningService() {
     const [overlay, setoverlay] = useState(false);
     const [services, setServices] = useState([]);
     const [serviceID, setServiceID] = useState('');
+
+    const [thumbnail, setThumbnail] = useState([]);
     const [index, setIndex] = useState('');
     const servicesID = useLocation().search; //Get id from  location
     const [loading, setLoading] = useState(false);
@@ -52,6 +54,12 @@ function CleaningService() {
         };
         fetchData();
     }, [servicesID]);
+    // useEffect(() => {
+    //     setThumbnail((thumbnail) => ({
+    //         ...thumbnail,
+    //         value: services.map((value) => `../../assets/img/services_img/${value.thumbnail}`),
+    //     }));
+    // }, [services]);
 
     const lastItemIndex = currentPage * itemPerPage;
     const firstItemIndex = lastItemIndex - itemPerPage;
@@ -61,6 +69,7 @@ function CleaningService() {
             {overlay && (
                 <ModelOverlay
                     descrip={loading ? services[index].description : 'Đang cập nhật'}
+                    def_thumbnail={loading && services[index].def_thumbnail}
                     onCancelbutton={() => setoverlay(false)}
                     serviceID={serviceID}
                 />
@@ -157,6 +166,7 @@ function CleaningService() {
                                                     <Link
                                                         to={{ pathname: '/service/', search: e.search }}
                                                         className={e.status}
+                                                        onClick={() => setCurrentPage(1)}
                                                     >
                                                         <svg
                                                             xmlns="http://www.w3.org/2000/svg"
