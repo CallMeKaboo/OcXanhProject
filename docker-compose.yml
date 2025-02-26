@@ -1,0 +1,38 @@
+version: '3.8'
+
+services:
+  app:
+    build: .
+    container_name: ocxanh_app
+    restart: always
+    ports:
+      - "3000:3000"
+    depends_on:
+      - db
+    environment:
+      DB_HOST: db
+      DB_USER: sa
+      DB_PASSWORD: YourPassword123!
+      DB_NAME: ocxanh_db
+    networks:
+      - ocxanh-network
+
+  db:
+    image: mcr.microsoft.com/mssql/server:2019-latest
+    container_name: ocxanh_db
+    restart: always
+    ports:
+      - "1433:1433"
+    environment:
+      SA_PASSWORD: YourPassword123!
+      ACCEPT_EULA: "Y"
+    networks:
+      - ocxanh-network
+    volumes:
+      - mssql-data:/var/opt/mssql
+
+networks:
+  ocxanh-network:
+
+volumes:
+  mssql-data:
